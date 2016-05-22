@@ -17,6 +17,10 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
+app.get('/random/', function (req, res) {
+  res.send('got random URL');
+});
+
 app.get('/webhookverify/', function (req, res) {
     console.log('entered')
     if (req.query['hub.verify_token'] === 'chattt_verify_token') {
@@ -26,10 +30,12 @@ app.get('/webhookverify/', function (req, res) {
 })
 
 app.post('/webhookverify/', function (req, res) {
+
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
+        console.log("received message from "+sender);
         if (event.message && event.message.text) {
             text = event.message.text
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
