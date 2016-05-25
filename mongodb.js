@@ -32,7 +32,11 @@ function getUsersNameAndSendMessage(userID, message, userIDToSendMessage, db) {
     findUserName.findOne({'userID': userID}, function (err, document) {
         if (err || !document) // Error finding user, means we need to get the person's name
         {
-            fb_apicalls.getUserName(userID, db);
+            var sendMessageFunction = function(userIDToSendMessage, finalMessage)
+            {
+                fb_apicalls.sendTextMessage(userIDToSendMessage, finalMessage )
+            }
+            fb_apicalls.getUserName(userID, message, db, sendMessageFunction());
             console.log('Error finding user in getUserToChat');
             return;
         }
@@ -52,22 +56,24 @@ function getUsersNameAndSendMessage(userID, message, userIDToSendMessage, db) {
 
 /**
  * Either gets a new user to chat from queue if exists or places the current user in queue
- * @param user userID to send message too
+ * @param userID userID to send message too
  * @param usersName users name
  * @param message message to send
  * @param db mongodb cursor
  */
-getNewUserToChat = function(user, usersName, message, db){
+function getNewUserToChat(userID, usersName, message, db){
     var chatQueue = db.collection("chat_queue")
 
     chatQueue.findOne({}, function (err, document) {
         if (err || !document) // Error finding a new user to chat with, need to insert
         {
             console.log('Error finding a new user to chat with, inserting into queue now');
-            chatQueue.insert({"userID":user})
-            fb_apicalls.sendTextMessage(user, "We are currently looking for a new user to chat with you...")
+            chatQueue.insert({"userID":userID, "usersName":usersName})
+            fb_apicalls.sendTextMessage(userID, "We are currently looking for a new user to chat with you...")
             return;
         }
+
+
     })
 
 

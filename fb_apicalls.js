@@ -32,7 +32,7 @@ function sendTextMessage(sender, text) {
  * @param userIDToGetNameFor
  * @param db
  */
-function getUserName(userIDToGetNameFor, db) {
+function getUserName(userIDToGetNameFor, message, db, callback) {
     console.log('getting name...')
     request({
         url: 'https://graph.facebook.com/v2.6/' + userIDToGetNameFor + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + token,
@@ -49,6 +49,10 @@ function getUserName(userIDToGetNameFor, db) {
             var insertUserName = db.collection('user_names');
             console.log("inserted users name into db")
             insertUserName.insert({'userID': userIDToGetNameFor, 'usersName': fullName})
+            if( callback != null )
+            {
+                callback(userIDToGetNameFor, message)
+            }
             db.close()
 
         }
