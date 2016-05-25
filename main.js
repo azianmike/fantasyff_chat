@@ -9,6 +9,8 @@ var request = require('request')
 var credentials = {key: privateKey, cert: certificate, ca:caKey};
 var express = require('express');
 var app = express();
+var sendMessageToPartner = require('./mongodb').sendMessageToPartner;
+
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
@@ -38,7 +40,8 @@ app.post('/webhookverify/', function (req, res) {
         console.log("received message from "+sender);
         if (event.message && event.message.text) {
             text = event.message.text
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendMessageToPartner(sender, message);
+            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200)
