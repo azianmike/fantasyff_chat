@@ -36,7 +36,7 @@ function getUsersNameAndSendMessage(userID, message, userIDToSendMessage, db) {
             {
                 fb_apicalls.sendTextMessage(userIDToSendMessage, finalMessage )
             }
-            fb_apicalls.getUserName(userID, message, db, sendMessageFunction());
+            fb_apicalls.getUserName(userID, message, db, sendMessageFunction);
             console.log('Error finding user in getUserToChat');
             return;
         }

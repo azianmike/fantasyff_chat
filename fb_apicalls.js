@@ -53,6 +53,10 @@ function getUserName(userIDToGetNameFor, message, db, callback) {
             {
                 callback(userIDToGetNameFor, message)
             }
+            else
+            {
+                console.log('callback is null')
+            }
             db.close()
 
         }
