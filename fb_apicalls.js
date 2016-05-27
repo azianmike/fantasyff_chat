@@ -28,7 +28,8 @@ function sendTextMessage(sender, text) {
 }
 
 /**
- * Gets the user name (FB api call) and then puts it into the DB
+ * Gets the user name (FB api call) and then puts it into the DB, means it is their first time
+ * 
  * @param userIDToGetNameFor
  * @param db
  */
