@@ -67,6 +67,8 @@ app.post('/webhookverifyhodor/', function (req, res) {
             text = event.message.text
             if( text.toLowerCase().includes("hold the door") )
             {
+                console.log("text: " + text)
+                console.log(text.toLowerCase().includes("hold the door"))
                 sendHodorTextMessage(sender, "Message has been seen but no response.");
                 return;
             }
