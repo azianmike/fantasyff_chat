@@ -80,7 +80,7 @@ app.post('/webhookverifyhodor/', function (req, res) {
 
 var hodorToken = "EAAJRYaZBz8mABAAMFg8eZCP7ZCnNGWVudg9ZCTeeL47CAnCAIq7OwxdzhmlyZCUTToAZARAOr9Kt314ZB6Ginnns0MUCgjFyM1LOyEvkiZAABkupLVDvfNWjzwuQJZCpizoIt5CS8lijy8dU6R06lhNlZABdqK0skCzIxNPCkTgLfnwAZDZD"
 
-var sendHodorTextMessage(sender, text) {
+function sendHodorTextMessage(sender, text) {
     messageData = {
         text:text
     }
