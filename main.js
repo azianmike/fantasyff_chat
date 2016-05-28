@@ -19,6 +19,10 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
+app.get('/privacypolicy', function (req, res) {
+    res.sendfile('privacypolicy.htm');
+});
+
 app.get('/random/', function (req, res) {
   res.send('got random URL');
 });
