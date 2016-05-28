@@ -40,7 +40,7 @@ app.post('/webhookverify/', function (req, res) {
         console.log("received message from "+sender);
         if (event.message && event.message.text) {
             text = event.message.text
-            sendMessageToPartner(sender, message);
+            sendMessageToPartner(sender, text);
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
