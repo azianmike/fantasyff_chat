@@ -70,17 +70,19 @@ app.post('/webhookverifyhodor/', function (req, res) {
                 console.log("text: " + text)
                 console.log(text.toLowerCase().includes("hold the door"))
                 sendHodorTextMessage(sender, "Message has been seen but no response.");
-                return;
             }
-            var hodorString = "Hodor"
-            var howManyHodors = Math.floor((Math.random() * 10) + 1);
-            for (i = 0; i < howManyHodors; i++) {
-                hodorString += " hodor"
+            else
+            {
+                var hodorString = "Hodor"
+                var howManyHodors = Math.floor((Math.random() * 10) + 1);
+                for (i = 0; i < howManyHodors; i++) {
+                    hodorString += " hodor"
+                }
+
+                hodorString += "."
+                sendHodorTextMessage(sender, hodorString);
             }
 
-            hodorString += "."
-            sendHodorTextMessage(sender, hodorString);
-            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200)
