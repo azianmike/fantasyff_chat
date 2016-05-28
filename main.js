@@ -64,6 +64,12 @@ app.post('/webhookverifyhodor/', function (req, res) {
         sender = event.sender.id
         console.log("received message from "+sender);
         if (event.message && event.message.text) {
+            text = event.message.text
+            if( text.toLowerCase().contains("hold the door") )
+            {
+                sendHodorTextMessage(sender, "Message has been seen but no response.");
+                return;
+            }
             var hodorString = "Hodor"
             var howManyHodors = Math.floor((Math.random() * 10) + 1);
             for (i = 0; i < howManyHodors; i++) {
