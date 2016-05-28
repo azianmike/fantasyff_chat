@@ -46,6 +46,39 @@ app.post('/webhookverify/', function (req, res) {
     }
     res.sendStatus(200)
 })
+
+
+app.get('/webhookverifyhodor/', function (req, res) {
+    console.log('entered')
+    if (req.query['hub.verify_token'] === 'chattt_verify_token') {
+        res.send(req.query['hub.challenge'])
+    }
+    res.send('error')
+})
+
+app.post('/webhookverifyhodor/', function (req, res) {
+
+    messaging_events = req.body.entry[0].messaging
+    for (i = 0; i < messaging_events.length; i++) {
+        event = req.body.entry[0].messaging[i]
+        sender = event.sender.id
+        console.log("received message from "+sender);
+        if (event.message && event.message.text) {
+            var hodorString = "Hodor"
+            var howManyHodors = Math.floor((Math.random() * 10) + 1);
+            for (i = 0; i < howManyHodors; i++) {
+                hodorString += " hodor"
+            }
+
+            hodorString += "."
+            sendTextMessage(sender, hodorString);
+            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+        }
+    }
+    res.sendStatus(200)
+})
+
+
 var token = "EAACZCA9ChjZCIBAGaPiOq6YYb0LZCRPiORRrHUbhf9J1MZCv3T3ZApwjAswfDdbaesS3Ohl55dpLg4v9ZBUxCTUqdBZBTgewJ6ZCBSZB7pli7aUALjEfZB9iryw2ixAzUPQkZCn66bovUutVLz52tP2D1gUnytxGLaHaNFKGrGVaW9aVQZDZD"
 
 function sendTextMessage(sender, text) {
