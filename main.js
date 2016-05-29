@@ -44,12 +44,40 @@ app.post('/webhookverify/', function (req, res) {
         console.log("received message from "+sender);
         if (event.message && event.message.text) {
             text = event.message.text
+            if( isChatFunction(sender, text) ) // Don't need to send any message, is just a normal chat function
+            {
+                return;
+            }
             sendMessageToPartner(sender, text);
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200)
 })
+
+/**
+ * Checks if the message sent is a specific chat function (i.e. get a new person to chat, leave current chat, etc)
+ * @param userID userID of who sent the specific chat function
+ * @param message message of the user (to check if it is a function)
+ */
+function isChatFunction(userID, message){
+    switch (message.toLowerCase())
+    {
+        case "/newchat":
+            // Currently just implementing for demo purposes
+            sendTextMessage(sender, "You are now connected to a new chat with Alex K.!")
+            return true;
+            break;
+
+        case "/leave":
+            // Currently just implementing for demo purposes
+            sendTextMessage(sender, "You have left the chat. Type /newchat for a new chat!")
+            return true;
+            break;
+        default:
+            return false;
+    }
+}
 
 
 app.get('/webhookverifyhodor/', function (req, res) {
