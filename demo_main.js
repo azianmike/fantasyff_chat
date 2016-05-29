@@ -71,13 +71,13 @@ function isChatFunction(userID, message){
     {
         case "/newchat":
             // Currently just implementing for demo purposes
-            sendTextMessage(sender, "You are now connected to a new chat with Alex K.!")
+            sendTextMessage(userID, "You are now connected to a new chat with Alex K.!")
             return true;
             break;
 
         case "/leave":
             // Currently just implementing for demo purposes
-            sendTextMessage(sender, "You have left the chat. Type /newchat for a new chat!")
+            sendTextMessage(userID, "You have left the chat. Type /newchat for a new chat!")
             return true;
             break;
         default:
@@ -172,9 +172,9 @@ function sendTextMessage(sender, text) {
     })
 }
 
-app.listen(8080, function () {
+app.listen(80, function () {
   console.log('Example app listening on port 80!');
 });
 
-// var httpsServer = https.createServer(credentials, app);
-// httpsServer.listen(443);
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(443);
