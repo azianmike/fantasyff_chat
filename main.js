@@ -46,6 +46,7 @@ app.post('/webhookverify/', function (req, res) {
             text = event.message.text
             if( isChatFunction(sender, text) ) // Don't need to send any message, is just a normal chat function
             {
+                res.sendStatus(200);
                 return;
             }
             sendMessageToPartner(sender, text);
