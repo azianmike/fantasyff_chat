@@ -35,7 +35,7 @@ app.get('/webhookverify/', function (req, res) {
     res.send('error')
 })
 
-var messageArray = [ 'ok, bye!', 'Love that late night restaurant! Used to go tehre all the time with my friends','oh cool, I actually went to school there!','Im from Chicago! Do you know where that is?','pretty good, you?']
+var messageArray = [ 'Alex K : ok, bye!', 'Alex K : Love that late night restaurant! Used to go tehre all the time with my friends','Alex K : oh cool, I actually went to school there!','Alex K : Im from Chicago! Do you know where that is?','Alex K : pretty good, you?']
 
 app.post('/webhookverify/', function (req, res) {
 
@@ -52,8 +52,9 @@ app.post('/webhookverify/', function (req, res) {
                 return;
             }
 
+            sendTextMessage(sender, messageArray.pop());
             res.sendStatus(200)
-            setTimeout(function(){sendTextMessage(sender, messageArray.pop())}, 1000);
+
             // sendMessageToPartner(sender, text);  //Commenting out for demo purposes
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
