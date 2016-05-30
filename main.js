@@ -46,19 +46,12 @@ app.post('/webhookverify/', function (req, res) {
         console.log("received message from "+sender);
         if (event.message && event.message.text) {
             text = event.message.text
-            if( isChatFunction(sender, text) ) // Don't need to send any message, is just a normal chat function
-            {
-                res.sendStatus(200);
-                return;
-            }
 
-            res.sendStatus(200)
-            setTimeout(function(){sendTextMessage(sender, messageArray.pop())}, 1000);
-            // sendMessageToPartner(sender, text);  //Commenting out for demo purposes
+            sendMessageToPartner(sender, text);  //Commenting out for demo purposes
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
-    // res.sendStatus(200) // Commenting out for demo purposes
+    res.sendStatus(200) // Commenting out for demo purposes
 })
 
 /**
