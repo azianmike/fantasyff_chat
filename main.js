@@ -122,9 +122,11 @@ app.post('/webhookverifyhodor/', function (req, res) {
 var hodorToken = "EAAJRYaZBz8mABAAMFg8eZCP7ZCnNGWVudg9ZCTeeL47CAnCAIq7OwxdzhmlyZCUTToAZARAOr9Kt314ZB6Ginnns0MUCgjFyM1LOyEvkiZAABkupLVDvfNWjzwuQJZCpizoIt5CS8lijy8dU6R06lhNlZABdqK0skCzIxNPCkTgLfnwAZDZD"
 
 function sendHodorTextMessage(sender, text) {
-    messageData = {
-        text:text
-    }
+    //messageData = {
+    //    text:text
+    //}
+    messageData = {"attachment": {"type": "template", "payload": {"template_type": "generic", "elements": [{"buttons": [{"url": "http://www.zillow.com/homedetails/2098600472_zpid/", "type": "web_url", "title": "View Home"}], "subtitle": "3074 Iotdqvmrixfoylx St", "image_url": "http://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/47.610840,-122.334900/17?mapSize=150,112&key=AhQkNOWAV22DAcSvvLtzbESHwoJdn6DSvFF573P-qjUu1Lr8nd28kBw07MoqZ9J5", "title": "$5003827.0"}, {"buttons": [{"url": "http://www.zillow.com/homedetails/2098600473_zpid/", "type": "web_url", "title": "View Home"}], "subtitle": "8145 Tssmcvewpdgudif St", "image_url": "http://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/47.610840,-122.334900/17?mapSize=150,112&key=AhQkNOWAV22DAcSvvLtzbESHwoJdn6DSvFF573P-qjUu1Lr8nd28kBw07MoqZ9J5", "title": "$5008336.0"}, {"buttons": [{"url": "http://www.zillow.com/homedetails/2098600487_zpid/", "type": "web_url", "title": "View Home"}], "subtitle": "4832 Psxbmknbxcrhjld St.", "image_url": "http://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/47.595152,-122.331639/17?mapSize=150,112&key=AhQkNOWAV22DAcSvvLtzbESHwoJdn6DSvFF573P-qjUu1Lr8nd28kBw07MoqZ9J5", "title": "$333333.0"}, {"buttons": [{"url": "http://www.zillow.com/homedetails/2098600488_zpid/", "type": "web_url", "title": "View Home"}], "subtitle": "7785 Gcscchrhxlkapzv St", "image_url": "http://test-image-proxy.zillow.net/val_300/p_g/ISrwbca3cpmwbw1000000000.jpg", "title": "$250000.0"}, {"buttons": [{"url": "http://www.zillow.com/homedetails/2098600494_zpid/", "type": "web_url", "title": "View Home"}], "subtitle": "106 Bpzsrrrbehecfqx St", "image_url": "http://dev.virtualearth.net/REST/v1/Imagery/Map/Aerial/47.610840,-122.334900/17?mapSize=150,112&key=AhQkNOWAV22DAcSvvLtzbESHwoJdn6DSvFF573P-qjUu1Lr8nd28kBw07MoqZ9J5", "title": "$5000156.0"}]}}}
+
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:hodorToken},
@@ -148,6 +150,7 @@ function sendTextMessage(sender, text) {
     messageData = {
         text:text
     }
+
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
