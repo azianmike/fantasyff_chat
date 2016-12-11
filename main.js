@@ -125,8 +125,6 @@ function sendHodorTextMessage(sender, text) {
     messageData = {
         text:text
     }
-<<<<<<< HEAD
-=======
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:hodorToken},
@@ -142,7 +140,6 @@ function sendHodorTextMessage(sender, text) {
             console.log('Error: ', response.body.error)
         }
     })
->>>>>>> parent of 1f4bea8... Updating main.js
 }
 
 var token = "EAACZCA9ChjZCIBAGaPiOq6YYb0LZCRPiORRrHUbhf9J1MZCv3T3ZApwjAswfDdbaesS3Ohl55dpLg4v9ZBUxCTUqdBZBTgewJ6ZCBSZB7pli7aUALjEfZB9iryw2ixAzUPQkZCn66bovUutVLz52tP2D1gUnytxGLaHaNFKGrGVaW9aVQZDZD"
