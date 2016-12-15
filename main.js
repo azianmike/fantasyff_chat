@@ -21,6 +21,7 @@ try {
     Wit = require('node-wit').Wit;
     interactive = require('node-wit').interactive;
 }
+var witAI = require('./basic')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
@@ -118,7 +119,7 @@ app.post('/webhookverifyhodor/', function (req, res) {
             /**
              * Testing out Wit.ai stuff
              */
-            
+            witAI.getRespone(sender, text);
 
         }
     }

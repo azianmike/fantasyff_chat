@@ -81,3 +81,4 @@ function getResponse(sender, text) {
         .catch(console.error);
 }
 
+module.exports.getRespone = getResponse
