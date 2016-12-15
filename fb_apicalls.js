@@ -7,6 +7,7 @@ var token = "EAACZCA9ChjZCIBAGaPiOq6YYb0LZCRPiORRrHUbhf9J1MZCv3T3ZApwjAswfDdbaes
  * @param text
  */
 function sendTextMessage(sender, text) {
+    console.log("Trying to send FB message to " + sender)
     messageData = {
         text:text
     }

@@ -18,11 +18,32 @@ function getLiveNFLData(){
     return options
 }
 
+function parseNFLGameData(jsonResult, teamName, funcToCall) {
+// The JSON result for games
+    var games = jsonResult.gms
+    for (var game in games) {  // Loop through games to match team names
+        var gameObj = games[game]
+        if (gameObj.vnn.toLowerCase() === teamName.toLowerCase() || gameObj.hnn.toLowerCase() === teamName.toLowerCase()) {
+            var formattedString = "Score is " + gameObj.vnn + "-" + gameObj.vs + " to " + gameObj.hnn + "-" + gameObj.hs
+            formattedString += " for week " + jsonResult.w
+            if (funcToCall)  // Check if null
+            {
+                funcToCall(formattedString)
+            }
+            else {
+                console.log("FuncToCall is null")
+            }
+
+            break;
+        }
+    }
+}
 /**
  * Gets a team's live score given a name
  * @param teamName name of team to get score of
+ * @param callback function after getting the team score
  */
-function getTeamLiveScore( teamName )
+function getTeamLiveScore( teamName, funcToCall )
 {
     http.get(getLiveNFLData(), function(resp){
         var retry = false  // Flag for recursive retry hell
@@ -35,20 +56,11 @@ function getTeamLiveScore( teamName )
                         var jsonResult = JSON.parse(chunk);
                     } catch (err) {
                         retry = true;  // Retry if parsing error
-                        getTeamLiveScore(teamName)
+                        getTeamLiveScore(teamName, funcToCall)
                         return;
                     }
-                    
-                    var games = jsonResult.gms
-                    for (var game in games) {
-                        var gameObj = games[game]
-                        if (gameObj.vnn.toLowerCase() === teamName.toLowerCase() || gameObj.hnn.toLowerCase() === teamName.toLowerCase()) {
-                            console.log("Score is " + gameObj.vs + " to " + gameObj.hs)
-                            return;
-                        }
-                    }
-                    console.log("Not found")
-                    console.log(jsonResult)
+
+                    parseNFLGameData(jsonResult, teamName, funcToCall);
                 }
 
             });
@@ -58,5 +70,23 @@ function getTeamLiveScore( teamName )
     });
 }
 
-getTeamLiveScore("Steelers")
+/**
+ * Used to get historical data for NFL games
+ * @returns {{host: string, port: number, path: string}}
+ */
+function getHistoricalNFLData()
+{
+    // http://www.nfl.com/ajax/scorestrip?
+    var options = {
+        host: 'www.nfl.com',
+        port: 80,
+        path: 'ajax/scorestrip?'
+    };
 
+    return options
+}
+// getTeamLiveScore("Steelers", function(string) {console.log(string)})
+
+module.exports = {
+    getTeamLiveScore: getTeamLiveScore
+}

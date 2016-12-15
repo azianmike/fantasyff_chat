@@ -10,6 +10,17 @@ var credentials = {key: privateKey, cert: certificate, ca:caKey};
 var express = require('express');
 var app = express();
 var sendMessageToPartner = require('./mongodb').sendMessageToPartner;
+// Set up wit AI stuff
+var Wit = null;
+var interactive = null;
+try {
+    // if running from repo
+    Wit = require('../').Wit;
+    interactive = require('../').interactive;
+} catch (e) {
+    Wit = require('node-wit').Wit;
+    interactive = require('node-wit').interactive;
+}
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
@@ -35,8 +46,6 @@ app.get('/webhookverify/', function (req, res) {
     res.send('error')
 })
 
-var messageArray = [ 'ok, bye!', 'Love that late night restaurant! Used to go tehre all the time with my friends','oh cool, I actually went to school there!','Im from Chicago! Do you know where that is?','pretty good, you?']
-
 app.post('/webhookverify/', function (req, res) {
 
     messaging_events = req.body.entry[0].messaging
@@ -48,10 +57,9 @@ app.post('/webhookverify/', function (req, res) {
             text = event.message.text
 
             sendMessageToPartner(sender, text);  //Commenting out for demo purposes
-            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
-    res.sendStatus(200) // Commenting out for demo purposes
+    res.sendStatus(200)
 })
 
 /**
@@ -78,7 +86,7 @@ function isChatFunction(userID, message){
     }
 }
 
-
+// Web hook to verify the hodor path
 app.get('/webhookverifyhodor/', function (req, res) {
     console.log('entered')
     if (req.query['hub.verify_token'] === 'chattt_verify_token') {
@@ -87,32 +95,30 @@ app.get('/webhookverifyhodor/', function (req, res) {
     res.send('error')
 })
 
+// Web hook where the hodor messages get sent to
 app.post('/webhookverifyhodor/', function (req, res) {
 
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
-        console.log("received message from "+sender);
+        console.log("received message from "+sender); // Sender is the sender ID we use to send message BACK
         if (event.message && event.message.text) {
             text = event.message.text
-            if( text.toLowerCase().includes("hold the door") )
-            {
-                console.log("text: " + text)
-                console.log(text.toLowerCase().includes("hold the door"))
-                sendHodorTextMessage(sender, "Message has been seen but no response.");
-            }
-            else
-            {
-                var hodorString = "Hodor"
-                var howManyHodors = Math.floor((Math.random() * 10) + 1);
-                for (i = 0; i < howManyHodors; i++) {
-                    hodorString += " hodor"
-                }
 
-                hodorString += "."
-                sendHodorTextMessage(sender, hodorString);
+            var hodorString = "Hodor"
+            var howManyHodors = Math.floor((Math.random() * 10) + 1);
+            for (i = 0; i < howManyHodors; i++) {
+                hodorString += " hodor"
             }
+
+            hodorString += "."
+            sendHodorTextMessage(sender, hodorString);
+
+            /**
+             * Testing out Wit.ai stuff
+             */
+            
 
         }
     }
