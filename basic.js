@@ -61,7 +61,7 @@ function callActionHelper(context, callbackFunc) {
 
 const client = new Wit({accessToken}); // No actions, manually choose actions
 
-getResponse('10157076165585601', "what is the score of ravens game")
+// getResponse('10157076165585601', "what is the score of ravens game")
 
 /**
  * Gets a wit.ai response based on the text and sender
@@ -76,7 +76,7 @@ function getResponse(sender, text) {
             var sendTextHelper = function(text){
                 fb_apicalls.sendTextMessage(sender, text)
             }
-            callActionHelper(data, sendTextHelper())
+            callActionHelper(data, sendTextHelper)
         })
         .catch(console.error);
 }
