@@ -49,7 +49,7 @@ const actions = {
 
 /**
  * Helper which analyzes the context intent and correctly calls the right function
- * @param context
+ * @param context context with all the information
  */
 function callActionHelper(context, callbackFunc) {
     if (context && context.entities && context.entities.intent) {
@@ -66,12 +66,12 @@ function callActionHelper(context, callbackFunc) {
 const client = new Wit({accessToken}); // No actions, manually choose actions
 
 // getResponse('10157076165585601', "what is the score of ravens game")
-// getResponse('no sender', "what is the score of seahawks game")
+// getResponse(null, "what is the score of ravens game")
 
 /**
  * Gets a wit.ai response based on the text and sender
- * @param sender
- * @param text
+ * @param sender the person who we send the response to eventually
+ * @param text text that we want to parse with wit.ai
  */
 function getResponse(sender, text) {
     client.message(text, {})
