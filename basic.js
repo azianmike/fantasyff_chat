@@ -30,15 +30,19 @@ const actions = {
         console.log('sending...', JSON.stringify(response));
     },
     'score': function getTeamScore(context, callbackFunc) {
+        console.log(context.entities)
+        if( context.entities.football_team && context.entities.football_team[0].confidence > 0.8 )  // Lets get a football score!
+        {
+            if (callbackFunc) {
+                nfl.getTeamLiveScore(context.entities.football_team[0].value, callbackFunc)
+            }
+            else {
+                nfl.getTeamLiveScore(context.entities.football_team[0].value, function (string) {
+                    console.log(string)
+                })
+            }
+        }
 
-        if (callbackFunc) {
-            nfl.getTeamLiveScore("Steelers", callbackFunc)
-        }
-        else {
-            nfl.getTeamLiveScore("Steelers", function (string) {
-                console.log(string)
-            })
-        }
         ;
     },
 };
@@ -62,6 +66,7 @@ function callActionHelper(context, callbackFunc) {
 const client = new Wit({accessToken}); // No actions, manually choose actions
 
 // getResponse('10157076165585601', "what is the score of ravens game")
+// getResponse('no sender', "what is the score of seahawks game")
 
 /**
  * Gets a wit.ai response based on the text and sender
