@@ -107,14 +107,14 @@ app.post('/webhookverifyhodor/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text
 
-            var hodorString = "Hodor"
-            var howManyHodors = Math.floor((Math.random() * 10) + 1);
-            for (i = 0; i < howManyHodors; i++) {
-                hodorString += " hodor"
-            }
-
-            hodorString += "."
-            sendHodorTextMessage(sender, hodorString);
+            // var hodorString = "Hodor"
+            // var howManyHodors = Math.floor((Math.random() * 10) + 1);
+            // for (i = 0; i < howManyHodors; i++) {
+            //     hodorString += " hodor"
+            // }
+            //
+            // hodorString += "."
+            // sendHodorTextMessage(sender, hodorString);
 
             /**
              * Testing out Wit.ai stuff
