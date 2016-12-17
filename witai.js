@@ -38,7 +38,7 @@ const actions = {
         console.log(context.entities)
         if( context.entities.football_team )  // Lets get a football score!
         {
-            if( context.entities.football_team[0].confidence > 0.8 )  // Confident in a football team name
+            if( context.entities.football_team[0].confidence > 0.9 )  // Confident in a football team name
             {
                 if (callbackFunc) {
                     nfl.getTeamLiveScore(context.entities.football_team[0].value, callbackFunc)
