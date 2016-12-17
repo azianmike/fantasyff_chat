@@ -1,12 +1,14 @@
 var request = require('request')
 var token = "EAAJRYaZBz8mABAAMFg8eZCP7ZCnNGWVudg9ZCTeeL47CAnCAIq7OwxdzhmlyZCUTToAZARAOr9Kt314ZB6Ginnns0MUCgjFyM1LOyEvkiZAABkupLVDvfNWjzwuQJZCpizoIt5CS8lijy8dU6R06lhNlZABdqK0skCzIxNPCkTgLfnwAZDZD"
 
+var sportsBotToken = 'EAADIe0RCeBwBAGNgnuoKaACZA2c6XIXW0tPOO2n1tsibUoYsLypAoWGopoyKbYXJhNbpQFxIFcDcm59er4b5UIWvoBFn85ZAZA3ZBcIAMdeCSgGZB75Ak5RaZAhYsCq7v6pDT8AtdZCaq5uwGny8eeNwOd7BSWUq0iGKLHAJcHBXgZDZD'
+
 /**
  *
  * @param sender
  * @param text
  */
-function sendTextMessage(sender, text) {
+function sendTextMessageForSportsBot(sender, text) {
     console.log("Trying to send FB message to " + sender + " - " + text)
     if( sender && text ) {
         messageData = {
@@ -14,7 +16,7 @@ function sendTextMessage(sender, text) {
         }
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {access_token: token},
+            qs: {access_token: sportsBotToken},
             method: 'POST',
             json: {
                 recipient: {id: sender},
@@ -69,4 +71,4 @@ function getUserName(userIDToGetNameFor, message, db, callback) {
 }
 
 module.exports.getUserName = getUserName
-module.exports.sendTextMessage = sendTextMessage
+module.exports.sendTextMessage = sendTextMessageForSportsBot

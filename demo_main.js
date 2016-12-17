@@ -55,7 +55,7 @@ app.post('/webhookverify/', function (req, res) {
             sendTextMessage(sender, messageArray.pop());
 
             // sendMessageToPartner(sender, text);  //Commenting out for demo purposes
-            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            // sendTextMessageForSportsBot(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200) // Commenting out for demo purposes

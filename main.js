@@ -126,6 +126,36 @@ app.post('/webhookverifyhodor/', function (req, res) {
     res.sendStatus(200)
 })
 
+// Web hook to verify the hodor path
+app.get('/webhookverifysports/', function (req, res) {
+    console.log('entered')
+    if (req.query['hub.verify_token'] === 'chattt_verify_token') {
+        res.send(req.query['hub.challenge'])
+    }
+    res.send('error')
+})
+
+// Web hook where the hodor messages get sent to
+app.post('/webhookverifysports/', function (req, res) {
+
+    messaging_events = req.body.entry[0].messaging
+    for (i = 0; i < messaging_events.length; i++) {
+        event = req.body.entry[0].messaging[i]
+        sender = event.sender.id
+        console.log("received message from "+sender); // Sender is the sender ID we use to send message BACK
+        if (event.message && event.message.text) {
+            text = event.message.text
+            
+            /**
+             * Testing out Wit.ai stuff
+             */
+            witAI.getRespone(sender, text);
+
+        }
+    }
+    res.sendStatus(200)
+})
+
 var hodorToken = "EAAJRYaZBz8mABAAMFg8eZCP7ZCnNGWVudg9ZCTeeL47CAnCAIq7OwxdzhmlyZCUTToAZARAOr9Kt314ZB6Ginnns0MUCgjFyM1LOyEvkiZAABkupLVDvfNWjzwuQJZCpizoIt5CS8lijy8dU6R06lhNlZABdqK0skCzIxNPCkTgLfnwAZDZD"
 
 function sendHodorTextMessage(sender, text) {

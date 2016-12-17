@@ -89,7 +89,7 @@ function callActionHelper(context, callbackFunc) {
 const client = new Wit({accessToken}); // No actions, manually choose actions
 
 // getResponse('10157076165585601', "what is the score of ravens game")
-getResponse(null, "what is the score of the potato game")
+// getResponse(null, "what is the score of the potato game")
 
 /**
  * Gets a wit.ai response based on the text and sender
