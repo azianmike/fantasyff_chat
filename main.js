@@ -21,7 +21,7 @@ try {
     Wit = require('node-wit').Wit;
     interactive = require('node-wit').interactive;
 }
-var witAI = require('./basic')
+var witAI = require('./witai')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())

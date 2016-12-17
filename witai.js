@@ -16,7 +16,7 @@ try {
 
 const accessToken = (() => {
         if (process.argv.length !== 3) {
-    console.log('usage: node examples/basic.js <wit-access-token>');
+    console.log('usage: node examples/witai.js <wit-access-token>');
     process.exit(1);
 }
 return process.argv[2];
@@ -29,17 +29,40 @@ const actions = {
         console.log('user said...', request.text);
         console.log('sending...', JSON.stringify(response));
     },
+    /**
+     *
+     * @param context
+     * @param callbackFunc Takes one string parameter to send back to the user
+     */
     'score': function getTeamScore(context, callbackFunc) {
         console.log(context.entities)
-        if( context.entities.football_team && context.entities.football_team[0].confidence > 0.8 )  // Lets get a football score!
+        if( context.entities.football_team )  // Lets get a football score!
         {
-            if (callbackFunc) {
-                nfl.getTeamLiveScore(context.entities.football_team[0].value, callbackFunc)
+            if( context.entities.football_team[0].confidence > 0.8 )  // Confident in a football team name
+            {
+                if (callbackFunc) {
+                    nfl.getTeamLiveScore(context.entities.football_team[0].value, callbackFunc)
+                }
+                else {
+                    nfl.getTeamLiveScore(context.entities.football_team[0].value, function (string) {
+                        console.log(string)
+                    })
+                }
             }
-            else {
-                nfl.getTeamLiveScore(context.entities.football_team[0].value, function (string) {
-                    console.log(string)
-                })
+            else
+            {
+                if( callbackFunc )
+                {
+                    callbackFunc( "Sorry, " + context.entities.football_team[0].value + " is an invalid team" )
+                }
+            }
+
+        }
+        else  // No football team name
+        {
+            if( callbackFunc )
+            {
+                callbackFunc( "Sorry, I think you forgot a team name or misspelled it" )
             }
         }
 
@@ -66,7 +89,7 @@ function callActionHelper(context, callbackFunc) {
 const client = new Wit({accessToken}); // No actions, manually choose actions
 
 // getResponse('10157076165585601', "what is the score of ravens game")
-// getResponse(null, "what is the score of ravens game")
+getResponse(null, "what is the score of the potato game")
 
 /**
  * Gets a wit.ai response based on the text and sender
