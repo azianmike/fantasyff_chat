@@ -103,7 +103,6 @@ app.post('/webhookverifyhodor/', function (req, res) {
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
-        console.log("received message from "+sender); // Sender is the sender ID we use to send message BACK
         if (event.message && event.message.text) {
             text = event.message.text
 
@@ -112,6 +111,7 @@ app.post('/webhookverifyhodor/', function (req, res) {
             for (i = 0; i < howManyHodors; i++) {
                 hodorString += " hodor"
             }
+            console.log("received message from "+sender + " - " + text); // Sender is the sender ID we use to send message BACK
 
             hodorString += "."
             sendHodorTextMessage(sender, hodorString);
@@ -137,9 +137,9 @@ app.post('/webhookverifysports/', function (req, res) {
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
-        console.log("received message from "+sender); // Sender is the sender ID we use to send message BACK
         if (event.message && event.message.text) {
             text = event.message.text
+            console.log("received message from "+sender + " - " + text); // Sender is the sender ID we use to send message BACK
 
             /**
              * Testing out Wit.ai stuff
