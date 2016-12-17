@@ -25,8 +25,9 @@ function getLiveNFLData(){
  * @param jsonResult the json result of the NFL.com api call
  * @param teamName team name that we want to get the score of
  * @param funcToCall has to take a formatted string (for message to send back)
+ * @param liveScore boolean true = live score, false = historical score
  */
-function parseNFLGameData(jsonResult, teamName, funcToCall) {
+function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
 // The JSON result for games
     var games = jsonResult.gms
     for (var game in games) {  // Loop through games to match team names
@@ -38,8 +39,16 @@ function parseNFLGameData(jsonResult, teamName, funcToCall) {
                 getTeamHistoricalScore(teamName, jsonResult.w-1, funcToCall )
                 break;
             }
-            var formattedString = "Score is " + gameObj.vnn + "-" + gameObj.vs + " to " + gameObj.hnn + "-" + gameObj.hs
-            formattedString += " for week " + jsonResult.w
+            // var formattedString = "Score is " + gameObj.vnn + "-" + gameObj.vs + " to " + gameObj.hnn + "-" + gameObj.hs
+            // formattedString += " for week " + jsonResult.w
+            var formattedString = "Score is %s's %s to %s's %s for week %s."
+            formattedString = util.format(formattedString, gameObj.vnn, gameObj.vs, gameObj.hnn, gameObj.hs, jsonResult.w)
+            if( gameObj.q.toLowerCase() === 'f' || gameObj.q.toLowerCase() === 'fo' && !liveScore )  // Symbols for final/final overtime
+            {
+                formattedString += "Final score. The game for week " + jsonResult.w+1 + " has not been played yet."
+            }
+
+
             if (funcToCall)  // Check if null
             {
                 funcToCall(formattedString)
@@ -79,7 +88,7 @@ function getTeamLiveScore( teamName, funcToCall )
                         return;
                     }
 
-                    parseNFLGameData(jsonResult, teamName, funcToCall);
+                    parseNFLGameData(jsonResult, teamName, funcToCall, true);
                 }
 
             });
@@ -120,7 +129,7 @@ function getTeamHistoricalScore( teamName, week, funcToCall )
                     console.log(jsonResult)
                     // Need to reformat json due to xml being slightly diff
                     var reformattedJSON = {'w':jsonResult.ss.gms.w, 'gms':jsonResult.ss.gms.g}
-                    parseNFLGameData(reformattedJSON, teamName, funcToCall);
+                    parseNFLGameData(reformattedJSON, teamName, funcToCall, false);
                 }
 
             });
