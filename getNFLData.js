@@ -45,7 +45,7 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
             formattedString = util.format(formattedString, gameObj.vnn, gameObj.vs, gameObj.hnn, gameObj.hs, jsonResult.w)
             if( gameObj.q.toLowerCase() === 'f' || gameObj.q.toLowerCase() === 'fo' && !liveScore )  // Symbols for final/final overtime
             {
-                var currWeek = jsonResult.w+1
+                var currWeek = parseInt(jsonResult.w)+1
                 formattedString += "Final score. The game for week " + currWeek + " has not been played yet."
             }
 
