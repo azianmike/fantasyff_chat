@@ -41,11 +41,11 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
             }
             // var formattedString = "Score is " + gameObj.vnn + "-" + gameObj.vs + " to " + gameObj.hnn + "-" + gameObj.hs
             // formattedString += " for week " + jsonResult.w
-            var formattedString = "Score is %s's %s to %s's %s for week %s."
+            var formattedString = "Score is %s's %s to %s's %s for week %s. "
             formattedString = util.format(formattedString, gameObj.vnn, gameObj.vs, gameObj.hnn, gameObj.hs, jsonResult.w)
             if( gameObj.q.toLowerCase() === 'f' || gameObj.q.toLowerCase() === 'fo' && !liveScore )  // Symbols for final/final overtime
             {
-                formattedString += "Final score. The game for week " + jsonResult.w+1 + " has not been played yet."
+                formattedString += "Final score. The game for week " + (jsonResult.w+1) + " has not been played yet."
             }
 
 
