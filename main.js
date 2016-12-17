@@ -107,19 +107,14 @@ app.post('/webhookverifyhodor/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text
 
-            // var hodorString = "Hodor"
-            // var howManyHodors = Math.floor((Math.random() * 10) + 1);
-            // for (i = 0; i < howManyHodors; i++) {
-            //     hodorString += " hodor"
-            // }
-            //
-            // hodorString += "."
-            // sendHodorTextMessage(sender, hodorString);
+            var hodorString = "Hodor"
+            var howManyHodors = Math.floor((Math.random() * 10) + 1);
+            for (i = 0; i < howManyHodors; i++) {
+                hodorString += " hodor"
+            }
 
-            /**
-             * Testing out Wit.ai stuff
-             */
-            witAI.getRespone(sender, text);
+            hodorString += "."
+            sendHodorTextMessage(sender, hodorString);
 
         }
     }
@@ -145,7 +140,7 @@ app.post('/webhookverifysports/', function (req, res) {
         console.log("received message from "+sender); // Sender is the sender ID we use to send message BACK
         if (event.message && event.message.text) {
             text = event.message.text
-            
+
             /**
              * Testing out Wit.ai stuff
              */
