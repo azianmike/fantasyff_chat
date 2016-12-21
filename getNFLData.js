@@ -37,16 +37,20 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
             {
                 //Yet to play this week, get historical score
                 getTeamHistoricalScore(teamName, jsonResult.w-1, funcToCall )
-                break;
+                return;
             }
             // var formattedString = "Score is " + gameObj.vnn + "-" + gameObj.vs + " to " + gameObj.hnn + "-" + gameObj.hs
             // formattedString += " for week " + jsonResult.w
             var formattedString = "Score is %s's %s to %s's %s for week %s. "
             formattedString = util.format(formattedString, gameObj.vnn, gameObj.vs, gameObj.hnn, gameObj.hs, jsonResult.w)
-            if( gameObj.q.toLowerCase() === 'f' || gameObj.q.toLowerCase() === 'fo' && !liveScore )  // Symbols for final/final overtime
+            if( (gameObj.q.toLowerCase() === 'f' || gameObj.q.toLowerCase() === 'fo') && !liveScore )  // Symbols for final/final overtime
             {
                 var currWeek = parseInt(jsonResult.w)+1
                 formattedString += "Final score. The game for week " + currWeek + " has not been played yet."
+            }
+            else if( parseInt(gameObj.q) >= 1 ) // Check if in quarter
+            {
+                formattedString += "Game is currently in the " + gameObj.q + "quarter."
             }
 
 
@@ -58,9 +62,43 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
                 console.log("FuncToCall is null")
             }
 
-            break;
+            return;
         }
-    }}
+    }
+    // If exit loop, then no match for team found
+    var formattedString = "Can't find the \'" + teamName + "\'. Did you misspell it?"
+    if (funcToCall)  // Check if null
+    {
+        funcToCall(formattedString)
+    }
+    else {
+        console.log("FuncToCall is null")
+    }
+}
+
+
+/**
+ * Checks to see if it's past tuesday. True if the day of week is after the day the game is played.
+ * i.e. if game has been played already on Sunday and it's Tuesday, will return true.
+ * if game has NOT been played on Sunday and it's friday, will return false
+ */
+function isCurrentNFLWeek()
+{
+    var weekday = new Array(7);
+    weekday[0] =  "sun";
+    weekday[1] = "mon";
+    weekday[2] = "tues";
+    weekday[3] = "wed";
+    weekday[4] = "thu";
+    weekday[5] = "fri";
+    weekday[6] = "sat";
+
+    var d = new Date();
+    var currDay = weekday[d.getDay()];
+
+    return currDay >= 4 || currDay <=1 // Current day is thursday - sat or sun-mon
+
+}
 
 /**
  * Gets a team's live score given a name

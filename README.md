@@ -6,8 +6,10 @@ Things left to do:
 Get score of nfl teams ✓
 Get score of past games if this week hasn't been played yet. ✓
 Get score of current game while being played ✓
-Format string such that it says how much time is left/final score/etc
+Format string such that it says how much time is left/final score/etc ✓
 Error cases i.e. "give me the score of the potato game"
+Conditional based on day of week for "game for week %s has not been played"  ✓
+Player stats
 
  {
          "hs": 24,
