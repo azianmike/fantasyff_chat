@@ -2,7 +2,12 @@ To run the main.js (hodor is included) use `sudo nohup node main.js` & or
 `sude node main.js` to not run in a seperate process. Runs on port 80
 
 
+
 Things left to do:
+
+Use python nflgame to create a service to populate mongodb with player stats (historical and current)
+
+
 Get score of nfl teams ✓
 Get score of past games if this week hasn't been played yet. ✓
 Get score of current game while being played ✓
@@ -35,3 +40,4 @@ ga = ???
 rz = red zone, true or false?
 t = time game starts
 q = status. F/FO = final/final overtime. P = yet to be played
+

@@ -21,6 +21,20 @@ function getLiveNFLData(){
 }
 
 /**
+ * Gets live NFL PLAYOFF data from nfl.com and then performs a function on the JSON data
+ * @param functionToCall function to call after getting JSON data
+ */
+function getLiveNFLPlayoffData(){
+    var options = {
+        host: 'www.nfl.com',
+        port: 80,
+        path: '/liveupdate/scorestrip/postseason/ss.xml'
+    };
+
+    return options
+}
+
+/**
  * Parse nfl game data and call funcToCall
  * @param jsonResult the json result of the NFL.com api call
  * @param teamName team name that we want to get the score of
@@ -37,7 +51,7 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
             {
                 //Yet to play this week, get historical score
                 getTeamHistoricalScore(teamName, jsonResult.w-1, funcToCall )
-                return;
+                break;
             }
             // var formattedString = "Score is " + gameObj.vnn + "-" + gameObj.vs + " to " + gameObj.hnn + "-" + gameObj.hs
             // formattedString += " for week " + jsonResult.w
@@ -62,7 +76,7 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
                 console.log("FuncToCall is null")
             }
 
-            return;
+            break;
         }
     }
     // If exit loop, then no match for team found
@@ -116,7 +130,10 @@ function getTeamLiveScore( teamName, funcToCall )
         var retry = false  // Flag for recursive retry hell
         resp.setEncoding('utf8');
         if( resp.statusCode == 200 && !retry ) {
+
+            var gotData = false;
             resp.on('data', function (chunk) {
+                gotData=true;
                 // Parses the JSON data
                 if( !retry ) {  // Retry because the anonymous function stays "attached" to http.get. i.e. multiple retries means multiple of this func
                     try {
@@ -131,11 +148,70 @@ function getTeamLiveScore( teamName, funcToCall )
                 }
 
             });
+
+            resp.on('end', function() {
+                if( !gotData )  // Means we got no data, no data means its playoffs or something is wrong
+                {
+                    console.log("We got NO data from getLiveNFLData. Either error or playoff games")
+                    getTeamPlayoffLiveScore(teamName, funcToCall)
+                }
+            });
         }
     }).on("error", function(e){
         console.log("Got error: " + e.message);
     });
 }
+
+/**
+ * Gets a teams live PLAYOFF score
+ *
+ * @param teamName name of team
+ * @param funcToCall callback function
+ */
+function getTeamPlayoffLiveScore( teamName, funcToCall )
+{
+    http.get(getLiveNFLPlayoffData(), function(resp){
+        if( this.path != getLiveNFLPlayoffData().path )  // Case where the callback func stays attached for future http calls
+        {
+            console.log("Wrong path for getTeamLiveScore")
+            return;
+        }
+        parseXMLData(resp, teamName, funcToCall);
+    });
+}
+
+/**
+ * Parses the XML data returned from an NFL api call
+ * @param resp
+ * @param teamName
+ * @param funcToCall
+ */
+function parseXMLData(resp, teamName, funcToCall) {
+    var retry = false  // Flag for recursive retry hell
+    resp.setEncoding('utf8');
+    if (resp.statusCode == 200 && !retry) {
+        resp.on('data', function (chunk) {
+            // Parses the JSON data
+            if (!retry) {  // Retry because the anonymous function stays "attached" to http.get. i.e. multiple retries means multiple of this func
+                try {
+                    var xmlResult = chunk;
+                    var jsonResult = JSON.parse(parser.toJson(xmlResult));
+                } catch (err) {
+                    retry = true;  // Retry if parsing error
+                    // getTeamLiveScore(teamName, funcToCall)
+                    return;
+                }
+
+                console.log(jsonResult)
+                // Need to reformat json due to xml being slightly diff
+                var reformattedJSON = {'w': jsonResult.ss.gms.w, 'gms': jsonResult.ss.gms.g}
+                parseNFLGameData(reformattedJSON, teamName, funcToCall, false);
+            }
+
+        });
+    }
+}
+
 
 /**
  * Gets the historical score for the team (for past weeks)
@@ -150,29 +226,8 @@ function getTeamHistoricalScore( teamName, week, funcToCall )
         {
             return;
         }
-        var retry = false  // Flag for recursive retry hell
-        resp.setEncoding('utf8');
-        if( resp.statusCode == 200 && !retry ) {
-            resp.on('data', function (chunk) {
-                // Parses the JSON data
-                if( !retry ) {  // Retry because the anonymous function stays "attached" to http.get. i.e. multiple retries means multiple of this func
-                    try {
-                        var xmlResult = chunk;
-                        var jsonResult = JSON.parse(parser.toJson(xmlResult));
-                    } catch (err) {
-                        retry = true;  // Retry if parsing error
-                        // getTeamLiveScore(teamName, funcToCall)
-                        return;
-                    }
+        parseXMLData(resp, teamName, funcToCall);
 
-                    console.log(jsonResult)
-                    // Need to reformat json due to xml being slightly diff
-                    var reformattedJSON = {'w':jsonResult.ss.gms.w, 'gms':jsonResult.ss.gms.g}
-                    parseNFLGameData(reformattedJSON, teamName, funcToCall, false);
-                }
-
-            });
-        }
     }).on("error", function(e){
         console.log("Got error: " + e.message);
     });
