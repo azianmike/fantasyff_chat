@@ -51,7 +51,7 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
             {
                 //Yet to play this week, get historical score
                 getTeamHistoricalScore(teamName, jsonResult.w-1, funcToCall )
-                break;
+                return;
             }
             // var formattedString = "Score is " + gameObj.vnn + "-" + gameObj.vs + " to " + gameObj.hnn + "-" + gameObj.hs
             // formattedString += " for week " + jsonResult.w
@@ -76,7 +76,7 @@ function parseNFLGameData(jsonResult, teamName, funcToCall, liveScore) {
                 console.log("FuncToCall is null")
             }
 
-            break;
+            return;
         }
     }
     // If exit loop, then no match for team found
