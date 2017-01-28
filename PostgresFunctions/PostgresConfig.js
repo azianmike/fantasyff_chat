@@ -36,7 +36,7 @@ function executePostgresQuery(query) {
             if(err) {
                 return console.error('error running query', err);
             }
-            console.log(result.rows[0].getplayerseasonstats);
+            console.log(result.rows[0].getplayerpassingseasonstats);
             //output: 1
         });
     });
