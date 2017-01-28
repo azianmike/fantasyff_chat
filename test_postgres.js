@@ -1,3 +1,3 @@
 var config =  require('./PostgresFunctions/PostgresConfig');
 
-config.executePostgresQuery('select GetPlayerSeasonStats(\'Tom Brady\', 2015);');
+config.executePostgresQuery('select GetPlayerPassingSeasonStats(\'Tom Brady\', 2015);');
