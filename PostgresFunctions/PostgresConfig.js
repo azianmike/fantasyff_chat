@@ -51,3 +51,7 @@ function executePostgresQuery(query) {
         console.error('idle client error', err.message, err.stack)
     })
 }
+
+module.exports = {
+    executePostgresQuery: executePostgresQuery
+}
