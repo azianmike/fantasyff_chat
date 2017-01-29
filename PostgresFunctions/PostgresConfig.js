@@ -17,7 +17,7 @@ var config = {
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
 
-function executePostgresQuery(query) {
+function executePostgresQuery(query, callbackFunc) {
 // instantiate a new client
 // the client will read connection information from
 // the same environment variables used by postgres cli tools
@@ -36,8 +36,13 @@ function executePostgresQuery(query) {
             if(err) {
                 return console.error('error running query', err);
             }
-            console.log(result.rows[0].getplayerpassingseasonstats);
+            console.log(result.rows[0]);
+            if(callbackFunc!=null)
+            {
+                callbackFunc(result);
+            }
             //output: 1
+            pool.end();
         });
     });
 
