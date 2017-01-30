@@ -55,7 +55,7 @@ var pool = Promise.promisifyAll(new pg.Pool(config));
 // );
 
 var transaction = function () {
-    return Promise.using(pool.connect(), function (connection) {
+    return Promise.using(pool.connect(), function (err, connection, done) {
         return Promise.try(function() {
             console.log('enter');
             return connection.queryAsync('select GetFuzzyNameSearch(\'Tom Brdy\');').then(
