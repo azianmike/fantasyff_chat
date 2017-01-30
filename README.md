@@ -7,7 +7,8 @@ Things left to do:
 
 Use python nflgame to create a service to populate mongodb with player stats (historical and current)
 
-
+Get fuzzy player name search - In progress
+Get individual player stats and for years - in progress
 Get score of nfl teams ✓
 Get score of past games if this week hasn't been played yet. ✓
 Get score of current game while being played ✓
