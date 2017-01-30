@@ -22,49 +22,62 @@ function executePostgresQuery(query, callbackFunc) {
 // instantiate a new client
 // the client will read connection information from
 // the same environment variables used by postgres cli tools
-var pool = new pg.Pool(config);
+var pool = Promise.promisifyAll(new pg.Pool(config));
 
 // to run a query we can acquire a client from the pool,
 // run a query on the client, and then return the client to the pool
+// pool.connectAsync().then(
+//     function (err, client, done) {
+//         if(err) {
+//             return console.error('error fetching client from pool', err);
+//         }
+//         client.queryAsync(query).then(
+//             function(err, result) {
+//                 //call `done()` to release the client back to the pool
+//                 done();
+//
+//                 if(err) {
+//                     return console.error('error running query', err);
+//                 }
+//                 console.log(result.rows[0]);
+//                 if(callbackFunc!=null)
+//                 {
+//                     callbackFunc(result);
+//                 }
+//                 //output: 1
+//                 pool.end();
+//                 return result.rows;
+//             }
+//
+//         );
+//     }
+//
+// );
 
+var transaction = function (fn) {
+    return Promise.using(pool.connect(), function (connection) {
+        return Promise.try(function() {
+            return connection.queryAsync('select GetFuzzyNameSearch(\'Tom Brdy\');').then(function () {
+                return fn(connection);
+            });
+        });
+    });
+};
 
-pool.connectAsync().then(
-    function (err, client, done) {
-        if(err) {
-            return console.error('error fetching client from pool', err);
-        }
-        client.queryAsync(query).then(
-            function(err, result) {
-                //call `done()` to release the client back to the pool
-                done();
-
-                if(err) {
-                    return console.error('error running query', err);
-                }
-                console.log(result.rows[0]);
-                if(callbackFunc!=null)
-                {
-                    callbackFunc(result);
-                }
-                //output: 1
-                pool.end();
-                return result.rows;
-            }
-
-        );
-    }
-
-);
-
-pool.onAsync('error', function (err, client) {
-    // if an error is encountered by a client while it sits idle in the pool
-    // the pool itself will emit an error event with both the error and
-    // the client which emitted the original error
-    // this is a rare occurrence but can happen if there is a network partition
-    // between your application and the database, the database restarts, etc.
-    // and so you might want to handle it and at least log it out
-    console.error('idle client error', err.message, err.stack)
-})
+transaction(function (client) {
+    return client.queryAsync(anyQuery).then(function () {
+        return client.queryAsync(anyQuery);
+    })
+});
+// pool.onAsync('error', function (err, client) {
+//     // if an error is encountered by a client while it sits idle in the pool
+//     // the pool itself will emit an error event with both the error and
+//     // the client which emitted the original error
+//     // this is a rare occurrence but can happen if there is a network partition
+//     // between your application and the database, the database restarts, etc.
+//     // and so you might want to handle it and at least log it out
+//     console.error('idle client error', err.message, err.stack)
+// })
 }
 
 module.exports = {
