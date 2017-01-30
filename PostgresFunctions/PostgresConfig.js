@@ -65,8 +65,8 @@ var transaction = function (fn) {
 };
 
 transaction(function (client) {
-    return client.queryAsync(anyQuery).then(function () {
-        return client.queryAsync(anyQuery);
+    return client.queryAsync().then(function () {
+        return client.queryAsync();
     })
 });
 // pool.onAsync('error', function (err, client) {
