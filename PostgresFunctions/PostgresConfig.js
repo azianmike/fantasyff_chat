@@ -54,21 +54,15 @@ var pool = Promise.promisifyAll(new pg.Pool(config));
 //
 // );
 
-var transaction = function (fn) {
+var transaction = function () {
     return Promise.using(pool.connect(), function (connection) {
         return Promise.try(function() {
-            return connection.queryAsync('select GetFuzzyNameSearch(\'Tom Brdy\');').then(function () {
-                return fn(connection);
-            });
+            return connection.queryAsync('select GetFuzzyNameSearch(\'Tom Brdy\');');
         });
     });
 };
 
-transaction(function (client) {
-    return client.queryAsync().then(function () {
-        return client.queryAsync();
-    })
-});
+transaction();
 // pool.onAsync('error', function (err, client) {
 //     // if an error is encountered by a client while it sits idle in the pool
 //     // the pool itself will emit an error event with both the error and
