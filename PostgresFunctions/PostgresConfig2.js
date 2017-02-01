@@ -2,7 +2,7 @@
  * Created by michaell on 1/28/17.
  */
 Promise = require('bluebird')
-var pg = require('pg');
+var pg = Promise.promisifyAll(require("pg"));
 
 // create a config to configure both pooling behavior
 // and client options
@@ -19,12 +19,29 @@ var config = {
 };
 
 function executePostgresQuery(query) {
+// instantiate a new client
+// the client will read connection information from
+// the same environment variables used by postgres cli tools
     var pool = Promise.promisifyAll(new pg.Pool(config));
 
-// to run a query we can acquire a client from the pool,
-// run a query on the client, and then return the client to the pool
-
+    // var transaction = function () {
+    //     return Promise.using(pool.connect(), function ( connection) {
+    //         return Promise.try(function() {
+    //             return connection.queryAsync(query).then(
+    //                     function (result) {
+    //                         //output: 1
+    //                         pool.end();
+    //                         connection.end();
+    //                         return result.rows;
+    //                     }
+    //                 )
+    //         });
+    //     });
+    //
+    //
+    // };
     return pool.query(query); // output: foo
+// return transaction();
 }
 
 module.exports = {
