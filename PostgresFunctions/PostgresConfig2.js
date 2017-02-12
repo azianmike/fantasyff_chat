@@ -24,24 +24,24 @@ function executePostgresQuery(query) {
 // the same environment variables used by postgres cli tools
     var pool = Promise.promisifyAll(new pg.Pool(config));
 
-    // var transaction = function () {
-    //     return Promise.using(pool.connect(), function ( connection) {
-    //         return Promise.try(function() {
-    //             return connection.queryAsync(query).then(
-    //                     function (result) {
-    //                         //output: 1
-    //                         pool.end();
-    //                         connection.end();
-    //                         return result.rows;
-    //                     }
-    //                 )
-    //         });
-    //     });
-    //
-    //
-    // };
-    return pool.query(query); // output: foo
-// return transaction();
+    var transaction = function () {
+        return Promise.using(pool.connect(), function ( connection) {
+            return Promise.try(function() {
+                return connection.queryAsync(query).then(
+                        function (result) {
+                            //output: 1
+                            pool.end();
+                            connection.end();
+                            return result.rows;
+                        }
+                    )
+            });
+        });
+
+
+    };
+    // return pool.query(query); // output: foo
+return transaction();
 }
 
 module.exports = {

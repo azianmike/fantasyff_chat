@@ -2,7 +2,6 @@
 
 var nfl = require('./getNFLData')
 var fb_apicalls = require('./fb_apicalls')
-var fuzzyNameSearch = require('./PostgresFunctions/GetFuzzyNameSearch');
 
 let Wit = null;
 let interactive = null;
@@ -69,14 +68,14 @@ const actions = {
 
         ;
     },
-    'getPassingYards':function getTeamScore(context, callbackFunc) {
-        console.log('enter get passing yards ' + context.entities.player);
+    'getStats':function getTeamScore(context, callbackFunc) {
+        console.log('enter get stats ' + JSON.stringify(context.entities.player));
         if( context.entities.player )  // Lets get a players passing yards!
         {
-
+            console.log("found player name! " + context.entities.player)
         }else  // Need to fuzzy search for player name
         {
-            fuzzyNameSearch.fuzzyNameSearch(context._text)
+
         }
     }
 };
@@ -101,7 +100,7 @@ const client = new Wit({accessToken}); // No actions, manually choose actions
 
 // getResponse('10157076165585601', "what is the score of ravens game")
 // getResponse(null, "what is the score of the potato game")
-getResponse(null, "how many passing yards does jay cutler have")
+getResponse(null, "how many passing yards does Eli Maning have")
 
 
 /**

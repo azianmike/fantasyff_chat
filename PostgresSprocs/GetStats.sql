@@ -48,4 +48,4 @@ LANGUAGE plpgsql STABLE
 COST 2;
 
 
-SELECT GetStats('Tom Brady', 2016, 'passing_yds');
+--SELECT GetStats('Tom Brady', 2016, 'passing_yds');
