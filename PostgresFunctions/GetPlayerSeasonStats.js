@@ -22,7 +22,7 @@ function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
     queryString += SqlString.escape(name) + ', ';
     queryString += SqlString.escape(year) + ',';
     queryString += SqlString.escape(statToGet)
-    if(seasonType){
+    if(seasonType && !week1 && !week2){
         queryString += ',' + SqlString.escape(seasonType)
     }
 
