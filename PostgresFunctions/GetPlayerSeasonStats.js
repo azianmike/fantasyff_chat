@@ -16,9 +16,9 @@ var SqlString = require('sqlstring');
  * @returns {*}
  */
 function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
-    year = year ||  new Date().getFullYear();
+    year = year ||  new Date().getFullYear() - 1;
     seasonType = seasonType || "Regular";
-    
+
     var queryString = 'select GetStats(';
     queryString += SqlString.escape(name) + ', ';
     queryString += SqlString.escape(year) + ',';
@@ -57,6 +57,10 @@ function getStatTypeString(statToGet){
 }
 
 function getStatsString(name, year, statToGet, seasonType, week1, week2, stat){
+    if(stat === null)
+    {
+        stat = 0;
+    }
     var returnString = name + " had " + stat;
     returnString += " " + getStatTypeString(statToGet);
     returnString += " in " + year;

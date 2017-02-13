@@ -77,7 +77,7 @@ const actions = {
             if(context.entities.statToGet)
             {
                 var name = context.entities.player[0].value;
-                var year = null;
+                var year = new Date().getFullYear() - 1;
                 var seasonType = null;
                 var year = null;
                 var week1 = null;
