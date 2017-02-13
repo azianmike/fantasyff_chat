@@ -2,6 +2,7 @@
 
 var nfl = require('./getNFLData')
 var fb_apicalls = require('./fb_apicalls')
+var getStats = require('./PostgresFunctions/GetPlayerSeasonStats');
 
 let Wit = null;
 let interactive = null;
@@ -73,9 +74,54 @@ const actions = {
         if( context.entities.player )  // Lets get a players passing yards!
         {
             console.log("found player name! " + context.entities.player)
+            if(context.entities.statToGet)
+            {
+                var name = context.entities.player[0].value;
+                var year = null;
+                var seasonType = null;
+                var year = null;
+                var week1 = null;
+                var week2 = null;
+                var statToGet = null;
+                if(context.entities.datetime) {
+                    year = context.entities.datetime[0].value.substring(0, 4);
+                }
+
+                if(context.entities.statToGet) {
+                    statToGet = context.entities.statToGet[0].value;
+                }
+
+                if(context.entities.season_type){
+                    seasonType = context.entities.season_type[0].value
+                }
+
+                if(context.entities.week1){
+                    week1 = context.entities.week1[0].value
+                }
+
+                if(context.entities.week2){
+                    week2 = context.entities.week2[0].value
+                    if(week1>week2){
+                        var temp = week2;
+                        week2 = week1;
+                        week1 = week2;
+                    }
+                }
+
+                getStats.getStatsPromise(name, year, statToGet, seasonType, week1, week2).then(
+                    function (row) {
+                        var stringToSend = getStats.getStatsString(name, year, statToGet, seasonType, week1, week2, row[0].getstats);
+                        callbackFunc(stringToSend)
+                    }
+                );
+            }else
+            {
+                callbackFunc("Sorry, enter in a stat to get! Like passing yards or rushing yards!")
+            }
+
         }else  // Need to fuzzy search for player name
         {
-
+            callbackFunc("Sorry, I think you forgot a name!")
         }
     }
 };
@@ -98,11 +144,6 @@ function callActionHelper(context, callbackFunc) {
 
 const client = new Wit({accessToken}); // No actions, manually choose actions
 
-// getResponse('10157076165585601', "what is the score of ravens game")
-// getResponse(null, "what is the score of the potato game")
-getResponse(null, "how many passing yards does Eli Maning have")
-
-
 /**
  * Gets a wit.ai response based on the text and sender
  * @param sender the person who we send the response to eventually
@@ -122,3 +163,9 @@ function getResponse(sender, text) {
 }
 
 module.exports.getRespone = getResponse
+
+
+// getResponse('10157076165585601', "what is the score of ravens game")
+// getResponse(null, "what is the score of the potato game")
+// getResponse(null, "how many passing yards does Eli Maning have")
+getResponse(null, "passing yards for Joe Flacco in the regular season of 2013 between week 5 and 11")

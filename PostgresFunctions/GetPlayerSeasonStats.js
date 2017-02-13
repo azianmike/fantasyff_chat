@@ -40,8 +40,56 @@ function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
     return config.executePostgresQuery(queryString);
 }
 
+function getStatTypeString(statToGet){
+    if(statToGet === "passing_yds")
+    {
+        return "passing yards";
+    }else if(statToGet === "rushing_yds"){
+        return "rushing yards";
+    }else if(statToGet === "rushing_tds"){
+        return "rushing tds";
+    }else if(statToGet === "passing_tds"){
+        return "passing tds";
+    }else{
+        throw new Error("Bad state type string conversion");
+    }
+}
+
+function getStatsString(name, year, statToGet, seasonType, week1, week2, stat){
+    var returnString = name + " had " + stat;
+    returnString += " " + getStatTypeString(statToGet);
+    returnString += " in " + year;
+    if(seasonType){
+        if(seasonType === "Regular")
+        {
+            returnString += " during the " + seasonType + " season";
+        }
+        else
+        {
+            returnString += " during the " + seasonType;
+        }
+    }
+
+    if(week1 && week2){
+        returnString += " between weeks " + week1 + " and " + week2;
+    }else if(week1){
+        returnString += " in week " + week1;
+    }
+
+    return returnString;
+}
+
+module.exports = {
+    getStatsPromise: getStatsPromise,
+    getStatsString: getStatsString
+}
+
 // var outputFunc = function(rows){console.log(rows[0].getstats)};
 // var statsPromise = getStatsPromise('Tom Brady', 2015, 'passing_yds');
 // var statsPromise2 = getStatsPromise('Tom Brady', 2014, 'rushing_yds', 'Postseason');
 // console.log(statsPromise.then(outputFunc));
 // statsPromise2.then(outputFunc);
+
+
+// console.log(getStatsString('Tom Brady', 2013, 'passing_yds', null, null, null, 3));
+// console.log(getStatsString('Tom Brady', 2013, 'passing_yds', "postseason", 3, 5, 3));
