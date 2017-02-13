@@ -168,4 +168,4 @@ module.exports.getRespone = getResponse
 // getResponse('10157076165585601', "what is the score of ravens game")
 // getResponse(null, "what is the score of the potato game")
 // getResponse(null, "how many passing yards does Eli Maning have")
-getResponse(null, "passing yards for Joe Flacco in the regular season of 2013 between week 5 and 11")
+// getResponse(null, "passing yards for Joe Flacco in the regular season of 2013 between week 5 and 11")
