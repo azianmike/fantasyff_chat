@@ -17,12 +17,13 @@ var SqlString = require('sqlstring');
  */
 function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
     year = year ||  new Date().getFullYear();
-
+    seasonType = seasonType || "Regular";
+    
     var queryString = 'select GetStats(';
     queryString += SqlString.escape(name) + ', ';
     queryString += SqlString.escape(year) + ',';
     queryString += SqlString.escape(statToGet)
-    if(seasonType && !week1 && !week2){
+    if(seasonType){
         queryString += ',' + SqlString.escape(seasonType)
     }
 
