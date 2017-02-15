@@ -15,11 +15,12 @@ Get individual player stats and for years - in progress
         - Take in different stats to get ✓
 Get score of nfl teams
     - Get historical scores
-        - Take in at least one team and 1) a week and a year or 2) a year and a team (opponent)
+        - Take in at least one team and 1) a week and a year or 2) a year and a team (opponent)  ✓
+        - Implement postseason week feature
     - Get live scores
         - Get score of past games if this week hasn't been played yet.
-        - Get score of current game while being played ✓
-        - Format string such that it says how much time is left/final score/etc ✓
+        - Get score of current game while being played
+        - Format string such that it says how much time is left/final score/etc
 Error cases i.e. "give me the score of the potato game"
 Conditional based on day of week for "game for week %s has not been played"  ✓
 Player stats

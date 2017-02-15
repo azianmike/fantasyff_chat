@@ -17,7 +17,6 @@ BEGIN
     ELSE  -- Given both a week and a team
         RETURN QUERY select home_team, away_team, week, season_year, season_type, home_score, away_score, finished from game where ((home_team=team and away_team=team2) or (home_team=team2 and away_team=team)) and season_year=year AND week = given_week and season_type<>'Preseason' limit 1;
     END IF;
-
 END;
 $BODY$
 LANGUAGE plpgsql STABLE

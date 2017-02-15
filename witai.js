@@ -59,18 +59,22 @@ const actions = {
             }
 
             getScore.getTeamScorePromise(team1, year, week, team2).then(function(rows){
-                var row = rows[0];
-                var home_team = row.return_home_team;
-                var away_team = row.return_away_team;
-                var week = row.return_week;
-                var year = row.return_season_year;
-                var seasonType = row.return_season_type;
-                var home_score = row.return_home_score;
-                var away_score = row.return_away_score;
-                var finished = row.return_finished;
+                if(row && row[0]) {
+                    var row = rows[0];
+                    var home_team = row.return_home_team;
+                    var away_team = row.return_away_team;
+                    var week = row.return_week;
+                    var year = row.return_season_year;
+                    var seasonType = row.return_season_type;
+                    var home_score = row.return_home_score;
+                    var away_score = row.return_away_score;
+                    var finished = row.return_finished;
 
-                var returnString = getScore.getTeamScoreString(home_team, away_team, week, year, seasonType, home_score, away_score, finished);
-                callbackFunc(returnString);
+                    var returnString = getScore.getTeamScoreString(home_team, away_team, week, year, seasonType, home_score, away_score, finished);
+                    callbackFunc(returnString);
+                }else{
+                    callbackFunc('Sorry, we couldn\'t find anything');
+                }
 
             });
         }
@@ -123,8 +127,13 @@ const actions = {
 
                 getStats.getStatsPromise(name, year, statToGet, seasonType, week1, week2).then(
                     function (row) {
-                        var stringToSend = getStats.getStatsString(name, year, statToGet, seasonType, week1, week2, row[0].getstats);
-                        callbackFunc(stringToSend)
+                        if(row && row[0]) {
+                            var stringToSend = getStats.getStatsString(name, year, statToGet, seasonType, week1, week2, row[0].getstats);
+                            callbackFunc(stringToSend)
+                        }else{
+                            callbackFunc('Sorry, we couldn\'t find anything')
+                        }
+
                     }
                 );
             }else
@@ -179,7 +188,7 @@ module.exports.getRespone = getResponse
 
 
 // getResponse('10157076165585601', "what is the score of ravens game")
-getResponse(null, "what is the score of ravens game in 2014 in week 3")
+// getResponse(null, "what is the score of ravens game in 2014 in week 3")
 
 // getResponse(null, "what is the score of the potato game")
 // getResponse(null, "how many passing yards does Eli Maning have")
