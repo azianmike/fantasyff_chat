@@ -2,8 +2,8 @@
  * Created by michaell on 1/28/17.
  */
 var config = require('./PostgresConfig');
-Promise = require('bluebird')
 var SqlString = require('sqlstring');
+var currYear = require('./GetCurrentYear')
 
 /**
  * Returns a PROMISE for stats
@@ -16,7 +16,7 @@ var SqlString = require('sqlstring');
  * @returns {*}
  */
 function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
-    year = year ||  new Date().getFullYear() - 1;
+    year = year ||  currYear.getCurrentYear();
     seasonType = seasonType || "Regular";
 
     var queryString = 'select GetStats(';

@@ -3,6 +3,8 @@
 var nfl = require('./getNFLData')
 var fb_apicalls = require('./fb_apicalls')
 var getStats = require('./PostgresFunctions/GetPlayerSeasonStats');
+var getScore = require('./PostgresFunctions/GetTeamScore');
+var currYear = require('./PostgresFunctions/GetCurrentYear')
 
 let Wit = null;
 let interactive = null;
@@ -39,25 +41,38 @@ const actions = {
         console.log(context.entities)
         if( context.entities.football_team )  // Lets get a football score!
         {
-            if( context.entities.football_team[0].confidence > 0.9 )  // Confident in a football team name
-            {
-                if (callbackFunc) {
-                    nfl.getTeamLiveScore(context.entities.football_team[0].value, callbackFunc)
-                }
-                else {
-                    nfl.getTeamLiveScore(context.entities.football_team[0].value, function (string) {
-                        console.log(string)
-                    })
-                }
-            }
-            else
-            {
-                if( callbackFunc )
-                {
-                    callbackFunc( "Sorry, " + context.entities.football_team[0].value + " is an invalid team" )
-                }
+
+            var team1 = context.entities.football_team[0].value;
+            var team2 = null;
+            var year = null;
+            var week = null;
+            if(context.entities.football_team.length > 1){ // Means two teams
+                team2 = context.entities.football_team[1].value;
             }
 
+            if(context.entities.datetime){
+                year = context.entities.datetime[0].value.substring(0, 4);
+            }
+
+            if(context.entities.week1){
+                week = context.entities.week1[0].value;
+            }
+
+            getScore.getTeamScorePromise(team1, year, week, team2).then(function(rows){
+                var row = rows[0];
+                var home_team = row.return_home_team;
+                var away_team = row.return_away_team;
+                var week = row.return_week;
+                var year = row.return_season_year;
+                var seasonType = row.return_season_type;
+                var home_score = row.return_home_score;
+                var away_score = row.return_away_score;
+                var finished = row.return_finished;
+
+                var returnString = getScore.getTeamScoreString(home_team, away_team, week, year, seasonType, home_score, away_score, finished);
+                callbackFunc(returnString);
+
+            });
         }
         else  // No football team name
         {
@@ -67,7 +82,6 @@ const actions = {
             }
         }
 
-        ;
     },
     'getStats':function getTeamScore(context, callbackFunc) {
         console.log('enter get stats ' + JSON.stringify(context.entities.player));
@@ -77,7 +91,7 @@ const actions = {
             if(context.entities.statToGet)
             {
                 var name = context.entities.player[0].value;
-                var year = new Date().getFullYear() - 1;
+                var year = currYear.getCurrentYear();
                 var seasonType = null;
                 var week1 = null;
                 var week2 = null;
@@ -165,6 +179,8 @@ module.exports.getRespone = getResponse
 
 
 // getResponse('10157076165585601', "what is the score of ravens game")
+getResponse(null, "what is the score of ravens game in 2014 in week 3")
+
 // getResponse(null, "what is the score of the potato game")
 // getResponse(null, "how many passing yards does Eli Maning have")
 // getResponse(null, "passing yards for Joe Flacco in the regular season of 2013 between week 5 and 11")
