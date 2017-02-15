@@ -24,6 +24,9 @@ function getTeamScorePromise(team1, year, week, team2){
     }
 
     if(team2){
+        if(!week){
+            query += ',' + SqlString.escape('-1');
+        }
         query += ',' + SqlString.escape(team2);
     }
 
