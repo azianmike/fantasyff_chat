@@ -64,7 +64,7 @@ const actions = {
             }
 
             getScore.getTeamScorePromise(team1, year, week, team2, season_type).then(function(rows){
-                if(row && row[0]) {
+                if(rows && rows[0]) {
                     var row = rows[0];
                     var home_team = row.return_home_team;
                     var away_team = row.return_away_team;
@@ -78,6 +78,7 @@ const actions = {
                     var returnString = getScore.getTeamScoreString(home_team, away_team, week, year, seasonType, home_score, away_score, finished);
                     callbackFunc(returnString);
                 }else{
+                    console.log(rows)
                     callbackFunc('Sorry, we couldn\'t find anything');
                 }
 
