@@ -26,6 +26,7 @@ function getTeamScorePromise(team1, year, week, team2, season_type){
     if(team2){
         if(!week){
             query += ',' + SqlString.escape('-1');
+            week = -1;  // Reset week
         }
         query += ',' + SqlString.escape(team2);
     }
