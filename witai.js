@@ -46,6 +46,7 @@ const actions = {
             var team2 = null;
             var year = null;
             var week = null;
+            var season_type = null;
             if(context.entities.football_team.length > 1){ // Means two teams
                 team2 = context.entities.football_team[1].value;
             }
@@ -58,7 +59,11 @@ const actions = {
                 week = context.entities.week1[0].value;
             }
 
-            getScore.getTeamScorePromise(team1, year, week, team2).then(function(rows){
+            if(context.entities.season_type){
+                season_type = context.entities.season_type[0].value
+            }
+
+            getScore.getTeamScorePromise(team1, year, week, team2, season_type).then(function(rows){
                 if(row && row[0]) {
                     var row = rows[0];
                     var home_team = row.return_home_team;
