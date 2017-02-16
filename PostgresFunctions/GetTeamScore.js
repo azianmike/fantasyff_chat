@@ -36,7 +36,7 @@ function getTeamScorePromise(team1, year, week, team2, season_type){
         }
 
         if(!team2){
-            query += ',' + SqlString.escape('null');
+            query += ',' + SqlString.escape(null);
         }
         query += ',' + SqlString.escape(season_type);
     }
@@ -85,3 +85,6 @@ module.exports = {
 //
 // var test4 = getTeamScorePromise('PIT', 2013, -1 /* 4 does not work */, 'BAL');
 // test4.then(test);
+//
+// console.log(SqlString.escape(null))
+// console.log(SqlString.escape('null'))
