@@ -127,7 +127,7 @@ const actions = {
                     if(week1>week2){
                         var temp = week2;
                         week2 = week1;
-                        week1 = week2;
+                        week1 = temp;
                     }
                 }
 
