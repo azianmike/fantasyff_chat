@@ -160,7 +160,7 @@ const actions = {
  */
 function callActionHelper(context, callbackFunc) {
     if (context && context.entities && context.entities.intent) {
-        if (context.entities.intent[0].confidence > 0.8) {
+        if (context.entities.intent[0].confidence > 0.7) {
             var funcToCall = actions[context.entities.intent[0].value]
             funcToCall(context, callbackFunc)
         }
