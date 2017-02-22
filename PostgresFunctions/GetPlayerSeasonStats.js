@@ -51,7 +51,12 @@ function getStatTypeString(statToGet){
         return "rushing tds";
     }else if(statToGet === "passing_tds"){
         return "passing tds";
-    }else{
+    }else if(statToGet === "receiving_yds"){
+        return "receiving yds";
+    }else if(statToGet === "receiving_tds"){
+        return "receiving tds";
+    }
+    else{
         throw new Error("Bad state type string conversion");
     }
 }

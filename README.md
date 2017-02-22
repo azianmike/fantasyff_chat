@@ -16,7 +16,7 @@ Get individual player stats and for years - in progress
 Get score of nfl teams
     - Get historical scores
         - Take in at least one team and 1) a week and a year or 2) a year and a team (opponent)  ✓
-        - Implement postseason week feature
+        - Implement postseason week feature ✓
     - Get live scores
         - Get score of past games if this week hasn't been played yet.
         - Get score of current game while being played
