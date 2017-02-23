@@ -13,6 +13,8 @@ Get individual player stats and for years - in progress
         - Write sproc to get generic stats for timeframe ✓
         - Finished fuzzy name search with wit.ai integration ✓
         - Take in different stats to get ✓
+        - Get player stats vs a team (i.e. passing yds vs jets)
+        - Generic total of a stat (like total touchdowns or total yards)
 Get score of nfl teams
     - Get historical scores
         - Take in at least one team and 1) a week and a year or 2) a year and a team (opponent)  ✓

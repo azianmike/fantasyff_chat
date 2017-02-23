@@ -20,7 +20,9 @@ function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
     seasonType = seasonType || "Regular";
 
     var queryString = 'select GetStats(';
-    queryString += SqlString.escape(name) + ', ';
+    var escapedName = SqlString.escape(name);
+    escapedName = escapedName.replace("\\", "\'")
+    queryString += escapedName + ', ';
     queryString += SqlString.escape(year) + ',';
     queryString += SqlString.escape(statToGet)
     if(seasonType){
