@@ -48,7 +48,7 @@ function sendTypingDots(userID){
             method: 'POST',
             json: {
                 recipient: {
-                    id: recipient
+                    id: userID
                 },
                 sender_action: senderAction
             }
