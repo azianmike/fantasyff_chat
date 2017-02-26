@@ -149,16 +149,11 @@ app.post('/webhookverifysports/', function (req, res) {
         console.log("received message from "+sender); // Sender is the sender ID we use to send message BACK
         if (event.message && event.message.text) {
             text = event.message.text
-
-
-            /**
-             * Testing out Wit.ai stuff
-             */
+            fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
             witAI.getRespone(sender, text);
 
         }
     }
-    fb_apicalls.sendTypingDots(sender)
     res.sendStatus(200)
 })
 
