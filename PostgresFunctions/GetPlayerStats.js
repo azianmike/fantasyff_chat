@@ -48,37 +48,37 @@ function getStatTypeString(statToGet){
     if(statToGet.includes("passing_yds"))
     {
         if(statType.length > 2){
-            statType += ", "
+            statType += " and "
         }
         statType += "passing yards";
     }
     if(statToGet.includes("rushing_yds")){
         if(statType.length > 2){
-            statType += ", "
+            statType += " and "
         }
         statType += "rushing yards";
     }
     if(statToGet.includes("rushing_tds")){
         if(statType.length > 2){
-            statType += ", "
+            statType += " and "
         }
         statType += "rushing tds";
     }
     if(statToGet.includes("passing_tds")){
         if(statType.length > 2){
-            statType += ", "
+            statType += " and "
         }
         statType += "passing tds";
     }
     if(statToGet.includes("receiving_yds")){
         if(statType.length > 2){
-            statType += ", "
+            statType += " and "
         }
-        statType += "receiving yds";
+        statType += "receiving yards";
     }
     if(statToGet.includes("receiving_tds")){
         if(statType.length > 2){
-            statType += ", "
+            statType += " and "
         }
         statType += "receiving tds";
     }
