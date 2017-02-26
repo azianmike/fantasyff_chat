@@ -170,14 +170,13 @@ const actions = {
  */
 function callActionHelper(context, callbackFunc) {
     // throw new Error("testing anoother error2");
-    if (context && context.entities && context.entities.intent) {
-        if (context.entities.intent[0].confidence > 0.7) {
+    if (context && context.entities && context.entities.intent && context.entities.intent[0].confidence > 0.7) {
             var funcToCall = actions[context.entities.intent[0].value]
             funcToCall(context, callbackFunc)
-        }
     }
     else {
-        console.log("No context")
+        context['errorMsg'] = "No context/bad context";
+        log.warn(context);
     }
 }
 
@@ -214,3 +213,8 @@ module.exports.getRespone = getResponse
 // getResponse(null, "what is the score of the potato game")
 // getResponse(null, "how many passing yards does Eli Maning have")
 // getResponse(null, "passing yards for Joe Flacco in the regular season of 2013 between week 5 and 11")
+// getResponse(null, "Doug Baldwin receiving yards 2014")
+// getResponse(null, "Tom brady passing tds between week 13 and 10")
+// getResponse(null, "Tom brady passing tds between week 10 and 10")
+// getResponse(null, "Le'veon Bell rushing yards 2016")
+
