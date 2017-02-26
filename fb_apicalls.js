@@ -50,7 +50,7 @@ function sendTypingDots(userID){
                 recipient: {
                     id: userID
                 },
-                sender_action: senderAction
+                sender_action: "typing_on"
             }
         }, function (error, response, body) {
             if (error) {
