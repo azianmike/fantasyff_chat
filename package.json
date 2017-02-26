@@ -1,0 +1,31 @@
+{
+  "name": "chatt",
+  "version": "1.0.0",
+  "description": "Sportschat bot",
+  "main": "main.js",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "le_node": "^1.7.0",
+    "mongodb": "^2.2.19",
+    "node-wit": "^4.2.0",
+    "pg": "^6.1.2",
+    "request": "^2.79.0",
+    "sqlstring": "^2.2.0",
+    "universal-analytics": "^0.4.9",
+    "winston": "^2.3.1",
+    "xml2json": "^0.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://msluo2@bitbucket.org/msluo2/chatt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/msluo2/chatt#readme"
+}
