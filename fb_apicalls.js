@@ -102,3 +102,4 @@ function getUserName(userIDToGetNameFor, message, db, callback) {
 
 module.exports.getUserName = getUserName
 module.exports.sendTextMessage = sendTextMessageForSportsBot
+module.exports.sendTypingDots = sendTypingDots
