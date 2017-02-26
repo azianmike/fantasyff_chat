@@ -1,8 +1,7 @@
 'use strict';
 
-var nfl = require('./getNFLData')
 var fb_apicalls = require('./fb_apicalls')
-var getStats = require('./PostgresFunctions/GetPlayerSeasonStats');
+var getStats = require('./PostgresFunctions/GetPlayerStats');
 var getScore = require('./PostgresFunctions/GetTeamScore');
 var currYear = require('./PostgresFunctions/GetCurrentYear')
 

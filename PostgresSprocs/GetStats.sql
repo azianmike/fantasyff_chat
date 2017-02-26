@@ -13,30 +13,28 @@ BEGIN
 IF week1 = -1 AND week2 = -2
 THEN
     EXECUTE
-    format('SELECT SUM(%I) FROM play_player
+    'SELECT SUM(' || statToGet ||') FROM play_player
     WHERE gsis_id IN
     (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2)
-    AND player_id in (SELECT player_id FROM player WHERE full_name=$3)',
-    statToGet)
+    AND player_id in (SELECT player_id FROM player WHERE full_name=$3)'
     into returnInt
     USING year, seasonType, name;
+
 ELSIF week1 > 0 AND week2 = -2
 THEN
     EXECUTE
-    format('SELECT SUM(%I) FROM play_player
+    'SELECT SUM(' || statToGet ||') FROM play_player
     WHERE gsis_id IN
     (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2 AND week=$3)
-    AND player_id in (SELECT player_id FROM player WHERE full_name=$4)',
-    statToGet)
+    AND player_id in (SELECT player_id FROM player WHERE full_name=$4)'
     into returnInt
     USING year, seasonType, week1, name;
 ELSE
     EXECUTE
-    format('SELECT SUM(%I) FROM play_player
+    'SELECT SUM(' || statToGet ||') FROM play_player
     WHERE gsis_id IN
     (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2 AND week>=$3 AND week<=$4)
-    AND player_id in (SELECT player_id FROM player WHERE full_name=$5)',
-    statToGet)
+    AND player_id in (SELECT player_id FROM player WHERE full_name=$5)'
     into returnInt
     USING year, seasonType, week1, week2, name;
 END IF;

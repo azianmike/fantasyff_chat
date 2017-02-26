@@ -8,6 +8,7 @@ Things left to do:
 Use python nflgame to create a service to populate mongodb with player stats (historical and current)
 
 Get fuzzy player name search - Done
+Implement "..." bot is typing
 Get individual player stats and for years - in progress
     - Get generic player stats
         - Write sproc to get generic stats for timeframe ✓
@@ -23,6 +24,7 @@ Get score of nfl teams
         - Get score of past games if this week hasn't been played yet.
         - Get score of current game while being played
         - Format string such that it says how much time is left/final score/etc
+        - Get total historical record (aka total wins of vikings to packers)
 Error cases i.e. "give me the score of the potato game"
 Conditional based on day of week for "game for week %s has not been played"  ✓
 Player stats

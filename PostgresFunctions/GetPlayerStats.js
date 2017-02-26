@@ -44,23 +44,46 @@ function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
 }
 
 function getStatTypeString(statToGet){
-    if(statToGet === "passing_yds")
+    var statType = "";
+    if(statToGet.includes("passing_yds"))
     {
-        return "passing yards";
-    }else if(statToGet === "rushing_yds"){
-        return "rushing yards";
-    }else if(statToGet === "rushing_tds"){
-        return "rushing tds";
-    }else if(statToGet === "passing_tds"){
-        return "passing tds";
-    }else if(statToGet === "receiving_yds"){
-        return "receiving yds";
-    }else if(statToGet === "receiving_tds"){
-        return "receiving tds";
+        if(statType.length > 2){
+            statType += ", "
+        }
+        statType += "passing yards";
     }
-    else{
-        throw new Error("Bad state type string conversion");
+    if(statToGet.includes("rushing_yds")){
+        if(statType.length > 2){
+            statType += ", "
+        }
+        statType += "rushing yards";
     }
+    if(statToGet.includes("rushing_tds")){
+        if(statType.length > 2){
+            statType += ", "
+        }
+        statType += "rushing tds";
+    }
+    if(statToGet.includes("passing_tds")){
+        if(statType.length > 2){
+            statType += ", "
+        }
+        statType += "passing tds";
+    }
+    if(statToGet.includes("receiving_yds")){
+        if(statType.length > 2){
+            statType += ", "
+        }
+        statType += "receiving yds";
+    }
+    if(statToGet.includes("receiving_tds")){
+        if(statType.length > 2){
+            statType += ", "
+        }
+        statType += "receiving tds";
+    }
+
+    return statType;
 }
 
 function getStatsString(name, year, statToGet, seasonType, week1, week2, stat){
@@ -105,3 +128,5 @@ module.exports = {
 
 // console.log(getStatsString('Tom Brady', 2013, 'passing_yds', null, null, null, 3));
 // console.log(getStatsString('Tom Brady', 2013, 'passing_yds', "postseason", 3, 5, 3));
+
+// console.log(getStatTypeString("passing_yds+rushing_yds+receiving_yds"))
