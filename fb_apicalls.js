@@ -36,6 +36,8 @@ function sendTextMessageForSportsBot(sender, text) {
             }
         })
     }
+
+    turnTypingDotsOff(sender)
 }
 
 function sendTypingDots(userID){
@@ -51,6 +53,30 @@ function sendTypingDots(userID){
                     id: userID
                 },
                 sender_action: "typing_on"
+            }
+        }, function (error, response, body) {
+            if (error) {
+                console.log('Error sending messages: ', error)
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error)
+            }
+        })
+    }
+}
+
+function turnTypingDotsOff(userID){
+    console.log("Sending typing dots to " + userID);
+    if( userID ) {
+
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: sportsBotToken},
+            method: 'POST',
+            json: {
+                recipient: {
+                    id: userID
+                },
+                sender_action: "typing_off"
             }
         }, function (error, response, body) {
             if (error) {
