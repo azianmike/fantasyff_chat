@@ -1,16 +1,17 @@
 'use strict';
 
-var fb_apicalls = require('./fb_apicalls')
-var getStats = require('./PostgresFunctions/GetPlayerStats');
-var getScore = require('./PostgresFunctions/GetTeamScore');
-var currYear = require('./PostgresFunctions/GetCurrentYear');
-var Logger = require('le_node');
-var log = new Logger({
+const fb_apicalls = require('./fb_apicalls')
+const getStats = require('./PostgresFunctions/GetPlayerStats');
+const getScore = require('./PostgresFunctions/GetTeamScore');
+const currYear = require('./PostgresFunctions/GetCurrentYear');
+const Logger = require('le_node');
+const log = new Logger({
     token:'b07ae47b-c124-4387-9f58-8870b66a570a',
     withStack:true
 });
-var winston = require('winston');
+const winston = require('winston');
 winston.add(winston.transports.Logentries, { token: 'b07ae47b-c124-4387-9f58-8870b66a570a',handleExceptions: true, withStack:true });
+const analytics = require('./Analytics/GoogleAnalytics')
 
 let Wit = null;
 let interactive = null;
@@ -69,6 +70,7 @@ const actions = {
                 season_type = context.entities.season_type[0].value
             }
 
+            analytics.trackGetTeamScore(team1, team2);
             getScore.getTeamScorePromise(team1, year, week, team2, season_type).then(function(rows){
                 if(rows && rows[0]) {
                     var row = rows[0];
@@ -137,6 +139,8 @@ const actions = {
                     }
                 }
 
+                analytics.trackGetStats(statToGet);
+                analytics.trackPlayer(name);
                 getStats.getStatsPromise(name, year, statToGet, seasonType, week1, week2).then(
                     function (row) {
                         if(row && row[0]) {
