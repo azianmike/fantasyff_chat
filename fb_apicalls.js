@@ -38,6 +38,30 @@ function sendTextMessageForSportsBot(sender, text) {
     }
 }
 
+function sendTypingDots(userID){
+    console.log("Sending typing dots to " + userID);
+    if( userID ) {
+
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: sportsBotToken},
+            method: 'POST',
+            json: {
+                recipient: {
+                    id: recipient
+                },
+                sender_action: senderAction
+            }
+        }, function (error, response, body) {
+            if (error) {
+                console.log('Error sending messages: ', error)
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error)
+            }
+        })
+    }
+}
+
 /**
  * Gets the user name (FB api call) and then puts it into the DB, means it is their first time
  * 

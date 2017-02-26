@@ -1,6 +1,7 @@
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
+var fb_apicalls = require('./fb_apicalls')
 var privateKey  = fs.readFileSync('server.key', 'utf8');
 var certificate = fs.readFileSync('server.crt', 'utf8');
 var caKey = fs.readFileSync('chattt_me_bundle.ca', 'utf8');
@@ -50,6 +51,7 @@ app.get('/webhookverify/', function (req, res) {
 app.post('/webhookverify/', function (req, res) {
 
     messaging_events = req.body.entry[0].messaging
+    var sender = null;
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
@@ -60,6 +62,7 @@ app.post('/webhookverify/', function (req, res) {
             sendMessageToPartner(sender, text);  //Commenting out for demo purposes
         }
     }
+    fb_apicalls.sendTypingDots(sender)
     res.sendStatus(200)
 })
 
