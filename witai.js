@@ -3,7 +3,14 @@
 var fb_apicalls = require('./fb_apicalls')
 var getStats = require('./PostgresFunctions/GetPlayerStats');
 var getScore = require('./PostgresFunctions/GetTeamScore');
-var currYear = require('./PostgresFunctions/GetCurrentYear')
+var currYear = require('./PostgresFunctions/GetCurrentYear');
+var Logger = require('le_node');
+var log = new Logger({
+    token:'b07ae47b-c124-4387-9f58-8870b66a570a',
+    withStack:true
+});
+var winston = require('winston');
+winston.add(winston.transports.Logentries, { token: 'b07ae47b-c124-4387-9f58-8870b66a570a',handleExceptions: true, withStack:true });
 
 let Wit = null;
 let interactive = null;
@@ -37,7 +44,7 @@ const actions = {
      * @param callbackFunc Takes one string parameter to send back to the user
      */
     'score': function getTeamScore(context, callbackFunc) {
-        console.log(context.entities)
+        console.log(context.entities);
         if( context.entities.football_team )  // Lets get a football score!
         {
 
@@ -158,6 +165,7 @@ const actions = {
  * @param context context with all the information
  */
 function callActionHelper(context, callbackFunc) {
+    // throw new Error("testing anoother error2");
     if (context && context.entities && context.entities.intent) {
         if (context.entities.intent[0].confidence > 0.7) {
             var funcToCall = actions[context.entities.intent[0].value]
@@ -180,13 +188,17 @@ function getResponse(sender, text) {
     client.message(text, {})
         .then((data) => {
             console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+            log.info(data);
 
             var sendTextHelper = function(text){
                 fb_apicalls.sendTextMessage(sender, text)
             }
             callActionHelper(data, sendTextHelper)
         })
-        .catch(console.error);
+        .catch(function(error){
+            console.log(error);
+            log.err(error);
+        });
 }
 
 module.exports.getRespone = getResponse
