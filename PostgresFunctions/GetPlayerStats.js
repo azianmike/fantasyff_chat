@@ -82,7 +82,36 @@ function getStatTypeString(statToGet){
         }
         statType += "receiving tds";
     }
-
+    if(statToGet.includes("defense_int")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "pass interceptions";
+    }
+    if(statToGet.includes("defense_sk")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "defensive sacks";
+    }
+    if(statToGet.includes("fumbles_forced")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "fumbles forced";
+    }
+    if(statToGet.includes("fumbles_rec")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "fumbles recovered";
+    }
+    if(statToGet.includes("defense_tkl")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "defensive tackles";
+    }
     return statType;
 }
 
