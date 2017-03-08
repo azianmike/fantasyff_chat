@@ -55,3 +55,11 @@ t = time game starts
 q = status. F/FO = final/final overtime. P = yet to be played
 
 Get chatbot restarted again : sudo nohup node main.js ZBA4QPLIQUOHAU5A66NMZKRZMOEZOVVN &
+
+
+
+Helpful hints:
+To update, go into sudo nano /etc/postgresql/9.3/main/pg_hba.conf  and change md5 to trust to run localhost WITHOUT password
+(error password authentication failed for user "nfldb")
+Run nfldb-udpate or nflgame-update-players
+

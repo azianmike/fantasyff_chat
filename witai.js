@@ -176,7 +176,7 @@ function callActionHelper(context, callbackFunc) {
     }
     else {
         context['errorMsg'] = "No context/bad context";
-        log.warn(context);
+        log.warning(context);
     }
 }
 
