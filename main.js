@@ -148,7 +148,7 @@ app.post('/webhookverifysports/', function (req, res) {
         sender = event.sender.id
         console.log("received message from " + sender); // Sender is the sender ID we use to send message BACK
         console.log("event is " + JSON.stringify(event));
-        if (event.message && event.message.text) {
+        if (event.message && event.message.text && !event.message.quick_reply) {
             text = event.message.text
             fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
             witAI.getResponse(sender, text);
