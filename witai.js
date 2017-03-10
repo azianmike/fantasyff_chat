@@ -32,6 +32,122 @@ const accessToken = (() => {
 return process.argv[2];
 })();
 
+function getStatsWitAi(context, callbackFunc) {
+    console.log('enter get stats ' + JSON.stringify(context.entities.player));
+    if (context.entities.player)  // Lets get a players passing yards!
+    {
+        console.log("found player name! " + context.entities.player)
+        if (context.entities.statToGet) {
+            var name = context.entities.player[0].value;
+            var year = currYear.getCurrentYear();
+            var seasonType = null;
+            var week1 = null;
+            var week2 = null;
+            var statToGet = null;
+            if (context.entities.datetime) {
+                year = context.entities.datetime[0].value.substring(0, 4);
+            }
+
+            if (context.entities.statToGet) {
+                statToGet = context.entities.statToGet[0].value;
+            }
+
+            if (context.entities.season_type) {
+                seasonType = context.entities.season_type[0].value
+            }
+
+            if (context.entities.week1) {
+                week1 = context.entities.week1[0].value
+            }
+
+            if (context.entities.week2) {
+                week2 = context.entities.week2[0].value
+                if (week1 > week2) {
+                    var temp = week2;
+                    week2 = week1;
+                    week1 = temp;
+                }
+            }
+
+            analytics.trackGetStats(statToGet);
+            analytics.trackPlayer(name);
+            getStats.getStatsPromise(name, year, statToGet, seasonType, week1, week2).then(
+                function (row) {
+                    if (row && row[0]) {
+                        var stringToSend = getStats.getStatsString(name, year, statToGet, seasonType, week1, week2, row[0].getstats);
+                        callbackFunc(stringToSend)
+                    } else {
+                        callbackFunc('Sorry, we couldn\'t find anything')
+                    }
+
+                }
+            );
+        } else {
+            callbackFunc("Sorry, enter in a stat to get! Like passing yards or rushing yards!")
+        }
+
+    } else  // Need to fuzzy search for player name
+    {
+        callbackFunc("Sorry, I think you forgot a name!")
+    }
+}
+
+function getTeamScoreWitAi(context, callbackFunc) {
+    console.log(context.entities);
+    if (context.entities.football_team)  // Lets get a football score!
+    {
+
+        var team1 = context.entities.football_team[0].value;
+        var team2 = null;
+        var year = null;
+        var week = null;
+        var season_type = null;
+        if (context.entities.football_team.length > 1) { // Means two teams
+            team2 = context.entities.football_team[1].value;
+        }
+
+        if (context.entities.datetime) {
+            year = context.entities.datetime[0].value.substring(0, 4);
+        }
+
+        if (context.entities.week1) {
+            week = context.entities.week1[0].value;
+        }
+
+        if (context.entities.season_type) {
+            season_type = context.entities.season_type[0].value
+        }
+
+        analytics.trackGetTeamScore(team1, team2);
+        getScore.getTeamScorePromise(team1, year, week, team2, season_type).then(function (rows) {
+            if (rows && rows[0]) {
+                var row = rows[0];
+                var home_team = row.return_home_team;
+                var away_team = row.return_away_team;
+                var week = row.return_week;
+                var year = row.return_season_year;
+                var seasonType = row.return_season_type;
+                var home_score = row.return_home_score;
+                var away_score = row.return_away_score;
+                var finished = row.return_finished;
+
+                var returnString = getScore.getTeamScoreString(home_team, away_team, week, year, seasonType, home_score, away_score, finished);
+                callbackFunc(returnString);
+            } else {
+                console.log(rows)
+                callbackFunc('Sorry, we couldn\'t find anything');
+            }
+
+        });
+    }
+    else  // No football team name
+    {
+        if (callbackFunc) {
+            callbackFunc("Sorry, I think you forgot a team name or misspelled it")
+        }
+    }
+}
+
 const actions = {
     'send': function send(request, response) {
         const {sessionId, context, entities} = request;
@@ -45,122 +161,14 @@ const actions = {
      * @param callbackFunc Takes one string parameter to send back to the user
      */
     'score': function getTeamScore(context, callbackFunc) {
-        console.log(context.entities);
-        if( context.entities.football_team )  // Lets get a football score!
-        {
-
-            var team1 = context.entities.football_team[0].value;
-            var team2 = null;
-            var year = null;
-            var week = null;
-            var season_type = null;
-            if(context.entities.football_team.length > 1){ // Means two teams
-                team2 = context.entities.football_team[1].value;
-            }
-
-            if(context.entities.datetime){
-                year = context.entities.datetime[0].value.substring(0, 4);
-            }
-
-            if(context.entities.week1){
-                week = context.entities.week1[0].value;
-            }
-
-            if(context.entities.season_type){
-                season_type = context.entities.season_type[0].value
-            }
-
-            analytics.trackGetTeamScore(team1, team2);
-            getScore.getTeamScorePromise(team1, year, week, team2, season_type).then(function(rows){
-                if(rows && rows[0]) {
-                    var row = rows[0];
-                    var home_team = row.return_home_team;
-                    var away_team = row.return_away_team;
-                    var week = row.return_week;
-                    var year = row.return_season_year;
-                    var seasonType = row.return_season_type;
-                    var home_score = row.return_home_score;
-                    var away_score = row.return_away_score;
-                    var finished = row.return_finished;
-
-                    var returnString = getScore.getTeamScoreString(home_team, away_team, week, year, seasonType, home_score, away_score, finished);
-                    callbackFunc(returnString);
-                }else{
-                    console.log(rows)
-                    callbackFunc('Sorry, we couldn\'t find anything');
-                }
-
-            });
-        }
-        else  // No football team name
-        {
-            if( callbackFunc )
-            {
-                callbackFunc( "Sorry, I think you forgot a team name or misspelled it" )
-            }
-        }
+        getTeamScoreWitAi(context, callbackFunc);
 
     },
     'getStats':function getTeamScore(context, callbackFunc) {
-        console.log('enter get stats ' + JSON.stringify(context.entities.player));
-        if( context.entities.player )  // Lets get a players passing yards!
-        {
-            console.log("found player name! " + context.entities.player)
-            if(context.entities.statToGet)
-            {
-                var name = context.entities.player[0].value;
-                var year = currYear.getCurrentYear();
-                var seasonType = null;
-                var week1 = null;
-                var week2 = null;
-                var statToGet = null;
-                if(context.entities.datetime) {
-                    year = context.entities.datetime[0].value.substring(0, 4);
-                }
-
-                if(context.entities.statToGet) {
-                    statToGet = context.entities.statToGet[0].value;
-                }
-
-                if(context.entities.season_type){
-                    seasonType = context.entities.season_type[0].value
-                }
-
-                if(context.entities.week1){
-                    week1 = context.entities.week1[0].value
-                }
-
-                if(context.entities.week2){
-                    week2 = context.entities.week2[0].value
-                    if(week1>week2){
-                        var temp = week2;
-                        week2 = week1;
-                        week1 = temp;
-                    }
-                }
-
-                analytics.trackGetStats(statToGet);
-                analytics.trackPlayer(name);
-                getStats.getStatsPromise(name, year, statToGet, seasonType, week1, week2).then(
-                    function (row) {
-                        if(row && row[0]) {
-                            var stringToSend = getStats.getStatsString(name, year, statToGet, seasonType, week1, week2, row[0].getstats);
-                            callbackFunc(stringToSend)
-                        }else{
-                            callbackFunc('Sorry, we couldn\'t find anything')
-                        }
-
-                    }
-                );
-            }else
-            {
-                callbackFunc("Sorry, enter in a stat to get! Like passing yards or rushing yards!")
-            }
-
-        }else  // Need to fuzzy search for player name
-        {
-            callbackFunc("Sorry, I think you forgot a name!")
-        }
+        getStatsWitAi(context, callbackFunc);
+    },
+    'getStarted':function getStarted(context, callbackFunc){
+        callbackFunc("Hello! Ask me anything like \"How many passing yards does Peyton manning have in 2014\" or \"What was the score of dolphins game\"");
     }
 };
 
