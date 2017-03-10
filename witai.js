@@ -212,7 +212,7 @@ function getResponse(sender, text) {
         });
 }
 
-module.exports.getRespone = getResponse
+module.exports.getResponse = getResponse
 
 
 // getResponse('10157076165585601', "what is the score of ravens game")

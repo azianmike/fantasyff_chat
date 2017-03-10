@@ -122,7 +122,7 @@ app.post('/webhookverifyhodor/', function (req, res) {
             /**
              * Testing out Wit.ai stuff
              */
-            witAI.getRespone(sender, text);
+            witAI.getResponse(sender, text);
 
         }
     }
@@ -146,12 +146,16 @@ app.post('/webhookverifysports/', function (req, res) {
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
-        console.log("received message from "+sender); // Sender is the sender ID we use to send message BACK
+        console.log("received message from " + sender); // Sender is the sender ID we use to send message BACK
+        console.log("event is " + JSON.stringify(event));
         if (event.message && event.message.text) {
             text = event.message.text
             fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
-            witAI.getRespone(sender, text);
-
+            witAI.getResponse(sender, text);
+        } else if (event.postback && event.postback.payload) {
+            text = event.message.text
+            fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
+            witAI.getResponse(sender, text);
         }
     }
     res.sendStatus(200)
@@ -203,9 +207,9 @@ function sendTextMessage(sender, text) {
     })
 }
 
-app.listen(80, function () {
-  console.log('Example app listening on port 80!');
+app.listen(8080, function () {
+  console.log('Example app listening on port 8080!');
 });
 
-var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(443);
+// var httpsServer = https.createServer(credentials, app);
+// httpsServer.listen(443);
