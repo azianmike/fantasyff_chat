@@ -156,6 +156,10 @@ app.post('/webhookverifysports/', function (req, res) {
             text = event.postback.payload
             fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
             witAI.getResponse(sender, text);
+        } else if (event.message && event.message.quick_reply && event.message.quick_reply.payload) {
+            text = event.message.quick_reply.payload;
+            fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
+            witAI.getResponse(sender, text);
         }
     }
     res.sendStatus(200)
