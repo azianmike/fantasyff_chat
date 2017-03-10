@@ -14,6 +14,8 @@ var log = new Logger({
  * @param text
  */
 function sendTextMessageForSportsBot(sender, text) {
+    turnTypingDotsOff(sender);
+
     console.log("Trying to send FB message to " + sender + " - " + text)
     log.info({"sender":sender, "text":text})
     if( sender && text ) {
@@ -36,8 +38,6 @@ function sendTextMessageForSportsBot(sender, text) {
             }
         })
     }
-
-    turnTypingDotsOff(sender)
 }
 
 function sendTypingDots(userID){
@@ -89,6 +89,41 @@ function turnTypingDotsOff(userID){
 }
 
 /**
+ * Sends quick replies to FB messenger
+ * @param userID
+ * @param text
+ * @param quick_replies MUST BE an array of quick replies
+ */
+function sendQuickReplies(sender, text, quick_replies){
+    turnTypingDotsOff(sender);
+
+    console.log("Trying to send FB quick replies to " + sender + " - " + text)
+    log.info({"sender":sender, "text":text})
+    if( sender && text ) {
+        messageData = {
+            text: text,
+            quick_replies:quick_replies
+        }
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: sportsBotToken},
+            method: 'POST',
+            json: {
+                recipient: {id: sender},
+                message: messageData,
+            }
+        }, function (error, response, body) {
+            if (error) {
+                console.log('Error sending messages: ', error)
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error)
+            }
+        })
+    }
+
+}
+
+/**
  * Gets the user name (FB api call) and then puts it into the DB, means it is their first time
  * 
  * @param userIDToGetNameFor
@@ -129,3 +164,4 @@ function getUserName(userIDToGetNameFor, message, db, callback) {
 module.exports.getUserName = getUserName
 module.exports.sendTextMessage = sendTextMessageForSportsBot
 module.exports.sendTypingDots = sendTypingDots
+module.exports.sendQuickReplies = sendQuickReplies

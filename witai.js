@@ -164,11 +164,42 @@ const actions = {
         getTeamScoreWitAi(context, callbackFunc);
 
     },
-    'getStats':function getTeamScore(context, callbackFunc) {
+    'getStats': function getTeamScore(context, callbackFunc) {
         getStatsWitAi(context, callbackFunc);
     },
-    'getStarted':function getStarted(context, callbackFunc){
+    'getStarted': function getStarted(context, callbackFunc) {
         callbackFunc("Hello! Ask me anything like \"How many passing yards does Peyton manning have in 2014\" or \"What was the score of dolphins game\"");
+    },
+    'getHelp': function getHelp(context, callbackFunc, sender) {
+        // ALWAYS send to fb_apicalls.sendQuickReplies
+
+        if (context.entities.helpEntities)  // Means user has chosen a help quick reply
+        {
+            var helpEntity = context.entities.helpEntities[0].value
+            if(helpEntity == "stats") {  // Stats help
+                callbackFunc("You can ask for lots of different stats, from defensive tackles to touchdowns (receiving, rushing, passing) " +
+                    "to yardage (receiving, rushing, passing)");
+                callbackFunc("You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'");
+            } else {  // Score help
+                callbackFunc("You can ask for lots of different scores of different teams! If you don't specify a week/year, we'll give you the latest game (or live score!)");
+                callbackFunc("You can also ask for scores between teams, like \'score of the ravens steelers game\'");
+            }
+        } else {
+            var quick_replies = [];
+            var statsQuickReply = {
+                "content_type":"text",
+                "title":"Getting Player Stats",
+                "payload":"stats"
+            }
+            var scoreQuickReply = {
+                "content_type":"text",
+                "title":"Get Scores of Games",
+                "payload":"score_help"
+            }
+            quick_replies.push(statsQuickReply);
+            quick_replies.push(scoreQuickReply);
+            fb_apicalls.sendQuickReplies(sender, "What do you need help with?", quick_replies);
+        }
     }
 };
 
@@ -176,7 +207,7 @@ const actions = {
  * Helper which analyzes the context intent and correctly calls the right function
  * @param context context with all the information
  */
-function callActionHelper(context, callbackFunc) {
+function callActionHelper(context, callbackFunc, sender) {
     // throw new Error("testing anoother error2");
     if (context && context.entities && context.entities.intent && context.entities.intent[0].confidence > 0.7) {
             var funcToCall = actions[context.entities.intent[0].value]
@@ -204,7 +235,7 @@ function getResponse(sender, text) {
             var sendTextHelper = function(text){
                 fb_apicalls.sendTextMessage(sender, text)
             }
-            callActionHelper(data, sendTextHelper)
+            callActionHelper(data, sendTextHelper, sender)
         })
         .catch(function(error){
             console.log(error);
