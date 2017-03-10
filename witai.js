@@ -211,7 +211,7 @@ function callActionHelper(context, callbackFunc, sender) {
     // throw new Error("testing anoother error2");
     if (context && context.entities && context.entities.intent && context.entities.intent[0].confidence > 0.7) {
             var funcToCall = actions[context.entities.intent[0].value]
-            funcToCall(context, callbackFunc)
+            funcToCall(context, callbackFunc, sender)
     }
     else {
         context['errorMsg'] = "No context/bad context";
