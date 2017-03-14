@@ -44,6 +44,7 @@ function getStatsWitAi(context, callbackFunc) {
             var week1 = null;
             var week2 = null;
             var statToGet = null;
+            var teamID = null;
             if (context.entities.datetime) {
                 year = context.entities.datetime[0].value.substring(0, 4);
             }
@@ -69,12 +70,16 @@ function getStatsWitAi(context, callbackFunc) {
                 }
             }
 
+            if (context.entities.football_team) {
+                teamID = context.entities.football_team[0].value
+            }
+
             analytics.trackGetStats(statToGet);
             analytics.trackPlayer(name);
-            getStats.getStatsPromise(name, year, statToGet, seasonType, week1, week2).then(
+            getStats.getStatsPromise(name, year, statToGet, seasonType, week1, week2, teamID).then(
                 function (row) {
                     if (row && row[0]) {
-                        var stringToSend = getStats.getStatsString(name, year, statToGet, seasonType, week1, week2, row[0].getstats);
+                        var stringToSend = getStats.getStatsString(name, year, statToGet, seasonType, week1, week2, teamID, row[0].getstats);
                         callbackFunc(stringToSend)
                     } else {
                         callbackFunc('Sorry, we couldn\'t find anything')

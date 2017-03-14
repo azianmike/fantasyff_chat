@@ -15,7 +15,7 @@ var currYear = require('./GetCurrentYear')
  * @param week2
  * @returns {*}
  */
-function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
+function getStatsPromise(name, year, statToGet, seasonType, week1, week2, team) {
     year = year ||  currYear.getCurrentYear();
     seasonType = seasonType || "Regular";
 
@@ -25,16 +25,26 @@ function getStatsPromise(name, year, statToGet, seasonType, week1, week2) {
     queryString += escapedName + ', ';
     queryString += SqlString.escape(year) + ',';
     queryString += SqlString.escape(statToGet)
-    if(seasonType){
+    if (seasonType) {
         queryString += ',' + SqlString.escape(seasonType)
     }
 
-    if(week1){
+    if (week1) {
         queryString += ',' + SqlString.escape(week1)
     }
 
-    if(week2){
+    if (week2) {
         queryString += ',' + SqlString.escape(week2)
+    }
+
+    if (team) {  // Need to add week1 and week2 if doesnt exist
+        if(!week1){
+            queryString += ',' + SqlString.escape('-1')
+        }
+        if(!week2){
+            queryString += ',' + SqlString.escape('-1')
+        }
+        queryString += ',' + SqlString.escape(team)
     }
 
     queryString += ');'  // Closing query string
@@ -115,7 +125,7 @@ function getStatTypeString(statToGet){
     return statType;
 }
 
-function getStatsString(name, year, statToGet, seasonType, week1, week2, stat){
+function getStatsString(name, year, statToGet, seasonType, week1, week2, teamID, stat){
     if(stat === null)
     {
         stat = 0;
@@ -138,6 +148,10 @@ function getStatsString(name, year, statToGet, seasonType, week1, week2, stat){
         returnString += " between weeks " + week1 + " and " + week2;
     }else if(week1){
         returnString += " in week " + week1;
+    }
+
+    if (teamID) {
+        returnString += " against " + teamID;
     }
 
     return returnString;

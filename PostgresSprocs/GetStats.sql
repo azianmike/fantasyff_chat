@@ -17,14 +17,14 @@ THEN
     teamSQL := format(' AND (home_team=''%s'' or away_team=''%s'')', teamID, teamID);
 END IF;
 
-IF week1 = -1 AND week2 = -2
+IF week1 = -1 AND week2 < 0
 THEN
     EXECUTE
     'SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2' || teamSQL || ') AND player_id in (SELECT player_id FROM player WHERE full_name=$3)'
     into returnInt
     USING year, seasonType, name;
 
-ELSIF week1 > 0 AND week2 = -2
+ELSIF week1 > 0 AND week2 < 0
 THEN
     EXECUTE
     'SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2 AND week=$3'|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=$4)'
