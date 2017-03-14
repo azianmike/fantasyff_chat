@@ -181,7 +181,7 @@ const actions = {
         if (context.entities.helpEntities)  // Means user has chosen a help quick reply
         {
             var helpEntity = context.entities.helpEntities[0].value
-            if(helpEntity == "stats") {  // Stats help
+            if(helpEntity == "stats_help") {  // Stats help
                 callbackFunc("You can ask for lots of different stats, from defensive tackles to touchdowns (receiving, rushing, passing) " +
                     "to yardage (receiving, rushing, passing)");
                 callbackFunc("You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'");
