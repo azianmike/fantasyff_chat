@@ -194,7 +194,7 @@ const actions = {
             var statsQuickReply = {
                 "content_type":"text",
                 "title":"Getting Player Stats",
-                "payload":"stats"
+                "payload":"stats_help"
             }
             var scoreQuickReply = {
                 "content_type":"text",
