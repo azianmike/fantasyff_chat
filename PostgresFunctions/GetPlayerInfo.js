@@ -73,7 +73,7 @@ function _calculateAge(birthday) { // birthday is a date
 
 function _convertHeight(inches) {
     var return_height = Math.trunc(inches/12) + ' ft '
-    return_height += 76%12 + ' inches '
+    return_height += inches%12 + ' inches '
     return return_height;
 }
 
