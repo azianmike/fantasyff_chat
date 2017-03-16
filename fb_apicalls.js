@@ -3,9 +3,21 @@ var token = "EAAJRYaZBz8mABAAMFg8eZCP7ZCnNGWVudg9ZCTeeL47CAnCAIq7OwxdzhmlyZCUTTo
 
 var sportsBotToken = 'EAAXL4nltVEsBAHYI4qKTqMJXlpobM85drZApMiTVOY1UH52g0LA6rRwFgON5Pun3T6ZBvY4EJu1ZBOhFOAR64w2t2k8MRCZBiX4smjkrI318lzXc3eZBF375RPiuBUfBOEk2zUqWsRS8m3eKPOGtPGM80t8ngcIMiV5UfVnNlngZDZD'
 
-var Logger = require('le_node');
-var log = new Logger({
-    token:'b07ae47b-c124-4387-9f58-8870b66a570a'
+var winston = require('winston');
+require('winston-loggly');
+
+var log = new (winston.Logger)({
+    transports: [
+        new (winston.transports.Console)(),
+        new (winston.transports.Loggly)( {
+            token: "eefdcc8d-96ac-44c9-b61f-cce64d15d027",
+            subdomain: "sportschat",
+            tags: ["Winston-NodeJS"],
+            json:true,
+            handleExceptions: true,
+            withStack: true
+        })
+    ]
 });
 
 /**

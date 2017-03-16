@@ -4,14 +4,25 @@ const fb_apicalls = require('./fb_apicalls')
 const getStats = require('./PostgresFunctions/GetPlayerStats');
 const getScore = require('./PostgresFunctions/GetTeamScore');
 const currYear = require('./PostgresFunctions/GetCurrentYear');
-const Logger = require('le_node');
 const getPlayerInfo = require('./PostgresFunctions/GetPlayerInfo')
-const log = new Logger({
-    token:'b07ae47b-c124-4387-9f58-8870b66a570a',
-    withStack:true
-});
+
 const winston = require('winston');
-winston.add(winston.transports.Logentries, { token: 'b07ae47b-c124-4387-9f58-8870b66a570a',handleExceptions: true, withStack:true });
+require('winston-loggly');
+
+var log = new (winston.Logger)({
+    transports: [
+        new (winston.transports.Console)(),
+        new (winston.transports.Loggly)( {
+            token: "eefdcc8d-96ac-44c9-b61f-cce64d15d027",
+            subdomain: "sportschat",
+            tags: ["Winston-NodeJS"],
+            json:true,
+            handleExceptions: true,
+            withStack: true
+        })
+    ]
+});
+
 const analytics = require('./Analytics/GoogleAnalytics')
 
 let Wit = null;
