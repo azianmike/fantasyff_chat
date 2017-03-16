@@ -5,6 +5,7 @@ const getStats = require('./PostgresFunctions/GetPlayerStats');
 const getScore = require('./PostgresFunctions/GetTeamScore');
 const currYear = require('./PostgresFunctions/GetCurrentYear');
 const Logger = require('le_node');
+const getPlayerInfo = require('./PostgresFunctions/GetPlayerInfo')
 const log = new Logger({
     token:'b07ae47b-c124-4387-9f58-8870b66a570a',
     withStack:true
@@ -140,6 +141,7 @@ function getTeamScoreWitAi(context, callbackFunc) {
                 callbackFunc(returnString);
             } else {
                 console.log(rows)
+                log.warn("Did not get any team score " + team1 + team2 + season_type)
                 callbackFunc('Sorry, we couldn\'t find anything');
             }
 
@@ -205,7 +207,8 @@ const actions = {
             quick_replies.push(scoreQuickReply);
             fb_apicalls.sendQuickReplies(sender, "What do you need help with?", quick_replies);
         }
-    }
+    },
+    'getPlayerInfo': getPlayerInfo.getPlayerInfo
 };
 
 /**
