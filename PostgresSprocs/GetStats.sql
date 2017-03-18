@@ -1,6 +1,8 @@
 CREATE OR REPLACE FUNCTION GetStats
 (name VARCHAR(70), year int,
-statToGet VARCHAR(15), seasonType season_phase default 'Regular',
+statToGet VARCHAR(15),
+year2 int default -1,
+seasonType season_phase default 'Regular',
 week1 INT default -1,
 week2 INT default -2,
 teamID varchar(4) default '')
@@ -9,6 +11,7 @@ $BODY$
 DECLARE
   returnInt int;
   teamSQL varchar(50) := '';
+  yearSQL varchar(50) := '';
 
 BEGIN
 
@@ -17,24 +20,29 @@ THEN
     teamSQL := format(' AND (home_team=''%s'' or away_team=''%s'')', teamID, teamID);
 END IF;
 
+IF year2 > 0
+THEN
+    yearSQL := format(' season_year>= %s AND season_year <= %s ', year, year2);
+ELSE
+    yearSQL := format(' season_year=%s ', year);
+END IF;
+
+
 IF week1 = -1 AND week2 < 0
 THEN
     EXECUTE
-    'SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2' || teamSQL || ') AND player_id in (SELECT player_id FROM player WHERE full_name=$3)'
-    into returnInt
-    USING year, seasonType, name;
+    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s''' || teamSQL || ') AND player_id in (SELECT player_id FROM player WHERE full_name=''%s'')', yearSQL, seasonType, name)
+    into returnInt;
 
 ELSIF week1 > 0 AND week2 < 0
 THEN
     EXECUTE
-    'SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2 AND week=$3'|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=$4)'
-    into returnInt
-    USING year, seasonType, week1, name;
+    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week=%s'|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=''%s'')', yearSQL, seasonType, week1, name)
+    into returnInt;
 ELSE
     EXECUTE
-    'SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE season_year=$1 and season_type=$2 AND week>=$3 AND week<=$4 '|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=$5)'
-    into returnInt
-    USING year, seasonType, week1, week2, name;
+    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week>=%s AND week<=%s '|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=''%s'')', yearSQL, seasonType, week1, week2, name)
+    into returnInt;
 END IF;
 
 RETURN returnInt;

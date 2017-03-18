@@ -16,7 +16,7 @@ const analytics = require('../Analytics/GoogleAnalytics');
  * @param week2
  * @returns {*}
  */
-function getStatsPromise(name, year, statToGet, seasonType, week1, week2, team) {
+function getStatsPromise(name, year, year2, statToGet, seasonType, week1, week2, team) {
     year = year ||  currYear.getCurrentYear();
     seasonType = seasonType || "Regular";
 
@@ -26,6 +26,11 @@ function getStatsPromise(name, year, statToGet, seasonType, week1, week2, team) 
     queryString += escapedName + ', ';
     queryString += SqlString.escape(year) + ',';
     queryString += SqlString.escape(statToGet)
+
+    if(year2) {
+        queryString += ',' + SqlString.escape(year2)
+    }
+
     if (seasonType) {
         queryString += ',' + SqlString.escape(seasonType)
     }
@@ -192,14 +197,18 @@ function getStatTypeString(statToGet){
     return statType;
 }
 
-function getStatsString(name, year, statToGet, seasonType, week1, week2, teamID, stat){
+function getStatsString(name, year, year2, statToGet, seasonType, week1, week2, teamID, stat){
     if(stat === null)
     {
         stat = 0;
     }
     var returnString = name + " had " + stat;
     returnString += " " + getStatTypeString(statToGet);
-    returnString += " in " + year;
+    if(year2) {
+        returnString += " between " + year + " and " + year2;
+    }else {
+        returnString += " in " + year;
+    }
     if(seasonType){
         if(seasonType === "Regular")
         {
@@ -231,13 +240,23 @@ function getStatsWitAi(context, callbackFunc) {
         console.log("found player name! " + context.entities.player)
         var name = context.entities.player[0].value;
         var year = currYear.getCurrentYear();
+        var year2 = -1;
         var seasonType = null;
         var week1 = null;
         var week2 = null;
         var statToGet = null;
-        var teamID = null;
+        var teamID = '';
         if (context.entities.datetime) {
-            year = context.entities.datetime[0].value.substring(0, 4);
+            if(context.entities.datetime[0].value) {
+                year = context.entities.datetime[0].value.substring(0, 4);
+            } else {
+                year = context.entities.datetime[0].from.value.substring(0, 4);
+                year2 = context.entities.datetime[0].to.value.substring(0, 4);
+            }
+
+            if(context.entities.datetime[1] && context.entities.datetime[1].value) {
+                year2 = context.entities.datetime[0].to.value.substring(0, 4);
+            }
         }
 
         try{
@@ -270,10 +289,10 @@ function getStatsWitAi(context, callbackFunc) {
 
         analytics.trackGetStats(statToGet);
         analytics.trackPlayer(name);
-        getStatsPromise(name, year, statToGet, seasonType, week1, week2, teamID).then(
+        getStatsPromise(name, year, year2, statToGet, seasonType, week1, week2, teamID).then(
             function (row) {
                 if (row && row[0]) {
-                    var stringToSend = getStatsString(name, year, statToGet, seasonType, week1, week2, teamID, row[0].getstats);
+                    var stringToSend = getStatsString(name, year, year2, statToGet, seasonType, week1, week2, teamID, row[0].getstats);
                     callbackFunc(stringToSend)
                 } else {
                     callbackFunc('Sorry, we couldn\'t find anything')
