@@ -169,7 +169,7 @@ function callActionHelper(context, callbackFunc, sender) {
     }
     else {
         context['errorMsg'] = "No context/bad context";
-        log.warning(context);
+        log.warn(context);
         callbackFunc("We\'re not sure what you meant. Type \'help\' for guidance from the bot!")
     }
 }
