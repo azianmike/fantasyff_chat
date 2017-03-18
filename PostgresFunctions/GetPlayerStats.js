@@ -109,6 +109,12 @@ function getStatTypeString(statToGet){
         if(statType.length > 2){
             statType += " and "
         }
+        statType += "def pass interceptions";
+    }
+    if(statToGet.includes("passing_int")){
+        if(statType.length > 2){
+            statType += " and "
+        }
         statType += "pass interceptions";
     }
     if(statToGet.includes("defense_sk")){
@@ -164,6 +170,24 @@ function getStatTypeString(statToGet){
             statType += " and "
         }
         statType += "rushing attempts";
+    }
+    if(statToGet.includes("fumbles_forced")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "fumbles forced";
+    }
+    if(statToGet.includes("fumbles_lost")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "fumbles lost";
+    }
+    if(statToGet.includes("fumbles_rec")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "fumbles recovered";
     }
     return statType;
 }
