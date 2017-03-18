@@ -198,29 +198,26 @@ function getStatTypeString(statToGet){
 }
 
 function getStatsString(name, year, year2, statToGet, seasonType, week1, week2, teamID, stat){
-    if(stat === null)
-    {
+    if (stat === null) {
         stat = 0;
     }
     var returnString = name + " had " + stat;
     returnString += " " + getStatTypeString(statToGet);
-    if(year2) {
+    if (year2 && year2 > 1) {
         returnString += " between " + year + " and " + year2;
-    }else {
+    } else {
         returnString += " in " + year;
     }
-    if(seasonType){
-        if(seasonType === "Regular")
-        {
+    if (seasonType) {
+        if (seasonType === "Regular") {
             returnString += " during the " + seasonType + " season";
         }
-        else
-        {
+        else {
             returnString += " during the " + seasonType;
         }
     }
 
-    if(week1 && week2){
+    if (week1 && week2){
         returnString += " between weeks " + week1 + " and " + week2;
     }else if(week1){
         returnString += " in week " + week1;

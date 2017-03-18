@@ -31,18 +31,21 @@ END IF;
 IF week1 = -1 AND week2 < 0
 THEN
     EXECUTE
-    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s''' || teamSQL || ') AND player_id in (SELECT player_id FROM player WHERE full_name=''%s'')', yearSQL, seasonType, name)
-    into returnInt;
+    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s''' || teamSQL || ') AND player_id in (SELECT player_id FROM player WHERE full_name=$1)', yearSQL, seasonType)
+    into returnInt
+    USING name;
 
 ELSIF week1 > 0 AND week2 < 0
 THEN
     EXECUTE
-    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week=%s'|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=''%s'')', yearSQL, seasonType, week1, name)
-    into returnInt;
+    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week=%s'|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=$1)', yearSQL, seasonType, week1)
+    into returnInt
+    USING name;
 ELSE
     EXECUTE
-    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week>=%s AND week<=%s '|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=''%s'')', yearSQL, seasonType, week1, week2, name)
-    into returnInt;
+    format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week>=%s AND week<=%s '|| teamSQL ||') AND player_id in (SELECT player_id FROM player WHERE full_name=$1)', yearSQL, seasonType, week1, week2)
+    into returnInt
+    USING name;
 END IF;
 
 RETURN returnInt;
