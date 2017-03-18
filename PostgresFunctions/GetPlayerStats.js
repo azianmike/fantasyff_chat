@@ -69,6 +69,18 @@ function getStatTypeString(statToGet){
         }
         statType += "rushing yards";
     }
+    if(statToGet.includes("kickret_yds")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "kick return yards";
+    }
+    if(statToGet.includes("kickret_tds")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "kick return touchdowns";
+    }
     if(statToGet.includes("rushing_tds")){
         if(statType.length > 2){
             statType += " and "
@@ -122,6 +134,30 @@ function getStatTypeString(statToGet){
             statType += " and "
         }
         statType += "defensive tackles";
+    }
+    if(statToGet.includes("passing_att")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "pass attempts";
+    }
+    if(statToGet.includes("passing_cmp")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "pass completions";
+    }
+    if(statToGet.includes("receiving_tar")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "pass targets";
+    }
+    if(statToGet.includes("rushing_att")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "rushing attempts";
     }
     return statType;
 }
