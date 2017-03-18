@@ -238,7 +238,7 @@ function constructStatsToGet(entities) {
             if (returnString.length == 0) {
                 returnString += prefix.value + suffix
             } else {
-                returnString += "+" + prefix + suffix
+                returnString += "+" + prefix.value + suffix
             }
         }
     }
