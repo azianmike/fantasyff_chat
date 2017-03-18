@@ -244,8 +244,8 @@ function constructStatsToGet(entities) {
     } else if (entities.statToGet_suffix) {  // Assume they want total yards or tds
         var suffix = entities.statToGet_suffix[0].value
         returnString = "rushing%s+passing%s+receiving%s".replace(/%s/g, suffix)
-    } else if ( entities.statToGet_defense) {
-        returnString = entities.statToGet_defense[0].value
+    } else if ( entities.statToGet_standalone) {
+        returnString = entities.statToGet_standalone[0].value
     }
 
 
