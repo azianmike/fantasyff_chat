@@ -153,6 +153,12 @@ function getStatTypeString(statToGet){
         }
         statType += "pass targets";
     }
+    if(statToGet.includes("receiving_rec")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "pass receptions";
+    }
     if(statToGet.includes("rushing_att")){
         if(statType.length > 2){
             statType += " and "
