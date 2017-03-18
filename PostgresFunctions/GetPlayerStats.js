@@ -323,7 +323,11 @@ function constructStatsToGet(entities) {
         }
     } else if (entities.statToGet_suffix) {  // Assume they want total yards or tds
         var suffix = entities.statToGet_suffix[0].value
-        returnString = "rushing%s+passing%s+receiving%s".replace(/%s/g, suffix)
+        if(entities.statToGet_suffix[0].value != '_int') {
+            returnString = "rushing%s+passing%s+receiving%s".replace(/%s/g, suffix)
+        } else {
+            returnString = "passing%s".replace(/%s/g, suffix)
+        }
     } else if ( entities.statToGet_standalone) {
         returnString = entities.statToGet_standalone[0].value
     }
