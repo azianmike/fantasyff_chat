@@ -241,7 +241,11 @@ function constructStatsToGet(entities) {
                 returnString += "+" + prefix.value + suffix
             }
         }
+    } else if (entities.statToGet_suffix) {  // Assume they want total yards or tds
+        var suffix = entities.statToGet_suffix[0].value
+        returnString = "rushing%s+passing%s+receiving%s".replace(/%s/g, suffix)
     }
+
 
     if(returnString.length == 0) {
         throw "Sorry, I think you forgot a stat to get like \'passing yards\'!"
