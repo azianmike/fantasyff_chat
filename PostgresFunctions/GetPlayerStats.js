@@ -163,67 +163,62 @@ function getStatsWitAi(context, callbackFunc) {
     if (context.entities.player)  // Lets get a players passing yards!
     {
         console.log("found player name! " + context.entities.player)
-        if (context.entities.statToGet_prefix || context.entities.statToGet_suffix) {
-            var name = context.entities.player[0].value;
-            var year = currYear.getCurrentYear();
-            var seasonType = null;
-            var week1 = null;
-            var week2 = null;
-            var statToGet = null;
-            var teamID = null;
-            if (context.entities.datetime) {
-                year = context.entities.datetime[0].value.substring(0, 4);
-            }
-
-            try{
-                statToGet = constructStatsToGet(context.entities);
-            } catch(err) {
-                callbackFunc(err);
-                return;
-            }
-
-            if (context.entities.season_type) {
-                seasonType = context.entities.season_type[0].value
-            }
-
-            if (context.entities.week1) {
-                week1 = context.entities.week1[0].value
-            }
-
-            if (context.entities.week2) {
-                week2 = context.entities.week2[0].value
-                if (week1 > week2) {
-                    var temp = week2;
-                    week2 = week1;
-                    week1 = temp;
-                }
-            }
-
-            if (context.entities.football_team) {
-                teamID = context.entities.football_team[0].value
-            }
-
-            analytics.trackGetStats(statToGet);
-            analytics.trackPlayer(name);
-            getStatsPromise(name, year, statToGet, seasonType, week1, week2, teamID).then(
-                function (row) {
-                    if (row && row[0]) {
-                        var stringToSend = getStatsString(name, year, statToGet, seasonType, week1, week2, teamID, row[0].getstats);
-                        callbackFunc(stringToSend)
-                    } else {
-                        callbackFunc('Sorry, we couldn\'t find anything')
-                    }
-
-                }
-            );
-        } else {
-            callbackFunc("Sorry, enter in a stat to get! Like passing yards or rushing yards or interceptions!")
+        var name = context.entities.player[0].value;
+        var year = currYear.getCurrentYear();
+        var seasonType = null;
+        var week1 = null;
+        var week2 = null;
+        var statToGet = null;
+        var teamID = null;
+        if (context.entities.datetime) {
+            year = context.entities.datetime[0].value.substring(0, 4);
         }
 
-    } else  // Need to fuzzy search for player name
-    {
-        callbackFunc("Sorry, I think you forgot a name!")
+        try{
+            statToGet = constructStatsToGet(context.entities);
+        } catch(err) {
+            callbackFunc(err);
+            return;
+        }
+
+        if (context.entities.season_type) {
+            seasonType = context.entities.season_type[0].value
+        }
+
+        if (context.entities.week1) {
+            week1 = context.entities.week1[0].value
+        }
+
+        if (context.entities.week2) {
+            week2 = context.entities.week2[0].value
+            if (week1 > week2) {
+                var temp = week2;
+                week2 = week1;
+                week1 = temp;
+            }
+        }
+
+        if (context.entities.football_team) {
+            teamID = context.entities.football_team[0].value
+        }
+
+        analytics.trackGetStats(statToGet);
+        analytics.trackPlayer(name);
+        getStatsPromise(name, year, statToGet, seasonType, week1, week2, teamID).then(
+            function (row) {
+                if (row && row[0]) {
+                    var stringToSend = getStatsString(name, year, statToGet, seasonType, week1, week2, teamID, row[0].getstats);
+                    callbackFunc(stringToSend)
+                } else {
+                    callbackFunc('Sorry, we couldn\'t find anything')
+                }
+
+            }
+        );
+    } else {
+        callbackFunc("Sorry, enter in a stat to get! Like passing yards or rushing yards or interceptions!")
     }
+
 }
 
 function constructStatsToGet(entities) {
