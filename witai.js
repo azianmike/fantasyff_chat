@@ -5,6 +5,7 @@ const getStats = require('./PostgresFunctions/GetPlayerStats');
 const getScore = require('./PostgresFunctions/GetTeamScore');
 const currYear = require('./PostgresFunctions/GetCurrentYear');
 const getPlayerInfo = require('./PostgresFunctions/GetPlayerInfo')
+const getTopStats = require('./PostgresFunctions/GetTopStats')
 
 const winston = require('winston');
 require('winston-loggly');
@@ -154,7 +155,8 @@ const actions = {
             fb_apicalls.sendQuickReplies(sender, "What do you need help with?", quick_replies);
         }
     },
-    'getPlayerInfo': getPlayerInfo.getPlayerInfo
+    'getPlayerInfo': getPlayerInfo.getPlayerInfo,
+    'getTopStats': getTopStats.getTopStatsWitAi
 };
 
 /**
@@ -203,12 +205,20 @@ module.exports.getResponse = getResponse
 
 // getResponse('10157076165585601', "what is the score of ravens game")
 // getResponse(null, "what is the score of ravens game in 2014 in week 3")
-
+// winston.remove(winston.transports.Console)
 // getResponse(null, "what is the score of the potato game")
 // getResponse(null, "how many passing yards does Eli Maning have")
 // getResponse(null, "passing yards for Joe Flacco in the regular season of 2013 between week 5 and 11")
 // getResponse(null, "Doug Baldwin receiving yards 2014")
 // getResponse(null, "Tom brady passing tds between week 13 and 10")
 // getResponse(null, "Tom brady passing tds between week 10 and 10")
-// getResponse(null, "Le'veon Bell rushing yards 2016")
+// getResponse(null, "Tom Brady interceptions from 2014 to 2016 against the Giants")
+// getResponse(null, "Carson Palmer rushing yards from 2014 to 2016 against the Giants")
+// getResponse(null, "stats")
+// getResponse(null, "how many tackles does jj watt have in 2015?")
+// getResponse(null, "who was the top rusher in 2015?")
+// getResponse(null, "who was the top tackler in 2015?")
+// getResponse(null, "blargh! tom brady!")
+
+
 

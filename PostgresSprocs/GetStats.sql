@@ -28,7 +28,7 @@ ELSE
 END IF;
 
 
-IF week1 = -1 AND week2 < 0
+IF week1 < 0 AND week2 < 0
 THEN
     EXECUTE
     format('SELECT SUM(' || statToGet ||') FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s''' || teamSQL || ') AND player_id in (SELECT player_id FROM player WHERE full_name=$1)', yearSQL, seasonType)

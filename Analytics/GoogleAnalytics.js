@@ -16,6 +16,15 @@ function trackGetStats(statToGet) {
     ).send()
 }
 
+function trackGetTopStats(statToGet) {
+    visitor.event("Intent", "GetTopStats", statToGet, 1, function (err) {
+            if(err) {
+                console.log(err);
+            }
+        }
+    ).send()
+}
+
 function trackPlayer(playerName) {
     visitor.event("Entities", "player", playerName, 1, function (err) {
         if(err) {
@@ -47,6 +56,7 @@ function trackGetTeamScore(team1, team2) {
 module.exports = {
     trackGetStats: trackGetStats,
     trackPlayer: trackPlayer,
-    trackGetTeamScore: trackGetTeamScore
+    trackGetTeamScore: trackGetTeamScore,
+    trackGetTopStats: trackGetTopStats
 }
 
