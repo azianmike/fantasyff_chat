@@ -63,3 +63,16 @@ To update, go into sudo nano /etc/postgresql/9.3/main/pg_hba.conf  and change md
 (error password authentication failed for user "nfldb")
 Run nfldb-udpate or nflgame-update-players
 
+
+ I get I do not have write access to "/usr/local/lib/python2.7/dist-packages/nflgame/players.json". when I try running it without.
+Not sure. On my system, --user installs to my home directory. You might try a virtual environment:
+
+$ virtualenv nfl
+$ source nfl/bin/activate
+$ pip install nfldb
+$ nflgame-update-players
+
+
+ran "nfldb-update --update-schedules ", but still had to run
+"<python 2 home lib>/site-packages/nflgame/update_sched.py --rebuild --year 2016 --phase POST"
+to get last weeks games in.

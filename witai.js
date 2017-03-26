@@ -47,15 +47,16 @@ return process.argv[2];
 
 function getTeamScoreWitAi(context, callbackFunc) {
     console.log(context.entities);
-    if (context.entities.football_team)  // Lets get a football score!
+    // Lets get a football score! Need a team OR super bowl (since only 2 teams)
+    if (context.entities.football_team || (context.entities.season_type && context.entities.season_type[0].value == 'Super Bowl'))
     {
 
-        var team1 = context.entities.football_team[0].value;
+        var team1 = context.entities.football_team?context.entities.football_team[0].value:null;
         var team2 = null;
         var year = null;
         var week = null;
         var season_type = null;
-        if (context.entities.football_team.length > 1) { // Means two teams
+        if (context.entities.football_team && context.entities.football_team.length > 1) { // Means two teams
             team2 = context.entities.football_team[1].value;
         }
 
@@ -69,6 +70,10 @@ function getTeamScoreWitAi(context, callbackFunc) {
 
         if (context.entities.season_type) {
             season_type = context.entities.season_type[0].value
+            if(season_type == "Super Bowl") {  // Hard code week 5 of postseason for superbowl
+                season_type = "Postseason";
+                week = 5;
+            }
         }
 
         analytics.trackGetTeamScore(team1, team2);

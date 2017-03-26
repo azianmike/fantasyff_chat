@@ -14,7 +14,9 @@ var currYear = require('./GetCurrentYear')
  * @param team2
  */
 function getTeamScorePromise(team1, year, week, team2, season_type){
-    team1 = team1.replace('*', ''); // Replace special team names * with empty string
+    if(team1) {
+        team1 = team1.replace('*', ''); // Replace special team names * with empty string, like WAS* 
+    }
     year = year || currYear.getCurrentYear();
     var query = 'select * from GetTeamScore(';
     query += SqlString.escape(team1);

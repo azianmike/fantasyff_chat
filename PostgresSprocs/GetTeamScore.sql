@@ -5,6 +5,11 @@ return_home_score usmallint, return_away_score usmallint, return_finished boolea
 $BODY$
 
 BEGIN
+    IF COALESCE(team, '-1') = '-1'  -- No team, null check
+    THEN
+        RETURN QUERY select home_team, away_team, week, season_year, season_type, home_score, away_score, finished from game where season_year=year AND week = given_week and season_type=given_season_type limit 1;
+    END IF;
+
     IF given_week = -1 AND (team2 = '') IS NOT FALSE -- Checks to see if team2 is not empty or null
     THEN
         RETURN QUERY select home_team, away_team, week, season_year, season_type, home_score, away_score, finished from game where (home_team=team or away_team=team) and season_year=year and season_type=given_season_type ORDER by start_time desc limit 1;
