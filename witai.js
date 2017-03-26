@@ -182,7 +182,40 @@ const actions = {
         }
     },
     'getPlayerInfo': getPlayerInfo.getPlayerInfo,
-    'getTopStats': getTopStats.getTopStatsWitAi
+    'getTopStats': getTopStats.getTopStatsWitAi,
+    'getPlayerOptions':function getHelp(context, callbackFunc, sender) {
+        if (context.entities.player)  // Lets get a players passing yards!
+        {
+            var player = context.entities.player[0].value;
+            var yardsQuickReply = {
+                "content_type":"text",
+                "title":"Get Yards",
+                "payload":"give me yards for " + player
+            }
+            var tdsQuickReply = {
+                "content_type":"text",
+                "title":"Get TDs",
+                "payload":"give me tds for " + player
+            }
+            var weightQuickReply = {
+                "content_type":"text",
+                "title":"Get Weight",
+                "payload":"get weight for " + player
+            }
+            var teamQuickReply = {
+                "content_type":"text",
+                "title":"Get Team",
+                "payload":"get team of " + player
+            }
+            quick_replies.push(yardsQuickReply);
+            quick_replies.push(weightQuickReply);
+            quick_replies.push(tdsQuickReply);
+            quick_replies.push(teamQuickReply);
+            fb_apicalls.sendQuickReplies(sender, "What do you need help with? (note, you can scroll left/right through the quick replies)", quick_replies);
+        } else {
+            callbackFunc("Sorry, we weren't sure what you meant. Try something else")
+        }
+    }
 };
 
 /**
