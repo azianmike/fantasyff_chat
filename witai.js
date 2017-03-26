@@ -186,6 +186,7 @@ const actions = {
     'getPlayerOptions':function getHelp(context, callbackFunc, sender) {
         if (context.entities.player)  // Lets get a players passing yards!
         {
+            var quick_replies = [];
             var player = context.entities.player[0].value;
             var yardsQuickReply = {
                 "content_type":"text",
