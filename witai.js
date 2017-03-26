@@ -170,8 +170,8 @@ const actions = {
                 "payload":"player_info_help"
             }
             quick_replies.push(statsQuickReply);
-            quick_replies.push(scoreQuickReply);
             quick_replies.push(getTopStatsReply);
+            quick_replies.push(scoreQuickReply);
             quick_replies.push(getPlayerInfoHelp);
             fb_apicalls.sendQuickReplies(sender, "What do you need help with?", quick_replies);
         }
