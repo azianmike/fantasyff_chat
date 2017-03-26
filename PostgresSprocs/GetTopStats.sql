@@ -6,7 +6,7 @@ seasonType season_phase default 'Regular',
 week1 INT default -1,
 week2 INT default -2,
 num_limit int default 1)
-RETURNS TABLE (player_name varchar, sum_of_stat bigint) as
+RETURNS TABLE (player_name varchar, sum_of_stat real) as
 $BODY$
 DECLARE
   returnInt int;
@@ -27,17 +27,17 @@ BEGIN
 
         RETURN QUERY
         EXECUTE
-        format('select player.full_name, result.sum_result from (select player_id, count(gsis_id), count(drive_id), count(play_id), sum(' || statToGet ||') as sum_result FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'') GROUP BY player_id ORDER BY sum('|| statToGet ||') DESC limit %s) as result left join player on result.player_id=player.player_id', yearSQL, seasonType, num_limit);
+        format('select player.full_name, CAST(result.sum_result as real) from (select player_id, count(gsis_id), count(drive_id), count(play_id), sum(' || statToGet ||') as sum_result FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'') GROUP BY player_id ORDER BY sum('|| statToGet ||') DESC limit %s) as result left join player on result.player_id=player.player_id', yearSQL, seasonType, num_limit);
 
     ELSIF week1 > 0 AND week2 < 0
     THEN
         RETURN QUERY
         EXECUTE
-        format('select player.full_name, result.sum_result from (select player_id, count(gsis_id), count(drive_id), count(play_id), sum(' || statToGet ||') as sum_result FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week=%s) GROUP BY player_id ORDER BY sum('|| statToGet ||') DESC limit %s) as result left join player on result.player_id=player.player_id', yearSQL, seasonType, week1, num_limit);
+        format('select player.full_name, CAST(result.sum_result as real) from (select player_id, count(gsis_id), count(drive_id), count(play_id), sum(' || statToGet ||') as sum_result FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND week=%s) GROUP BY player_id ORDER BY sum('|| statToGet ||') DESC limit %s) as result left join player on result.player_id=player.player_id', yearSQL, seasonType, week1, num_limit);
     ELSE
         RETURN QUERY
         EXECUTE
-        format('select player.full_name, result.sum_result from (select player_id, count(gsis_id), count(drive_id), count(play_id), sum(' || statToGet ||') as sum_result FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND (week>=%s AND week<=%s)) GROUP BY player_id ORDER BY sum('|| statToGet ||') DESC limit %s) as result left join player on result.player_id=player.player_id', yearSQL, seasonType, week1, week2, num_limit);
+        format('select player.full_name, CAST(result.sum_result as real) from (select player_id, count(gsis_id), count(drive_id), count(play_id), sum(' || statToGet ||') as sum_result FROM play_player WHERE gsis_id IN (SELECT gsis_id FROM game WHERE %s and season_type=''%s'' AND (week>=%s AND week<=%s)) GROUP BY player_id ORDER BY sum('|| statToGet ||') DESC limit %s) as result left join player on result.player_id=player.player_id', yearSQL, seasonType, week1, week2, num_limit);
 
     END IF;
 
