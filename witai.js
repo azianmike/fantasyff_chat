@@ -134,7 +134,12 @@ const actions = {
                 callbackFunc("You can ask for lots of different stats, from defensive tackles to touchdowns (receiving, rushing, passing) " +
                     "to yardage (receiving, rushing, passing)");
                 callbackFunc("You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'");
-            } else {  // Score help
+            }
+            else if(helpEntity == "top_stats_help") {  // Stats help
+                callbackFunc("You can ask for category leaders for any stat (yards, touchdowns, sacks, etc) during any given time period!");
+                callbackFunc("Try it out! Ask \'who was the top rusher in 2014 between week 4 and 10\' or \'who had the most sacks in week 10?\'");
+            }
+            else {  // Score help
                 callbackFunc("You can ask for lots of different scores of different teams! If you don't specify a week/year, we'll give you the latest game (or live score!)");
                 callbackFunc("You can also ask for scores between teams, like \'score of the ravens steelers game\'");
             }
@@ -149,6 +154,11 @@ const actions = {
                 "content_type":"text",
                 "title":"Get Scores of Games",
                 "payload":"score_help"
+            }
+            var getTopStatsReply = {
+                "content_type":"text",
+                "title":"Get Top Stats",
+                "payload":"top_stats_help"
             }
             quick_replies.push(statsQuickReply);
             quick_replies.push(scoreQuickReply);
@@ -220,5 +230,6 @@ module.exports.getResponse = getResponse
 // getResponse(null, "who was the top tackler in 2015?")
 // getResponse(null, "blargh! tom brady!")
 
+// getResponse(null, "who had the most sacks in 2015")
 
 
