@@ -162,6 +162,7 @@ const actions = {
             }
             quick_replies.push(statsQuickReply);
             quick_replies.push(scoreQuickReply);
+            quick_replies.push(getTopStatsReply);
             fb_apicalls.sendQuickReplies(sender, "What do you need help with?", quick_replies);
         }
     },
