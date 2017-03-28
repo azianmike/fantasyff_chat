@@ -128,6 +128,7 @@ const actions = {
     },
     'getStarted': function getStarted(context, callbackFunc) {
         callbackFunc("Hello! Ask me anything like \"How many passing yards does Peyton manning have in 2014\" or \"What was the score of dolphins game\"");
+        callbackFunc("I specialize in player stats over a specific time period, like asking for \'Tom Brady\'s passing yards between week 12 and 18 in 2013\'");
     },
     'getHelp': function getHelp(context, callbackFunc, sender) {
         // ALWAYS send to fb_apicalls.sendQuickReplies
@@ -178,7 +179,7 @@ const actions = {
             quick_replies.push(getTopStatsReply);
             quick_replies.push(scoreQuickReply);
             quick_replies.push(getPlayerInfoHelp);
-            fb_apicalls.sendQuickReplies(sender, "What do you need help with?", quick_replies);
+            fb_apicalls.sendQuickReplies(sender, "What do you need help with? We specialize in player stats over a specific time period (like \'between week 4 and 8 in 2014\')", quick_replies);
         }
     },
     'getPlayerInfo': getPlayerInfo.getPlayerInfo,
