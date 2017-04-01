@@ -53,7 +53,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
             "title":"Getting Player Info",
             "payload":"player_info_help"
         }
-        var getPlayerInfoHelp = {
+        var typesOfStatsHelp = {
             "content_type":"text",
             "title":"Types of Stats",
             "payload":"stats_type_help"
@@ -62,6 +62,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
         quick_replies.push(getTopStatsReply);
         quick_replies.push(scoreQuickReply);
         quick_replies.push(getPlayerInfoHelp);
+        quick_replies.push(typesOfStatsHelp);
         fb_apicalls.sendQuickReplies(sender, "What do you need help with? We specialize in player stats over a specific time period (like \'between week 4 and 8 in 2014\')", quick_replies);
     }
 }
