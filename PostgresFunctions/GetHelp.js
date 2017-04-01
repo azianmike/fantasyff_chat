@@ -2,6 +2,8 @@
  * Created by michaell on 4/1/17.
  */
 
+const fb_apicalls = require('../fb_apicalls')
+
 
 function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
     // ALWAYS send to fb_apicalls.sendQuickReplies
