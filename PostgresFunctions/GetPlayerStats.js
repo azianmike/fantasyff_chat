@@ -359,7 +359,7 @@ function constructStatsToGet(entities) {
 
 module.exports = {
     getStatsPromise: getStatsPromise,
-    getStatsString: getStatsString,
+    getStatTypeString: getStatTypeString,
     getStatsWitAi: getStatsWitAi
 }
 

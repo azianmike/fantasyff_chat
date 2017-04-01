@@ -52,7 +52,7 @@ function getTopStatsString(name, year, year2, statToGet, seasonType, week1, week
     if (stat === null) {
         stat = 0;
     }
-    var returnString = name + " had the most " + getPlayerStats.getStatsString(statToGet);
+    var returnString = name + " had the most " + getPlayerStats.getStatTypeString(statToGet);
     returnString += " with " + stat
     if (year2 && year2 > 1) {
         returnString += " between " + year + " and " + year2;
