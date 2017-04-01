@@ -200,6 +200,12 @@ function getStatTypeString(statToGet){
         }
         statType += "field goals made";
     }
+    if(statToGet.includes("kicking_fga")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "field goal attempts";
+    }
     return statType;
 }
 
