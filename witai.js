@@ -225,7 +225,7 @@ function sendMessageAfterTimeout(callbackFunc, text) {
         callbackFunc(text);
     }
 
-    setTimeout(func, 500);
+    setTimeout(func, 50);
 }
 
 /**
