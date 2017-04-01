@@ -24,6 +24,9 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
             callbackFunc("You can ask for player info, like how tall a player is or what team they play for!");
             sendMessageAfterTimeout(callbackFunc, "Try it out! Ask \'how tall is tom brady\' or \'how many years has cam newton played in the league\'");
         }
+        else if(helpEntity == "stats_type_help") {  // Stats help
+            callbackFunc("These are the types of stats you can ask:\n•Passing yds, tds, ints, completions, attempts\n•Rushing yds, tds, attempts•\nReceiving yds, tds, targets, receptions•\n•Fumbles lost or forced\n•Defensive tackles, sacks, ints ");
+        }
         else {  // Score help
             callbackFunc("You can ask for lots of different scores of different teams! If you don't specify a week/year, we'll give you the latest game (or live score!)");
             sendMessageAfterTimeout(callbackFunc, "You can also ask for scores between teams, like \'score of the ravens steelers game\'");
@@ -49,6 +52,11 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
             "content_type":"text",
             "title":"Getting Player Info",
             "payload":"player_info_help"
+        }
+        var getPlayerInfoHelp = {
+            "content_type":"text",
+            "title":"Types of Stats",
+            "payload":"stats_type_help"
         }
         quick_replies.push(statsQuickReply);
         quick_replies.push(getTopStatsReply);
