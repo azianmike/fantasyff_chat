@@ -35,7 +35,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
         var quick_replies = [];
         var statsQuickReply = {
             "content_type":"text",
-            "title":"Getting Player Stats",
+            "title":"Get Player Stats",
             "payload":"stats_help"
         }
         var scoreQuickReply = {
@@ -50,7 +50,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
         }
         var getPlayerInfoHelp = {
             "content_type":"text",
-            "title":"Getting Player Info",
+            "title":"Get Player Info",
             "payload":"player_info_help"
         }
         var typesOfStatsHelp = {
