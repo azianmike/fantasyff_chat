@@ -25,7 +25,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
             sendMessageAfterTimeout(callbackFunc, "Try it out! Ask \'how tall is tom brady\' or \'how many years has cam newton played in the league\'");
         }
         else if(helpEntity == "stats_type_help") {  // Stats help
-            callbackFunc("These are the types of stats you can ask:\n•Passing yds, tds, ints, completions, attempts\n•Rushing yds, tds, attempts\n•Receiving yds, tds, targets, receptions•\n•Fumbles lost or forced\n•Defensive tackles, sacks, ints ");
+            callbackFunc("These are the types of stats you can ask:\n•Passing yds, tds, ints, completions, attempts\n•Rushing yds, tds, attempts\n•Receiving yds, tds, targets, receptions\n•Fumbles lost or forced\n•Defensive tackles, sacks, ints ");
         }
         else {  // Score help
             callbackFunc("You can ask for lots of different scores of different teams! If you don't specify a week/year, we'll give you the latest game (or live score!)");
