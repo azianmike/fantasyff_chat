@@ -127,8 +127,8 @@ const actions = {
         getStats.getStatsWitAi(context, callbackFunc);
     },
     'getStarted': function getStarted(context, callbackFunc) {
-        callbackFunc("Hello! Ask me anything like \"How many passing yards does Peyton manning have in 2014\" or \"What was the score of dolphins game\"");
-        setTimeout(callbackFunc("I specialize in NFL player stats over a specific time period, like asking for \'Tom Brady\'s passing yards between week 12 and 18 in 2013\'"), 500);
+        callbackFunc("Hello! Ask me anything about the NFL! Like \"How many passing yards does Peyton manning have in 2014\" or \"What was the score of dolphins game\"");
+        callbackFunc("I specialize in NFL player stats over a specific time period, like asking for \'Tom Brady\'s passing yards between week 12 and 18 in 2013\'");
     },
     'getHelp': function getHelp(context, callbackFunc, sender) {
         // ALWAYS send to fb_apicalls.sendQuickReplies
@@ -139,19 +139,19 @@ const actions = {
             if(helpEntity == "stats_help") {  // Stats help
                 callbackFunc("You can ask for lots of different stats, from defensive tackles to touchdowns (receiving, rushing, passing) " +
                     "to yardage (receiving, rushing, passing)");
-                setTimeout(callbackFunc("You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'"), 500);
+                callbackFunc("You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'");
             }
             else if(helpEntity == "top_stats_help") {  // Stats help
                 callbackFunc("You can ask for category leaders for any stat (yards, touchdowns, sacks, etc) during any given time period!");
-                setTimeout(callbackFunc("Try it out! Ask \'who was the top rusher in 2014 between week 4 and 10\' or \'who had the most sacks in week 10?\'"), 500);
+                callbackFunc("Try it out! Ask \'who was the top rusher in 2014 between week 4 and 10\' or \'who had the most sacks in week 10?\'");
             }
             else if(helpEntity == "player_info_help") {  // Stats help
                 callbackFunc("You can ask for player info, like how tall a player is or what team they play for!");
-                setTimeout(callbackFunc("Try it out! Ask \'how tall is tom brady\' or \'how many years has cam newton played in the league\'"), 500);
+                callbackFunc("Try it out! Ask \'how tall is tom brady\' or \'how many years has cam newton played in the league\'");
             }
             else {  // Score help
                 callbackFunc("You can ask for lots of different scores of different teams! If you don't specify a week/year, we'll give you the latest game (or live score!)");
-                setTimeout(callbackFunc("You can also ask for scores between teams, like \'score of the ravens steelers game\'"), 500);
+                callbackFunc("You can also ask for scores between teams, like \'score of the ravens steelers game\'");
             }
         } else {
             var quick_replies = [];
