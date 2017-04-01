@@ -2,10 +2,11 @@
  * Created by michaell on 3/25/17.
  */
 
-var config = require('./PostgresConfig');
-var SqlString = require('sqlstring');
-var currYear = require('./GetCurrentYear')
+const config = require('./PostgresConfig');
+const SqlString = require('sqlstring');
+const currYear = require('./GetCurrentYear')
 const analytics = require('../Analytics/GoogleAnalytics');
+const getPlayerStats = require('./GetPlayerStats');
 
 /**
  * Returns a PROMISE for stats
@@ -47,149 +48,11 @@ function getTopStatsPromise(year, year2, statToGet, seasonType, week1, week2, nu
     return config.executePostgresQuery(queryString);
 }
 
-function getStatTypeString(statToGet){
-    var statType = "";
-    if(statToGet.includes("passing_yds"))
-    {
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "passing yards";
-    }
-    if(statToGet.includes("rushing_yds")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "rushing yards";
-    }
-    if(statToGet.includes("kickret_yds")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "kick return yards";
-    }
-    if(statToGet.includes("kickret_tds")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "kick return touchdowns";
-    }
-    if(statToGet.includes("rushing_tds")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "rushing tds";
-    }
-    if(statToGet.includes("passing_tds")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "passing tds";
-    }
-    if(statToGet.includes("receiving_yds")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "receiving yards";
-    }
-    if(statToGet.includes("receiving_tds")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "receiving tds";
-    }
-    if(statToGet.includes("defense_int")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "def pass interceptions";
-    }
-    if(statToGet.includes("passing_int")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "pass interceptions";
-    }
-    if(statToGet.includes("defense_sk")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "defensive sacks";
-    }
-    if(statToGet.includes("fumbles_forced")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "fumbles forced";
-    }
-    if(statToGet.includes("fumbles_rec")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "fumbles recovered";
-    }
-    if(statToGet.includes("defense_tkl")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "defensive tackles";
-    }
-    if(statToGet.includes("passing_att")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "pass attempts";
-    }
-    if(statToGet.includes("passing_cmp")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "pass completions";
-    }
-    if(statToGet.includes("receiving_tar")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "pass targets";
-    }
-    if(statToGet.includes("receiving_rec")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "pass receptions";
-    }
-    if(statToGet.includes("rushing_att")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "rushing attempts";
-    }
-    if(statToGet.includes("fumbles_forced")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "fumbles forced";
-    }
-    if(statToGet.includes("fumbles_lost")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "fumbles lost";
-    }
-    if(statToGet.includes("fumbles_rec")){
-        if(statType.length > 2){
-            statType += " and "
-        }
-        statType += "fumbles recovered";
-    }
-    return statType;
-}
-
 function getTopStatsString(name, year, year2, statToGet, seasonType, week1, week2, num_limit, stat){
     if (stat === null) {
         stat = 0;
     }
-    var returnString = name + " had the most " + getStatTypeString(statToGet);
+    var returnString = name + " had the most " + getPlayerStats.getStatsString(statToGet);
     returnString += " with " + stat
     if (year2 && year2 > 1) {
         returnString += " between " + year + " and " + year2;

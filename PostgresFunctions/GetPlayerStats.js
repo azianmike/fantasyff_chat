@@ -194,6 +194,12 @@ function getStatTypeString(statToGet){
         }
         statType += "fumbles recovered";
     }
+    if(statToGet.includes("kicking_fgm")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "field goals made";
+    }
     return statType;
 }
 
