@@ -206,6 +206,12 @@ function getStatTypeString(statToGet){
         }
         statType += "field goal attempts";
     }
+    if(statToGet.includes("kicking_fgmissed")){
+        if(statType.length > 2){
+            statType += " and "
+        }
+        statType += "field goals missed";
+    }
     return statType;
 }
 
