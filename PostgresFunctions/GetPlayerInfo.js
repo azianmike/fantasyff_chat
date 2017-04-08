@@ -45,8 +45,8 @@ function getPlayerInfoString(name, data, player_info) {
         return_string += 'weighs ' + data + ' pounds.'
     } else if(player_info=='years_pro'){
         return_string += 'has been in the NFL for ' + data + ' years.'
-    } else if(player_info=='age'){
-        return_string += 'is ' + _calculateAge(new Date(Date.parse("8/3/1977"))) + ' years old.'
+    } else if(player_info=='birthdate'){
+        return_string += 'is ' + _calculateAge(new Date(Date.parse(data))) + ' years old.'
     } else if(player_info=='player_position'){
         return_string += 'plays ' + data
     } else if(player_info=='team'){
@@ -76,5 +76,4 @@ function _convertHeight(inches) {
     return_height += inches%12 + ' inches '
     return return_height;
 }
-
 
