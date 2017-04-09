@@ -318,7 +318,7 @@ function getStatsWitAi(context, callbackFunc) {
             }
         );
     } else {
-        callbackFunc("Sorry, I think you're missing a player name!")
+        callbackFunc("Sorry, I think you're missing a player name! (Or we don't recognize that name)")
     }
 
 }
