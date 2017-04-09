@@ -9,7 +9,7 @@ num_limit int default 1)
 RETURNS TABLE (player_name varchar, sum_of_stat real) as
 $BODY$
 DECLARE
-  returnInt int;
+  returnInt real;  -- For sacks, can have .5
   yearSQL varchar(50) := '';
 
 BEGIN

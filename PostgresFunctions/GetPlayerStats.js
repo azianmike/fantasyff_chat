@@ -318,7 +318,7 @@ function getStatsWitAi(context, callbackFunc) {
             }
         );
     } else {
-        callbackFunc("Sorry, enter in a stat to get! Like passing yards or rushing yards or interceptions!")
+        callbackFunc("Sorry, I think you're missing a player name!")
     }
 
 }

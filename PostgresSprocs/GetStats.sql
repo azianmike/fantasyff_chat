@@ -6,10 +6,10 @@ seasonType season_phase default 'Regular',
 week1 INT default -1,
 week2 INT default -2,
 teamID varchar(4) default '')
-RETURNS INT AS
+RETURNS REAL AS
 $BODY$
 DECLARE
-  returnInt int;
+  returnInt real;  -- For sacks, can have .5
   teamSQL varchar(50) := '';
   yearSQL varchar(50) := '';
 
