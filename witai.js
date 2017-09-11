@@ -244,5 +244,7 @@ module.exports.getResponse = getResponse
 // getResponse(null, "peyton manning")
 // getResponse(null, "who had the most sacks in 2015")
 // getResponse(null, "who had the most field goals in 2015")
+getResponse(null, "how old is russell wilson")
+
 
 

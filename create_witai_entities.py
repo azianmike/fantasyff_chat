@@ -1,3 +1,16 @@
+# __author__ = 'michaell'
+#
+# import urllib2, json
+#
+# opener = urllib2.Request("https://api.wit.ai/entities/player/values")
+# opener.add_header("Authorization", "Bearer %s" % "ZBA4QPLIQUOHAU5A66NMZKRZMOEZOVVN")
+# opener.add_header("Content-Type", "application/json")
+# data = {}
+# data["value"] = "Deshaun Watson"
+# print urllib2.urlopen(opener,json.dumps(data))
+# # temp = json.loads(urllib2.urlopen(opener).read())
+
+
 __author__ = 'michaell'
 
 
@@ -25,37 +38,41 @@ def req(access_token, path, params, **kwargs):
     print rsp
 
     if rsp.status_code > 200:
-        raise AssertionError('Wit responded with status: ' + str(rsp.status_code) +
-                       ' (' + rsp.reason + ')')
+        print 'Wit responded with status: ' + str(rsp.status_code) +' (' + rsp.reason + ')'
+
     json = rsp.json()
     if 'error' in json:
-        raise AssertionError('Wit responded with an error: ' + json)
+        print 'Wit responded with an error: ' + json
+        # raise AssertionError('Wit responded with an error: ' + json)
 
     # logger.debug('%s %s %s', meth, full_url, json)
     return json
 
-# params = {}
-# # params['id'] = 'player'
-# setOfPlayers = {}
-# for i in range(2009, 2017): # Go from 2009 to 2016
-# # i = 2009
-#     print 'year ' + str(i)
-#     games = nflgame.games(i)
-#     players = nflgame.combine_game_stats(games)
-#     # for p in players.rushing().sort('rushing_yds').limit(5):
-#     allYearPlayers = []
-#     for p in players:
-#         msg = '%s %d carries for %d yards and %d TDs'
-#         print str(p.player.full_name)
-#         playerParam = {}
-#         playerParam['value'] = str(p.player.full_name)
-#         # allYearPlayers.append(playerParam)
-#         # setOfPlayers[str(p.player.full_name)] = True
-#
-#         # params['value'] = allYearPlayers
-#         # print str(params)
-#
-#         req('ZBA4QPLIQUOHAU5A66NMZKRZMOEZOVVN', '/entities/player/values?v=20160516', playerParam)
+'''
+Creates individual player entities in wit.ai
+'''
+params = {}
+# params['id'] = 'player'
+setOfPlayers = {}
+for i in range(2009, 2017): # Go from 2009 to 2016
+# i = 2009
+    print 'year ' + str(i)
+    games = nflgame.games(i)
+    players = nflgame.combine_game_stats(games)
+    # for p in players.rushing().sort('rushing_yds').limit(5):
+    allYearPlayers = []
+    for p in players:
+        msg = '%s %d carries for %d yards and %d TDs'
+        print str(p.player.full_name)
+        playerParam = {}
+        playerParam['value'] = str(p.player.full_name)
+        # allYearPlayers.append(playerParam)
+        # setOfPlayers[str(p.player.full_name)] = True
+
+        # params['value'] = allYearPlayers
+        # print str(params)
+
+        req('ZBA4QPLIQUOHAU5A66NMZKRZMOEZOVVN', '/entities/player/values?v=20160516', playerParam)
 
 '''
 Creates players entities in witai
