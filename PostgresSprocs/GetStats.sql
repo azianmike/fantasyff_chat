@@ -60,7 +60,7 @@ COST 2;
 --SELECT SUM(passing_yds) FROM play_player
 --    WHERE gsis_id IN
 --    (SELECT gsis_id FROM game WHERE season_year=2015 and season_type='Regular' AND week>=1 AND week<=17)
---    AND player_id in (SELECT player_id FROM player WHERE full_name='Tom Brady') AND team='ARI'
+--    AND player_id in (SELECT player_id FROM player WHERE full_name='Tom Brady') AND team='ARI';
 
 --SELECT SUM(passing_yds) FROM play_player
 --    WHERE gsis_id IN
