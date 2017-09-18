@@ -140,7 +140,7 @@ function getFantasyPtsWithAi(context, callbackFunc) {
         getFantasyPtsPromise(name, year, year2, seasonType, week1, week2, teamID).then(
             function (row) {
                 if (row && row[0]) {
-                    var stringToSend = getFantasyPtsString(name, year, year2, seasonType, week1, week2, teamID, row[0].getstats);
+                    var stringToSend = getFantasyPtsString(name, year, year2, seasonType, week1, week2, teamID, row[0].getstandardfantasypoints);
                     callbackFunc(stringToSend)
                 } else {
                     callbackFunc('Sorry, we couldn\'t find anything')
