@@ -86,6 +86,8 @@ function getFantasyPtsString(name, year, year2, seasonType, week1, week2, teamID
         returnString += " against " + teamID;
     }
 
+    returnString += ". (Standard scoring)"
+
     return returnString;
 }
 
