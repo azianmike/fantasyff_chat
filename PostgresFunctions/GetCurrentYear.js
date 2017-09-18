@@ -3,11 +3,11 @@
  */
 
 /**
- * Current season is 2016
+ * Current season is 2017
  * @returns {number}
  */
 function getCurrentYear(){
-    return new Date().getFullYear() - 1;
+    return new Date().getFullYear();
 }
 
 
