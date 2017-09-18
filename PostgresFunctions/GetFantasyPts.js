@@ -91,6 +91,19 @@ function getFantasyPtsString(name, year, year2, seasonType, week1, week2, teamID
     return returnString;
 }
 
+function createPromiseAndReturnString(name, year, year2, seasonType, week1, week2, teamID, callbackFunc) {
+    getFantasyPtsPromise(name, year, year2, seasonType, week1, week2, teamID).then(
+        function (row) {
+            if (row && row[0]) {
+                var stringToSend = getFantasyPtsString(name, year, year2, seasonType, week1, week2, teamID, row[0].getstandardfantasypoints);
+                callbackFunc(stringToSend)
+            } else {
+                callbackFunc('Sorry, we couldn\'t find anything')
+            }
+
+        }
+    );
+}
 function getFantasyPtsWithAi(context, callbackFunc) {
     console.log('enter get stats ' + JSON.stringify(context.entities.player));
     if (context.entities.player)  // Lets get a players passing yards!
@@ -139,17 +152,15 @@ function getFantasyPtsWithAi(context, callbackFunc) {
 
         analytics.trackGetFantasyStats();
         analytics.trackPlayer(name);
-        getFantasyPtsPromise(name, year, year2, seasonType, week1, week2, teamID).then(
-            function (row) {
-                if (row && row[0]) {
-                    var stringToSend = getFantasyPtsString(name, year, year2, seasonType, week1, week2, teamID, row[0].getstandardfantasypoints);
-                    callbackFunc(stringToSend)
-                } else {
-                    callbackFunc('Sorry, we couldn\'t find anything')
+        if (week1 == null) {
+            currYear.getCurrentWeekPromise().then(
+                function(week){
+                    createPromiseAndReturnString(name, year, year2, seasonType, week[0].getcurrentweek, week2, teamID, callbackFunc);
                 }
-
-            }
-        );
+            );
+        } else {
+            createPromiseAndReturnString(name, year, year2, seasonType, week1, week2, teamID, callbackFunc);
+        }
     } else {
         callbackFunc("Sorry, I think you're missing a player name! (Or we don't recognize that name)")
     }
