@@ -23,7 +23,7 @@ function getFantasyPtsPromise(name, year, year2, seasonType, week1, week2, team)
     var escapedName = SqlString.escape(name);
     escapedName = escapedName.replace("\\", "\'")
     queryString += escapedName + ', ';
-    queryString += SqlString.escape(year) + ',';
+    queryString += SqlString.escape(year);
 
     if(year2) {
         queryString += ',' + SqlString.escape(year2)
