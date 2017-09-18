@@ -6,6 +6,7 @@ const getScore = require('./PostgresFunctions/GetTeamScore');
 const currYear = require('./PostgresFunctions/GetCurrentYear');
 const getPlayerInfo = require('./PostgresFunctions/GetPlayerInfo')
 const getTopStats = require('./PostgresFunctions/GetTopStats')
+const getFantasyPts = require('./PostgresFunctions/GetFantasyPts')
 const getHelp = require('./PostgresFunctions/GetHelp')
 
 const winston = require('winston');
@@ -136,6 +137,7 @@ const actions = {
     },
     'getPlayerInfo': getPlayerInfo.getPlayerInfo,
     'getTopStats': getTopStats.getTopStatsWitAi,
+    'getFantasyPts': getFantasyPts.getFantasyPtsWithAi,
     'getPlayerOptions':function getHelp(context, callbackFunc, sender) {
         if (context.entities.player)  // Lets get a players passing yards!
         {
