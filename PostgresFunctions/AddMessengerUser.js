@@ -5,7 +5,7 @@
 var config = require('./PostgresConfig');
 
 function addMessengerUser(messengerUser){
-    var sqlString = "select AddMessengerUser("+messengerUser()+");";
+    var sqlString = "select AddMessengerUser("+messengerUser+");";
     config.executePostgresQuery(sqlString).then({
         function(temp){
             // Finish adding messenger user
