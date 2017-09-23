@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION AddMessengerUser(messengerSenderID varchar(40))
+CREATE OR REPLACE FUNCTION AddMessengerUser(messengerSenderID bigint)
 RETURNS void
 as
 $BODY$

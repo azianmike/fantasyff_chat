@@ -1,6 +1,6 @@
 CREATE TABLE messengerUser (
     userID      serial PRIMARY KEY,
-    messengerSenderID       varchar(40) NOT NULL
+    messengerSenderID       bigint NOT NULL
 );
 
 
