@@ -9,6 +9,8 @@ var bodyParser = require('body-parser')
 var request = require('request')
 var credentials = {key: privateKey, cert: certificate, ca:caKey};
 var express = require('express');
+const addMessengerUser = require('./PostgresFunctions/AddMessengerUser')
+
 var app = express();
 var sendMessageToPartner = require('./mongodb').sendMessageToPartner;
 // Set up wit AI stuff
@@ -44,6 +46,7 @@ app.post('/webhookverify/', function (req, res) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         console.log("received message from "+sender);
+        addMessengerUser.addMessengerUser(sender);
         if (event.message && event.message.text) {
             text = event.message.text
 
@@ -73,6 +76,7 @@ app.post('/webhookverifysports/', function (req, res) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         console.log("received message from " + sender); // Sender is the sender ID we use to send message BACK
+        addMessengerUser.addMessengerUser(sender);
         console.log("event is " + JSON.stringify(event));
         if (event.message && event.message.text && !event.message.quick_reply) {
             text = event.message.text
