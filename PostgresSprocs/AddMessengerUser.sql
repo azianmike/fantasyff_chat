@@ -1,9 +1,16 @@
-CREATE OR REPLACE FUNCTION AddMessengerUser(messengerSenderID bigint)
+CREATE OR REPLACE FUNCTION AddMessengerUser(messengerSenderIDInput bigint)
 RETURNS void
 as
 $BODY$
 
-INSERT INTO messengerUser (messengerSenderID) VALUES (messengerSenderID);
+DECLARE userIDExists real;
 
+BEGIN
+    select userid into userIDExists from messengerUser where messengerUser.messengerSenderID = messengerSenderIDInput;
+    IF userIDExists IS NULL
+    THEN
+        INSERT INTO messengerUser (messengerSenderID) VALUES (messengerSenderIDInput);
+    END IF;
+END
 $BODY$
-LANGUAGE sql;
+LANGUAGE plpgsql;

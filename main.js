@@ -76,20 +76,22 @@ app.post('/webhookverifysports/', function (req, res) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         console.log("received message from " + sender); // Sender is the sender ID we use to send message BACK
-        addMessengerUser.addMessengerUser(sender);
         console.log("event is " + JSON.stringify(event));
         if (event.message && event.message.text && !event.message.quick_reply) {
             text = event.message.text
             fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
             witAI.getResponse(sender, text);
+            addMessengerUser.addMessengerUser(sender);
         } else if (event.postback && event.postback.payload) {
             text = event.postback.payload
             fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
             witAI.getResponse(sender, text);
+            addMessengerUser.addMessengerUser(sender);
         } else if (event.message && event.message.quick_reply && event.message.quick_reply.payload) {  // Quick reply payload
             text = event.message.quick_reply.payload;
             fb_apicalls.sendTypingDots(sender)  // Sends typing dots of "..."
             witAI.getResponse(sender, text);
+            addMessengerUser.addMessengerUser(sender);
         }
     }
     res.sendStatus(200)
