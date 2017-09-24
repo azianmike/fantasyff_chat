@@ -26,6 +26,10 @@ var log = new (winston.Logger)({
  * @param text
  */
 function sendTextMessageForSportsBot(sender, text) {
+    if(sender == 123) // Test user
+    {
+        return;
+    }
     turnTypingDotsOff(sender);
 
     console.log("Trying to send FB message to " + sender + " - " + text)

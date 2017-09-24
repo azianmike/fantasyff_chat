@@ -8,6 +8,8 @@ const getPlayerInfo = require('./PostgresFunctions/GetPlayerInfo')
 const getTopStats = require('./PostgresFunctions/GetTopStats')
 const getFantasyPts = require('./PostgresFunctions/GetFantasyPts')
 const getHelp = require('./PostgresFunctions/GetHelp')
+const subscribePlayerUpdates = require('./PostgresFunctions/SubscribePlayerUpdates')
+
 
 const winston = require('winston');
 require('winston-loggly');
@@ -138,6 +140,7 @@ const actions = {
     'getPlayerInfo': getPlayerInfo.getPlayerInfo,
     'getTopStats': getTopStats.getTopStatsWitAi,
     'getFantasyPts': getFantasyPts.getFantasyPtsWithAi,
+    'subscribe': subscribePlayerUpdates.addPlayerSubscription,
     'getPlayerOptions':function getHelp(context, callbackFunc, sender) {
         if (context.entities.player)  // Lets get a players passing yards!
         {
@@ -246,7 +249,10 @@ module.exports.getResponse = getResponse
 // getResponse(null, "peyton manning")
 // getResponse(null, "who had the most sacks in 2015")
 // getResponse(null, "who had the most field goals in 2015")
-getResponse(null, "how old is russell wilson")
+// getResponse(null, "how old is russell wilson")
+// getResponse(null, "how many fantasy points does russell wilson have in week 5 of 2015")
+// getResponse(null, "how many fantasy points does russell wilson have")
+// getResponse(123, "give me updates for eli manning");
 
 
 
