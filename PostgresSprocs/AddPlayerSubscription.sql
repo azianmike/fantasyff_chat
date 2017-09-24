@@ -14,10 +14,13 @@ BEGIN
         INSERT INTO messengerUser (messengerSenderID) VALUES (messengerSenderIDInput);
     END IF;
 
-    select userid into userIDExists from messengerUser where messengerUser.messengerSenderID = messengerSenderIDInput;
-    select player_id into playerID from player where full_name = name;
+    SELECT userid into userIDExists from messengerUser where messengerUser.messengerSenderID = messengerSenderIDInput;
+    SELECT player_id into playerID from player where full_name = name;
 
-    INSERT INTO playerSubscription (userID, player_id) VALUES (userIDExists, playerID);
+    if (SELECT SubscriptionID FROM playerSubscription WHERE player_id = playerID AND userID = userIDExists) IS NULL
+    THEN
+        INSERT INTO playerSubscription (userID, player_id) VALUES (userIDExists, playerID);
+    END IF;
 END;
 $BODY$
 LANGUAGE plpgsql;
