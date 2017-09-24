@@ -49,7 +49,8 @@ BEGIN
     INNER JOIN playerSubscription AS ps
     ON notifToSend.player_id = ps.player_id
     INNER JOIN messengerUser AS m
-    ON ps.userID = m.userID;
+    ON ps.userID = m.userID
+    WHERE notifToSend.touchdowns > 1;
 
     UPDATE playersToCheck as ptc
     SET lastProcessedGsisID = (SELECT MAX(gsis_id) FROM play_player as pp where ptc.player_id=pp.player_id),

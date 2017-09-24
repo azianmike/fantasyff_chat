@@ -22,6 +22,12 @@ function getAddSubscriptionPromise(sender, player_name) {
     return config.executePostgresQuery(queryString);
 }
 
+function getRemoveubscriptionPromise(sender, player_name) {
+    var queryString = 'select RemovePlayerSubscription('+SqlString.escape(sender)+","+SqlString.escape(player_name)+");";
+
+    return config.executePostgresQuery(queryString);
+}
+
 function addPlayerSubscription(context, callbackFunc, sender) {
     if (context.entities.player)  // Lets get a players passing yards!
     {
@@ -29,12 +35,21 @@ function addPlayerSubscription(context, callbackFunc, sender) {
         var name = context.entities.player[0].value;
 
         analytics.trackSubscribe(name);
-        getAddSubscriptionPromise(sender, name).then(
-            function (row) {
-                // Finish
-                callbackFunc("We've subscribed you for player updates for "+name);
-            }
-        );
+        if(context.entities.unsubscribe){ // Unsubscribe user
+            getRemoveubscriptionPromise(sender, name).then(
+                function (row) {
+                    // Finish
+                    callbackFunc("We've unsubscribed you for player updates for "+name);
+                }
+            );
+        } else {
+            getAddSubscriptionPromise(sender, name).then(
+                function (row) {
+                    // Finish
+                    callbackFunc("We've subscribed you for player updates for "+name);
+                }
+            );
+        }
     }else {
         callbackFunc("Sorry, I think you're missing a player name! (Or we don't recognize that name)")
     }
