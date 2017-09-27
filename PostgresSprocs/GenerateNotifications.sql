@@ -24,10 +24,12 @@ BEGIN
     (SUM(passing_tds) + SUM(rushing_tds) + SUM(receiving_tds) +  SUM(puntret_tds) + SUM(kickret_tds)) as touchdowns,
     (SUM(rushing_yds) + SUM(receiving_yds)) as yards,
     ptc.player_id,
-    MAX(ptc.lastProcessedGsisID) as lastProcessedGsisID
+    MAX(pp.gsis_id) as lastProcessedGsisID
     FROM play_player AS pp INNER JOIN playersToCheck as ptc
      ON pp.player_id = ptc.player_id
-     WHERE pp.gsis_id >= ptc.lastProcessedGsisID AND pp.play_id > ptc.lastProcessedPlayID AND
+     WHERE
+     ((pp.gsis_id = ptc.lastProcessedGsisID AND pp.play_id > ptc.lastProcessedPlayID) OR (pp.gsis_id > ptc.lastProcessedGsisID))
+     AND
      (pp.passing_tds >= 1 OR pp.rushing_tds >= 1 OR pp.receiving_tds >= 1 OR pp.puntret_tds >= 1 OR pp.kickret_tds >= 1)
       GROUP BY ptc.player_id;
 
