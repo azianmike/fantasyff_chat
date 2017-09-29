@@ -9,7 +9,7 @@ const fb_apicalls = require('../fb_apicalls')
 function sendMessengerNotificationsOut() {
     var queryString = 'select * from GetNotificationsToSend();';
 
-    config.executePostgresQuery(queryString).then(processNotifications());
+    config.executePostgresQuery(queryString).then(processNotifications);
 }
 
 function processNotifications(rows) {
@@ -30,7 +30,7 @@ function constructNotificationToSendString(notif) {
         }
 
         if(notif.yards && notif.yards > 5) {
-            returnString += ", " + notif.passing_yards + " rushing and receiving yds"
+            returnString += ", " + notif.yards + " rushing and receiving yds"
         }
 
     }

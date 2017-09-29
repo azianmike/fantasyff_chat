@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION GetNotificationsToSend()
-RETURNS TABLE(notificationID int, messengerSenderIDsToSend bigint, player_id varchar(40), touchdowns int, yards int, passing_yards int)
+RETURNS TABLE(notificationID int, messengerSenderIDsToSend bigint, player_id varchar(40), playerName text, touchdowns int, yards int, passing_yards int)
 AS
 $BODY$
 BEGIN
