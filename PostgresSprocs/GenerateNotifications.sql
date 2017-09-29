@@ -43,11 +43,13 @@ BEGIN
     INSERT INTO notificationToSend
     (messengerSenderIDsToSend,
     player_id,
+    playerName,
     touchdowns,
     yards,
     passing_yards)
     SELECT m.messengerSenderID,
     notifToSend.player_id,
+    p.full_name,
     notifToSend.touchdowns,
     notifToSend.yards,
     notifToSend.passing_yards
@@ -56,6 +58,8 @@ BEGIN
     ON notifToSend.player_id = ps.player_id
     INNER JOIN messengerUser AS m
     ON ps.userID = m.userID
+    INNER JOIN player as p
+    ON p.player_id = notifToSend.player_id
     WHERE notifToSend.touchdowns >= 1;
 
     UPDATE playersToCheck as ptc

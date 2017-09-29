@@ -16,6 +16,7 @@ CREATE TABLE notificationToSend (
     notificationID      serial PRIMARY KEY,
     messengerSenderIDsToSend       bigint NOT NULL,
     player_id    varchar(40) NOT NULL,
+    playerName    text NOT NULL,
     touchdowns    int NOT NULL,
     yards int NOT NULL,
     passing_yards int NOT NULL

@@ -26,7 +26,7 @@ var log = new (winston.Logger)({
  * @param text
  */
 function sendTextMessageForSportsBot(sender, text) {
-    if(sender == 123) // Test user
+    if(sender <= 123) // Test user
     {
         return;
     }
