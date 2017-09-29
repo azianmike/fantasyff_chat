@@ -61,7 +61,8 @@ function getTeamScoreString(home_team, away_team, week, season_year, season_type
         }
         queryString += '.'
     }else{  // Live game, still have yet to do
-        queryString += 'Not implemented yet';
+        queryString += 'The current score of ' + home_team + ' vs ' + away_team + ' is ';
+        queryString += home_score + ' - ' + away_score
     }
 
     return queryString;
