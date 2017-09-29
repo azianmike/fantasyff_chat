@@ -1,0 +1,8 @@
+/**  “At every 1th minute past every hour from 5 through 20 on Sunday.” **/
+*/1 09-22 * * 0 node /home/ubuntu/chatt/CronJobs/ConsumeNotificationsToSend.js
+
+/** “At every 1th minute past every hour from 17 through 22 on Monday." **/
+*/1 17-22 * * 1 node /home/ubuntu/chatt/CronJobs/ConsumeNotificationsToSend.js
+
+/** “At every 1th minute past every hour from 17 through 22 on Thursday.” **/
+*/1 17-22 * * 4 node /home/ubuntu/chatt/CronJobs/ConsumeNotificationsToSend.js
