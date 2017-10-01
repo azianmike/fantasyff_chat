@@ -12,9 +12,15 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
     {
         var helpEntity = context.entities.helpEntities[0].value
         if(helpEntity == "stats_help") {  // Stats help
-            callbackFunc("You can ask for lots of different stats, from defensive tackles to touchdowns (receiving, rushing, passing) " +
+            callbackFunc("You can ask for lots of different stats, including fantasy poitns, from defensive tackles to touchdowns (receiving, rushing, passing) " +
                 "to yardage (receiving, rushing, passing)");
             sendMessageAfterTimeout(callbackFunc, "You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'")
+            sendMessageAfterTimeout(callbackFunc, "You can also ask fantasy points! Try \'Tom brady fantasy points\' or \'Eli manning fantasy points week 2\'")
+
+        }
+        else if(helpEntity == "subscribe_help") {  // Stats help
+            callbackFunc("Subscribe to a player for updates! We'll notify you when the player has a major play, like a touchdown");
+            sendMessageAfterTimeout(callbackFunc, "Try it out! Just say \'give me updates for eli manning\'");
         }
         else if(helpEntity == "top_stats_help") {  // Stats help
             callbackFunc("You can ask for category leaders for any stat (yards, touchdowns, sacks, etc) during any given time period!");
@@ -35,8 +41,13 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
         var quick_replies = [];
         var statsQuickReply = {
             "content_type":"text",
-            "title":"Get Player Stats",
+            "title":"Get Player Stats and Fantasy Points",
             "payload":"stats_help"
+        }
+        var subscribeQuickReply = {
+            "content_type":"text",
+            "title":"Subscribe to player updates",
+            "payload":"subscribe_help"
         }
         var scoreQuickReply = {
             "content_type":"text",
@@ -59,9 +70,10 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
             "payload":"stats_type_help"
         }
         quick_replies.push(statsQuickReply);
-        quick_replies.push(getTopStatsReply);
+        quick_replies.push(subscribeQuickReply);
         quick_replies.push(scoreQuickReply);
         quick_replies.push(getPlayerInfoHelp);
+        quick_replies.push(getTopStatsReply);
         quick_replies.push(typesOfStatsHelp);
         fb_apicalls.sendQuickReplies(sender, "What do you need help with? We specialize in player stats over a specific time period (like \'between week 4 and 8 in 2014\')", quick_replies);
     }
