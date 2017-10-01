@@ -14,7 +14,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
         if(helpEntity == "stats_help") {  // Stats help
             callbackFunc("You can ask for lots of different stats, including fantasy points, from defensive tackles to touchdowns (receiving, rushing, passing) " +
                 "to yardage (receiving, rushing, passing)");
-            sendMessageAfterTimeout(callbackFunc, "You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'")
+            sendMessageAfterTimeout(callbackFunc, "You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson in week 10 in 2013\'")
             sendMessageAfterTimeout(callbackFunc, "You can also ask fantasy points! Try \'Tom brady fantasy points\' or \'Eli manning fantasy points week 2\'")
 
         }

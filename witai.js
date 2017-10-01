@@ -132,7 +132,7 @@ const actions = {
     },
     'getStarted': function getStarted(context, callbackFunc) {
         callbackFunc("Hello! Ask me anything about the NFL! Like \"How many passing yards does Peyton manning have in 2014\" or \"What was the score of dolphins game\"");
-        sendMessageAfterTimeout(callbackFunc, "I specialize in NFL player stats over a specific time period, like asking for \'Tom Brady\'s passing yards between week 12 and 18 in 2013\'");
+        sendMessageAfterTimeout(callbackFunc, "I can also give you fantasy points and updates! Ask \'Tom Brady fantasy points week 1\' or \'update me on Eli Manning\'");
     },
     'getHelp': function helpFunc(context, callbackFunc, sender) {
         getHelp.getHelp(context, callbackFunc, sender, sendMessageAfterTimeout)
