@@ -12,7 +12,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
     {
         var helpEntity = context.entities.helpEntities[0].value
         if(helpEntity == "stats_help") {  // Stats help
-            callbackFunc("You can ask for lots of different stats, including fantasy poitns, from defensive tackles to touchdowns (receiving, rushing, passing) " +
+            callbackFunc("You can ask for lots of different stats, including fantasy points, from defensive tackles to touchdowns (receiving, rushing, passing) " +
                 "to yardage (receiving, rushing, passing)");
             sendMessageAfterTimeout(callbackFunc, "You can also ask for a week time range and/or a year! Try \'Give me passing tds for russell wilson between weeks 2 and 10 in 2013\'")
             sendMessageAfterTimeout(callbackFunc, "You can also ask fantasy points! Try \'Tom brady fantasy points\' or \'Eli manning fantasy points week 2\'")
@@ -41,12 +41,12 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
         var quick_replies = [];
         var statsQuickReply = {
             "content_type":"text",
-            "title":"Get Player Stats and Fantasy Points",
+            "title":"Player and Fantasy Stats",
             "payload":"stats_help"
         }
         var subscribeQuickReply = {
             "content_type":"text",
-            "title":"Subscribe to player updates",
+            "title":"Player updates",
             "payload":"subscribe_help"
         }
         var scoreQuickReply = {
