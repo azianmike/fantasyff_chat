@@ -61,7 +61,7 @@ function getFantasyPtsString(name, year, year2, seasonType, week1, week2, teamID
     if (stat === null) {
         stat = 0;
     }
-    var returnString = name + " had " + stat + " fantasy points";
+    var returnString = name + " has " + stat + " fantasy points";
     if (year2 && year2 > 1) {
         returnString += " between " + year + " and " + year2;
     } else {
