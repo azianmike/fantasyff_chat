@@ -41,7 +41,7 @@ function getHelp(context, callbackFunc, sender, sendMessageAfterTimeout) {
         var quick_replies = [];
         var statsQuickReply = {
             "content_type":"text",
-            "title":"Player and Fantasy Stats",
+            "title":"Player Fantasy Stats",
             "payload":"stats_help"
         }
         var subscribeQuickReply = {
