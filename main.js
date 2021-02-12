@@ -1,13 +1,14 @@
+console.log("reached 1")
 var fs = require('fs');
-var http = require('http');
-var https = require('https');
+// var http = require('http');
+// var https = require('https');
 var fb_apicalls = require('./fb_apicalls')
-var privateKey  = fs.readFileSync('server.key', 'utf8');
-var certificate = fs.readFileSync('server.crt', 'utf8');
-var caKey = fs.readFileSync('chattt_me_bundle.ca', 'utf8');
+// var privateKey  = fs.readFileSync('server.key', 'utf8');
+// var certificate = fs.readFileSync('server.crt', 'utf8');
+// var caKey = fs.readFileSync('chattt_me_bundle.ca', 'utf8');
 var bodyParser = require('body-parser')
-var request = require('request')
-var credentials = {key: privateKey, cert: certificate, ca:caKey};
+// var request = require('request')
+// var credentials = {key: privateKey, cert: certificate, ca:caKey};
 var express = require('express');
 const addMessengerUser = require('./PostgresFunctions/AddMessengerUser')
 

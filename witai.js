@@ -11,22 +11,22 @@ const getHelp = require('./PostgresFunctions/GetHelp')
 const subscribePlayerUpdates = require('./PostgresFunctions/SubscribePlayerUpdates')
 
 
-const winston = require('winston');
-require('winston-loggly');
+// const winston = require('winston');
+// require('winston-loggly');
 
-var log = new (winston.Logger)({
-    transports: [
-        new (winston.transports.Console)(),
-        new (winston.transports.Loggly)( {
-            token: "eefdcc8d-96ac-44c9-b61f-cce64d15d027",
-            subdomain: "sportschat",
-            tags: ["Winston-NodeJS"],
-            json:true,
-            handleExceptions: true,
-            withStack: true
-        })
-    ]
-});
+// var log = new (winston.Logger)({
+//     transports: [
+//         new (winston.transports.Console)(),
+//         new (winston.transports.Loggly)( {
+//             token: "eefdcc8d-96ac-44c9-b61f-cce64d15d027",
+//             subdomain: "sportschat",
+//             tags: ["Winston-NodeJS"],
+//             json:true,
+//             handleExceptions: true,
+//             withStack: true
+//         })
+//     ]
+// });
 
 const analytics = require('./Analytics/GoogleAnalytics')
 
@@ -97,7 +97,7 @@ function getTeamScoreWitAi(context, callbackFunc) {
                 callbackFunc(returnString);
             } else {
                 console.log(rows)
-                log.warn("Did not get any team score " + team1 + team2 + season_type)
+                // log.warn("Did not get any team score " + team1 + team2 + season_type)
                 callbackFunc('Sorry, we couldn\'t find anything');
             }
 
@@ -197,7 +197,7 @@ function callActionHelper(context, callbackFunc, sender) {
     }
     else {
         context['errorMsg'] = "No context/bad context";
-        log.warn(context);
+        // log.warn(context);
         callbackFunc("We\'re not sure what you meant. Type \'help\' for guidance from the bot!")
     }
 }
@@ -213,7 +213,7 @@ function getResponse(sender, text) {
     client.message(text, {})
         .then((data) => {
             console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-            log.info(data);
+            // log.info(data);
 
             var sendTextHelper = function(text){
                 fb_apicalls.sendTextMessage(sender, text)
@@ -222,7 +222,7 @@ function getResponse(sender, text) {
         })
         .catch(function(error){
             console.log(error);
-            log.error(error);
+            // log.error(error);
         });
 }
 

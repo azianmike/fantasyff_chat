@@ -5,22 +5,22 @@ var token = "EAAJRYaZBz8mABAAMFg8eZCP7ZCnNGWVudg9ZCTeeL47CAnCAIq7OwxdzhmlyZCUTTo
 // For page FantasyScout
 var sportsBotToken = 'EAAXL4nltVEsBAPWJVU6UPXA63GGwAw9Q65xYmAvFI8JZCltIhOGYi4JUIevTJpOzCdjOZARuRS8jZCLAE7SDMwd5KAwRE5X7XNWiNvzVNcicrYc02HPzejr02YFGLjU33iZCutWugx47oiR5wxSQHqFcxVsVoMQlEwd7IbjUSQZDZD';
 
-var winston = require('winston');
-require('winston-loggly');
-
-var log = new (winston.Logger)({
-    transports: [
-        new (winston.transports.Console)(),
-        new (winston.transports.Loggly)( {
-            token: "eefdcc8d-96ac-44c9-b61f-cce64d15d027",
-            subdomain: "sportschat",
-            tags: ["Winston-NodeJS"],
-            json:true,
-            handleExceptions: true,
-            withStack: true
-        })
-    ]
-});
+// var winston = require('winston');
+// require('winston-loggly');
+//
+// var log = new (winston.Logger)({
+//     transports: [
+//         new (winston.transports.Console)(),
+//         new (winston.transports.Loggly)( {
+//             token: "eefdcc8d-96ac-44c9-b61f-cce64d15d027",
+//             subdomain: "sportschat",
+//             tags: ["Winston-NodeJS"],
+//             json:true,
+//             handleExceptions: true,
+//             withStack: true
+//         })
+//     ]
+// });
 
 /**
  *
@@ -35,7 +35,7 @@ function sendTextMessageForSportsBot(sender, text) {
     turnTypingDotsOff(sender);
 
     console.log("Trying to send FB message to " + sender + " - " + text)
-    log.info({"sender":sender, "text":text})
+    // log.info({"sender":sender, "text":text})
     if( sender && text ) {
         messageData = {
             text: text
@@ -116,7 +116,7 @@ function sendQuickReplies(sender, text, quick_replies){
     turnTypingDotsOff(sender);
 
     console.log("Trying to send FB quick replies to " + sender + " - " + text)
-    log.info({"sender":sender, "text":text})
+    // log.info({"sender":sender, "text":text})
     if( sender && text ) {
         messageData = {
             text: text,
