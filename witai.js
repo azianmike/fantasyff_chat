@@ -192,7 +192,7 @@ function sendMessageAfterTimeout(callbackFunc, text) {
 function callActionHelper(context, callbackFunc, sender) {
     // throw new Error("testing anoother error2");
     if (context && context.intents && context.intents && context.intents[0].confidence > 0.5) {
-            var funcToCall = actions[context.intents[0].value]
+            var funcToCall = actions[context.intents[0].name]
             funcToCall(context, callbackFunc, sender)
     }
     else {
