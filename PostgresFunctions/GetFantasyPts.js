@@ -110,7 +110,7 @@ function getFantasyPtsWithAi(context, callbackFunc) {
     {
         console.log("found player name! " + context.entities.player)
         var name = context.entities.player[0].value;
-        var year = currYear.getCurrentYear();
+        var year = 2019;
         var year2 = -1;
         var seasonType = null;
         var week1 = null;
