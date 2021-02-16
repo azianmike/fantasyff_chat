@@ -251,11 +251,11 @@ function getStatsString(name, year, year2, statToGet, seasonType, week1, week2, 
 }
 
 function getStatsWitAi(context, callbackFunc) {
-    console.log('enter get stats ' + JSON.stringify(context.entities.player));
-    if (context.entities.player)  // Lets get a players passing yards!
+    console.log('enter get stats ' + JSON.stringify(context.entities["player:player"][0]));
+    if (context.entities["player:player"][0])  // Lets get a players passing yards!
     {
-        console.log("found player name! " + context.entities.player)
-        var name = context.entities.player[0].value;
+        console.log("found player name! " + context.entities["player:player"][0].body)
+        var name = context.entities["player:player"][0].body;
         var year = currYear.getCurrentYear();
         var year2 = -1;
         var seasonType = null;
@@ -325,13 +325,13 @@ function getStatsWitAi(context, callbackFunc) {
 
 function constructStatsToGet(entities) {
     var returnString = "";
-    if (entities.statToGet_prefix) {
+    if (entities["statToGet_prefix:statToGet_prefix"]) {
         var suffix = "_yds" // No suffix, assume yards
-        if (entities.statToGet_suffix) {
+        if (entities["statToGet_suffix:statToGet_suffix"]) {
             // TODO Ask user if they want yards or TD - Need to implement user specific session
-            suffix = entities.statToGet_suffix[0].value;
+            suffix = entities["statToGet_suffix:statToGet_suffix"][0].value;
         }
-        for (var prefix of entities.statToGet_prefix) {
+        for (var prefix of entities["statToGet_prefix:statToGet_prefix"]) {
             if (returnString.length == 0) {
                 returnString += prefix.value + suffix
             } else {
