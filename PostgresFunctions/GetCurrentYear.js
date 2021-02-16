@@ -9,7 +9,7 @@ var config = require('./PostgresConfig');
  * @returns {number}
  */
 function getCurrentYear(){
-    return new Date().getFullYear();
+    return 2018;
 }
 
 function getCurrentWeekPromise(){
