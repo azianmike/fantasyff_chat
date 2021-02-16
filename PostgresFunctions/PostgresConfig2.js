@@ -11,7 +11,7 @@ var pg = Promise.promisifyAll(require("pg"));
 var config = {
     user: 'nfldb', //env var: PGUSER
     database: 'nfldb', //env var: PGDATABASE
-    password: '!!@@##$$', //env var: PGPASSWORD
+    password: '123', //env var: PGPASSWORD
     host: 'localhost', // Server hosting the postgres database
     port: 5432, //env var: PGPORT
     max: 10, // max number of clients in the pool

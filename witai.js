@@ -191,12 +191,15 @@ function sendMessageAfterTimeout(callbackFunc, text) {
  */
 function callActionHelper(context, callbackFunc, sender) {
     // throw new Error("testing anoother error2");
-    if (context && context.entities && context.entities.intent && context.entities.intent[0].confidence > 0.5) {
+    if (context && context.intents && context.intents && context.intents[0].confidence > 0.5) {
             var funcToCall = actions[context.entities.intent[0].value]
             funcToCall(context, callbackFunc, sender)
     }
     else {
         context['errorMsg'] = "No context/bad context";
+        console.log('ERROR IN CALLACTION HELPER')
+        console.log('')
+        console.log(context.entities.intent[0].confidence)
         // log.warn(context);
         callbackFunc("We\'re not sure what you meant. Type \'help\' for guidance from the bot!")
     }

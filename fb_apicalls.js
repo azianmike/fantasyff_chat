@@ -1,9 +1,9 @@
 var request = require('request')
-var token = "EAAJRYaZBz8mABAAMFg8eZCP7ZCnNGWVudg9ZCTeeL47CAnCAIq7OwxdzhmlyZCUTToAZARAOr9Kt314ZB6Ginnns0MUCgjFyM1LOyEvkiZAABkupLVDvfNWjzwuQJZCpizoIt5CS8lijy8dU6R06lhNlZABdqK0skCzIxNPCkTgLfnwAZDZD"
+var token = "EAAXL4nltVEsBAJEXZCvuoEpAsRCb2E6YawTpiRz1ZA4cZBkpIWfDZAEP4PEZBDl0AilVsrbGFF23kCw54zy7vuJV4rZAbMrt57JffJw4rtKBueWG89REBlocD4o2n6EZBZC78U3fpHjZBHacMZAGb1QQjH1zeHWQpZBLxk1NYugRzIlomgY4C8vNt2UYMYTCaiXNm8ZD"
 
 // var sportsBotToken = 'EAAXL4nltVEsBAHYI4qKTqMJXlpobM85drZApMiTVOY1UH52g0LA6rRwFgON5Pun3T6ZBvY4EJu1ZBOhFOAR64w2t2k8MRCZBiX4smjkrI318lzXc3eZBF375RPiuBUfBOEk2zUqWsRS8m3eKPOGtPGM80t8ngcIMiV5UfVnNlngZDZD'
 // For page FantasyScout
-var sportsBotToken = 'EAAXL4nltVEsBAPWJVU6UPXA63GGwAw9Q65xYmAvFI8JZCltIhOGYi4JUIevTJpOzCdjOZARuRS8jZCLAE7SDMwd5KAwRE5X7XNWiNvzVNcicrYc02HPzejr02YFGLjU33iZCutWugx47oiR5wxSQHqFcxVsVoMQlEwd7IbjUSQZDZD';
+var sportsBotToken = 'EAAXL4nltVEsBAJEXZCvuoEpAsRCb2E6YawTpiRz1ZA4cZBkpIWfDZAEP4PEZBDl0AilVsrbGFF23kCw54zy7vuJV4rZAbMrt57JffJw4rtKBueWG89REBlocD4o2n6EZBZC78U3fpHjZBHacMZAGb1QQjH1zeHWQpZBLxk1NYugRzIlomgY4C8vNt2UYMYTCaiXNm8ZD';
 
 // var winston = require('winston');
 // require('winston-loggly');
@@ -143,7 +143,7 @@ function sendQuickReplies(sender, text, quick_replies){
 
 /**
  * Gets the user name (FB api call) and then puts it into the DB, means it is their first time
- * 
+ *
  * @param userIDToGetNameFor
  * @param db
  */
