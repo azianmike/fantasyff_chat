@@ -4,20 +4,19 @@
   "description": "Sportschat bot",
   "main": "main.js",
   "dependencies": {
-    "bluebird": "^3.4.7",
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
-    "le_node": "^1.7.0",
-    "mongodb": "^3.6.4",
-    "node-wit": "^4.2.0",
-    "pg": "^6.1.2",
-    "request": "^2.79.0",
-    "sqlstring": "^2.2.0",
-    "universal-analytics": "^0.4.9",
-    "winston": "^2.3.1",
-    "xml2json": "^0.10.0"
+    "bluebird": "*",
+    "body-parser": "*",
+    "express": "*",
+    "le_node": "*",
+    "mongodb": "*",
+    "node-wit": "*",
+    "pg": "*",
+    "request": "*",
+    "sqlstring": "*",
+    "universal-analytics": "*",
+    "winston": "*",
+    "xml2json": "*"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
